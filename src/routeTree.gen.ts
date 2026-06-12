@@ -9,38 +9,199 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedTutorRouteImport } from './routes/_authenticated/tutor'
+import { Route as AuthenticatedTestsRouteImport } from './routes/_authenticated/tests'
+import { Route as AuthenticatedSyllabusRouteImport } from './routes/_authenticated/syllabus'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedLabsRouteImport } from './routes/_authenticated/labs'
+import { Route as AuthenticatedIdentifyRouteImport } from './routes/_authenticated/identify'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCommunityRouteImport } from './routes/_authenticated/community'
+import { Route as AuthenticatedCommunityGroupIdRouteImport } from './routes/_authenticated/community.$groupId'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedTutorRoute = AuthenticatedTutorRouteImport.update({
+  id: '/tutor',
+  path: '/tutor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTestsRoute = AuthenticatedTestsRouteImport.update({
+  id: '/tests',
+  path: '/tests',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSyllabusRoute = AuthenticatedSyllabusRouteImport.update({
+  id: '/syllabus',
+  path: '/syllabus',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLabsRoute = AuthenticatedLabsRouteImport.update({
+  id: '/labs',
+  path: '/labs',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIdentifyRoute = AuthenticatedIdentifyRouteImport.update({
+  id: '/identify',
+  path: '/identify',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCommunityRoute = AuthenticatedCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCommunityGroupIdRoute =
+  AuthenticatedCommunityGroupIdRouteImport.update({
+    id: '/$groupId',
+    path: '/$groupId',
+    getParentRoute: () => AuthenticatedCommunityRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/community': typeof AuthenticatedCommunityRouteWithChildren
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/identify': typeof AuthenticatedIdentifyRoute
+  '/labs': typeof AuthenticatedLabsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/syllabus': typeof AuthenticatedSyllabusRoute
+  '/tests': typeof AuthenticatedTestsRoute
+  '/tutor': typeof AuthenticatedTutorRoute
+  '/api/chat': typeof ApiChatRoute
+  '/community/$groupId': typeof AuthenticatedCommunityGroupIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/community': typeof AuthenticatedCommunityRouteWithChildren
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/identify': typeof AuthenticatedIdentifyRoute
+  '/labs': typeof AuthenticatedLabsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/syllabus': typeof AuthenticatedSyllabusRoute
+  '/tests': typeof AuthenticatedTestsRoute
+  '/tutor': typeof AuthenticatedTutorRoute
+  '/api/chat': typeof ApiChatRoute
+  '/community/$groupId': typeof AuthenticatedCommunityGroupIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/community': typeof AuthenticatedCommunityRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/identify': typeof AuthenticatedIdentifyRoute
+  '/_authenticated/labs': typeof AuthenticatedLabsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/syllabus': typeof AuthenticatedSyllabusRoute
+  '/_authenticated/tests': typeof AuthenticatedTestsRoute
+  '/_authenticated/tutor': typeof AuthenticatedTutorRoute
+  '/api/chat': typeof ApiChatRoute
+  '/_authenticated/community/$groupId': typeof AuthenticatedCommunityGroupIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/community'
+    | '/dashboard'
+    | '/identify'
+    | '/labs'
+    | '/profile'
+    | '/syllabus'
+    | '/tests'
+    | '/tutor'
+    | '/api/chat'
+    | '/community/$groupId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/community'
+    | '/dashboard'
+    | '/identify'
+    | '/labs'
+    | '/profile'
+    | '/syllabus'
+    | '/tests'
+    | '/tutor'
+    | '/api/chat'
+    | '/community/$groupId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/community'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/identify'
+    | '/_authenticated/labs'
+    | '/_authenticated/profile'
+    | '/_authenticated/syllabus'
+    | '/_authenticated/tests'
+    | '/_authenticated/tutor'
+    | '/api/chat'
+    | '/_authenticated/community/$groupId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +209,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/tutor': {
+      id: '/_authenticated/tutor'
+      path: '/tutor'
+      fullPath: '/tutor'
+      preLoaderRoute: typeof AuthenticatedTutorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tests': {
+      id: '/_authenticated/tests'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof AuthenticatedTestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/syllabus': {
+      id: '/_authenticated/syllabus'
+      path: '/syllabus'
+      fullPath: '/syllabus'
+      preLoaderRoute: typeof AuthenticatedSyllabusRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/labs': {
+      id: '/_authenticated/labs'
+      path: '/labs'
+      fullPath: '/labs'
+      preLoaderRoute: typeof AuthenticatedLabsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/identify': {
+      id: '/_authenticated/identify'
+      path: '/identify'
+      fullPath: '/identify'
+      preLoaderRoute: typeof AuthenticatedIdentifyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/community': {
+      id: '/_authenticated/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AuthenticatedCommunityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/community/$groupId': {
+      id: '/_authenticated/community/$groupId'
+      path: '/$groupId'
+      fullPath: '/community/$groupId'
+      preLoaderRoute: typeof AuthenticatedCommunityGroupIdRouteImport
+      parentRoute: typeof AuthenticatedCommunityRoute
+    }
   }
 }
 
+interface AuthenticatedCommunityRouteChildren {
+  AuthenticatedCommunityGroupIdRoute: typeof AuthenticatedCommunityGroupIdRoute
+}
+
+const AuthenticatedCommunityRouteChildren: AuthenticatedCommunityRouteChildren =
+  {
+    AuthenticatedCommunityGroupIdRoute: AuthenticatedCommunityGroupIdRoute,
+  }
+
+const AuthenticatedCommunityRouteWithChildren =
+  AuthenticatedCommunityRoute._addFileChildren(
+    AuthenticatedCommunityRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCommunityRoute: typeof AuthenticatedCommunityRouteWithChildren
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedIdentifyRoute: typeof AuthenticatedIdentifyRoute
+  AuthenticatedLabsRoute: typeof AuthenticatedLabsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedSyllabusRoute: typeof AuthenticatedSyllabusRoute
+  AuthenticatedTestsRoute: typeof AuthenticatedTestsRoute
+  AuthenticatedTutorRoute: typeof AuthenticatedTutorRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCommunityRoute: AuthenticatedCommunityRouteWithChildren,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedIdentifyRoute: AuthenticatedIdentifyRoute,
+  AuthenticatedLabsRoute: AuthenticatedLabsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedSyllabusRoute: AuthenticatedSyllabusRoute,
+  AuthenticatedTestsRoute: AuthenticatedTestsRoute,
+  AuthenticatedTutorRoute: AuthenticatedTutorRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
