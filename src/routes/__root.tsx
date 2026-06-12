@@ -82,11 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "HAM PRO — All-in-one learning, from primary to university" },
       { name: "description", content: "HAM PRO is an AI-powered learning hub with a tutor chatbot, interactive labs, identify-with-camera notes, syllabuses including Zambian, tests and community study groups." },
       { name: "author", content: "Josiah Brian Chirambo" },
-      { property: "og:title", content: "HAM PRO — All-in-one learning" },
-      { property: "og:description", content: "AI tutor, labs, identify, syllabuses & study groups. Built by Josiah Brian Chirambo." },
+      { property: "og:title", content: "HAM PRO — All-in-one learning, from primary to university" },
+      { property: "og:description", content: "HAM PRO is an AI-powered learning hub with a tutor chatbot, interactive labs, identify-with-camera notes, syllabuses including Zambian, tests and community study groups." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "HAM PRO — All-in-one learning, from primary to university" },
+      { name: "twitter:description", content: "HAM PRO is an AI-powered learning hub with a tutor chatbot, interactive labs, identify-with-camera notes, syllabuses including Zambian, tests and community study groups." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d6f16f46-f8d8-4520-a5c3-76da01d3da8a/id-preview-80213e6a--87d10780-7221-4c6e-a05b-df0133976625.lovable.app-1781291334039.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d6f16f46-f8d8-4520-a5c3-76da01d3da8a/id-preview-80213e6a--87d10780-7221-4c6e-a05b-df0133976625.lovable.app-1781291334039.png" },
     ],
     links: [
       {
