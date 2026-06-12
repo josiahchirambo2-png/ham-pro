@@ -62,26 +62,31 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.75rem;
+  /* Nature theme — leaf greens, bark browns, sky */
+  --background: oklch(0.985 0.012 130);
+  --foreground: oklch(0.22 0.04 150);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.22 0.04 150);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --popover-foreground: oklch(0.22 0.04 150);
+  --primary: oklch(0.48 0.13 152);
+  --primary-foreground: oklch(0.985 0.012 130);
+  --primary-glow: oklch(0.66 0.16 145);
+  --secondary: oklch(0.94 0.04 130);
+  --secondary-foreground: oklch(0.32 0.07 152);
+  --muted: oklch(0.95 0.02 140);
+  --muted-foreground: oklch(0.45 0.04 150);
+  --accent: oklch(0.88 0.09 110);
+  --accent-foreground: oklch(0.22 0.06 150);
+  --destructive: oklch(0.6 0.2 28);
+  --destructive-foreground: oklch(0.985 0.012 130);
+  --border: oklch(0.88 0.03 140);
+  --input: oklch(0.92 0.02 140);
+  --ring: oklch(0.55 0.13 150);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.48 0.13 152), oklch(0.66 0.16 145));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.32 0.08 152), oklch(0.55 0.14 145));
+  --shadow-leaf: 0 12px 40px -12px oklch(0.48 0.13 152 / 0.35);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -98,25 +103,29 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.18 0.03 150);
+  --foreground: oklch(0.95 0.02 130);
+  --card: oklch(0.22 0.04 150);
+  --card-foreground: oklch(0.95 0.02 130);
+  --popover: oklch(0.22 0.04 150);
+  --popover-foreground: oklch(0.95 0.02 130);
+  --primary: oklch(0.7 0.16 145);
+  --primary-foreground: oklch(0.18 0.03 150);
+  --primary-glow: oklch(0.8 0.17 140);
+  --secondary: oklch(0.28 0.05 150);
+  --secondary-foreground: oklch(0.95 0.02 130);
+  --muted: oklch(0.26 0.04 150);
+  --muted-foreground: oklch(0.7 0.03 140);
+  --accent: oklch(0.4 0.1 130);
+  --accent-foreground: oklch(0.95 0.02 130);
+  --destructive: oklch(0.65 0.2 28);
+  --destructive-foreground: oklch(0.95 0.02 130);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.7 0.16 145);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.4 0.12 152), oklch(0.65 0.16 145));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.2 0.05 152), oklch(0.4 0.12 145));
+  --shadow-leaf: 0 12px 40px -12px oklch(0 0 0 / 0.6);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
