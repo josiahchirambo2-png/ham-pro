@@ -23,8 +23,8 @@ function Tutor() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 flex flex-col" style={{ minHeight: "calc(100dvh - 56px - 60px)" }}>
-      <h1 className="text-2xl font-bold flex items-center gap-2"><Bot className="text-primary" /> AI Tutor</h1>
-      <p className="text-sm text-muted-foreground">Created by Josiah Brian Chirambo · Ask anything from grade 1 to university.</p>
+      <h1 className="text-2xl font-bold flex items-center gap-2"><Bot className="text-primary" /> HAM — Your AI Tutor</h1>
+      <p className="text-sm text-muted-foreground">HAM, created by Josiah Brian Chirambo · Ask anything from grade 1 to university.</p>
       <div className="flex-1 mt-4 space-y-4 overflow-y-auto pr-1">
         {messages.length === 0 && (
           <div className="text-sm text-muted-foreground border border-dashed rounded-xl p-6 text-center">
