@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 });
 
 const TILES = [
-  { to: "/tutor", icon: Bot, title: "AI Tutor", desc: "Ask anything, get clear step-by-step answers." },
+  { to: "/tutor", icon: Bot, title: "HAM — AI Tutor", desc: "Ask HAM anything, get clear step-by-step answers." },
   { to: "/identify", icon: Camera, title: "Identify & Notes", desc: "Photo → instant explanation and downloadable notes." },
   { to: "/syllabus", icon: BookOpen, title: "Syllabuses", desc: "Zambian (ECZ), Cambridge, IB, Common Core & more." },
   { to: "/tests", icon: GraduationCap, title: "Tests", desc: "Generate practice tests by subject and level." },
