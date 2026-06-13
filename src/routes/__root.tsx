@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { InstallPrompt } from "@/components/install-prompt";
 
 function NotFoundComponent() {
   return (
@@ -91,12 +92,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "HAM PRO is an AI-powered learning hub with a tutor chatbot, interactive labs, identify-with-camera notes, syllabuses including Zambian, tests and community study groups." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d6f16f46-f8d8-4520-a5c3-76da01d3da8a/id-preview-80213e6a--87d10780-7221-4c6e-a05b-df0133976625.lovable.app-1781291334039.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d6f16f46-f8d8-4520-a5c3-76da01d3da8a/id-preview-80213e6a--87d10780-7221-4c6e-a05b-df0133976625.lovable.app-1781291334039.png" },
+      { name: "theme-color", content: "#0e1f17" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "HAM PRO" },
+      { name: "mobile-web-app-capable", content: "yes" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -136,6 +145,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Toaster richColors position="top-center" />
+      <InstallPrompt />
     </QueryClientProvider>
   );
 }

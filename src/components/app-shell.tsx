@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const NAV = [
   { to: "/dashboard", label: "Home" },
-  { to: "/tutor", label: "AI Tutor" },
+  { to: "/tutor", label: "HAM Tutor" },
   { to: "/identify", label: "Identify" },
   { to: "/syllabus", label: "Syllabus" },
   { to: "/tests", label: "Tests" },
