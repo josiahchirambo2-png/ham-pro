@@ -14,10 +14,43 @@ export type Database = {
   }
   public: {
     Tables: {
+      group_members: {
+        Row: {
+          added_by: string | null
+          created_at: string
+          group_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string
+          group_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string
+          group_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "study_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       group_messages: {
         Row: {
           content: string
           created_at: string
+          edited_at: string | null
           group_id: string
           id: string
           user_id: string
@@ -25,6 +58,7 @@ export type Database = {
         Insert: {
           content: string
           created_at?: string
+          edited_at?: string | null
           group_id: string
           id?: string
           user_id: string
@@ -32,6 +66,7 @@ export type Database = {
         Update: {
           content?: string
           created_at?: string
+          edited_at?: string | null
           group_id?: string
           id?: string
           user_id?: string
@@ -112,6 +147,7 @@ export type Database = {
           created_by: string | null
           description: string | null
           id: string
+          is_private: boolean
           name: string
           subject: string | null
         }
@@ -120,6 +156,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          is_private?: boolean
           name: string
           subject?: string | null
         }
@@ -128,6 +165,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          is_private?: boolean
           name?: string
           subject?: string | null
         }
@@ -168,7 +206,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_access_group: {
+        Args: { _group_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_group_member: {
+        Args: { _group_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
