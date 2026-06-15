@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { identifyImage } from "@/lib/identify.functions";
 import { useServerFn } from "@tanstack/react-start";
 import { Camera, Upload, Download, Loader2 } from "lucide-react";
+import { Save } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/identify")({
   head: () => ({ meta: [{ title: "Identify — HAM PRO" }] }),
@@ -46,6 +48,17 @@ function Identify() {
     URL.revokeObjectURL(url);
   }
 
+  async function saveToNotes() {
+    if (!result) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return toast.error("Sign in to save notes");
+    const { error } = await supabase.from("notes").insert({
+      user_id: user.id, title: result.title, subject: null, syllabus, content: result.notes, source: "identify",
+    });
+    if (error) return toast.error(error.message);
+    toast.success("Saved to My Notes");
+  }
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="text-3xl font-bold">Identify & get notes</h1>
@@ -82,7 +95,10 @@ function Identify() {
             <>
               <div className="flex items-start justify-between gap-3">
                 <h2 className="text-xl font-semibold">{result.title}</h2>
-                <Button size="sm" onClick={download}><Download className="size-4" /> Download .md</Button>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" onClick={saveToNotes}><Save className="size-4" /> Save</Button>
+                  <Button size="sm" onClick={download}><Download className="size-4" /> .md</Button>
+                </div>
               </div>
               <div className="prose prose-sm dark:prose-invert max-w-none mt-3">
                 <ReactMarkdown>{result.notes}</ReactMarkdown>
