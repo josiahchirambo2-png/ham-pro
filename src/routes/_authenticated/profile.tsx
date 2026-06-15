@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { Camera } from "lucide-react";
+import { setThemeFromLevel } from "@/components/theme-provider";
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({ meta: [{ title: "Profile — HAM PRO" }] }),
@@ -46,7 +47,9 @@ function Profile() {
   async function save() {
     if (!userId) return;
     const { error } = await supabase.from("profiles").update({ display_name: name, education_level: level, syllabus, bio, avatar_url: avatarPath, updated_at: new Date().toISOString() }).eq("id", userId);
-    if (error) toast.error(error.message); else toast.success("Profile saved");
+    if (error) { toast.error(error.message); return; }
+    setThemeFromLevel(level);
+    toast.success("Profile saved");
   }
 
   async function uploadAvatar(e: React.ChangeEvent<HTMLInputElement>) {
@@ -83,7 +86,9 @@ function Profile() {
         <div><Label>Bio</Label><Textarea value={bio} onChange={(e) => setBio(e.target.value)} rows={3} /></div>
         <Button onClick={save} className="w-full">Save profile</Button>
       </div>
-      <p className="mt-4 text-center text-xs text-muted-foreground">HAM PRO — created by Josiah Brian Chirambo</p>
+      <p className="mt-4 text-center text-[11px] text-muted-foreground/70">
+        Your theme changes automatically based on your education level — primary → Graphic, secondary → Space, university → Custom. Default is Nature.
+      </p>
     </div>
   );
 }

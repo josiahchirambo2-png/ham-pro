@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bot, Camera, FlaskConical, BookOpen, GraduationCap, Users, User } from "lucide-react";
+import { Bot, Camera, FlaskConical, BookOpen, GraduationCap, Users, User, NotebookPen } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
@@ -9,6 +9,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 const TILES = [
   { to: "/tutor", icon: Bot, title: "HAM — AI Tutor", desc: "Ask HAM anything, get clear step-by-step answers." },
   { to: "/identify", icon: Camera, title: "Identify & Notes", desc: "Photo → instant explanation and downloadable notes." },
+  { to: "/notes", icon: NotebookPen, title: "My Notes", desc: "Saved notes you can search and use offline." },
   { to: "/syllabus", icon: BookOpen, title: "Syllabuses", desc: "Zambian (ECZ), Cambridge, IB, Common Core & more." },
   { to: "/tests", icon: GraduationCap, title: "Tests", desc: "Generate practice tests by subject and level." },
   { to: "/labs", icon: FlaskConical, title: "Interactive Labs", desc: "50+ science, math & computing simulations." },

@@ -10,6 +10,7 @@ const NAV = [
   { to: "/dashboard", label: "Home" },
   { to: "/tutor", label: "HAM Tutor" },
   { to: "/identify", label: "Identify" },
+  { to: "/notes", label: "Notes" },
   { to: "/syllabus", label: "Syllabus" },
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
@@ -78,8 +79,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground">
-        HAM PRO · Created by <span className="font-semibold text-foreground">Josiah Brian Chirambo</span>
+      <footer className="border-t border-border py-4 text-center text-[11px] text-muted-foreground/80">
+        HAM PRO © Josiah Brian Chirambo
       </footer>
     </div>
   );
