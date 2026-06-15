@@ -22,8 +22,9 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/dashboard", replace: true });
+    // Fast-path: skip the auth screen entirely if there's already a session.
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) navigate({ to: "/dashboard", replace: true });
     });
   }, [navigate]);
 
@@ -96,7 +97,7 @@ function AuthPage() {
             <div className="h-px flex-1 bg-border" /> or <div className="h-px flex-1 bg-border" />
           </div>
           <Button variant="outline" className="w-full" onClick={google}>Continue with Google</Button>
-          <p className="mt-6 text-xs text-center text-muted-foreground">By continuing you agree to use HAM PRO responsibly. App created by Josiah Brian Chirambo.</p>
+          <p className="mt-6 text-[11px] text-center text-muted-foreground/70">By continuing you agree to use HAM PRO responsibly.</p>
         </div>
       </div>
     </div>

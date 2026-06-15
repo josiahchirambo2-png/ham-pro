@@ -141,6 +141,87 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+/* === Per-level themes (override on top of .dark) === */
+
+/* Graphic — playful, bright, for under-13s */
+.theme-graphic.dark, .theme-graphic {
+  --background: oklch(0.22 0.05 280);
+  --foreground: oklch(0.98 0.02 90);
+  --card: oklch(0.28 0.08 290);
+  --card-foreground: oklch(0.98 0.02 90);
+  --popover: oklch(0.28 0.08 290);
+  --popover-foreground: oklch(0.98 0.02 90);
+  --primary: oklch(0.78 0.2 50);
+  --primary-foreground: oklch(0.15 0.03 290);
+  --secondary: oklch(0.65 0.22 340);
+  --secondary-foreground: oklch(0.98 0.02 90);
+  --muted: oklch(0.3 0.07 290);
+  --muted-foreground: oklch(0.85 0.05 90);
+  --accent: oklch(0.75 0.2 180);
+  --accent-foreground: oklch(0.15 0.03 290);
+  --border: oklch(1 0 0 / 18%);
+  --input: oklch(1 0 0 / 20%);
+  --ring: oklch(0.78 0.2 50);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.78 0.2 50), oklch(0.65 0.22 340));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.55 0.22 340), oklch(0.78 0.2 50));
+  --shadow-leaf: 0 12px 40px -12px oklch(0.65 0.22 340 / 0.5);
+}
+
+/* Space — deep dark cosmos, neon cyan/violet, for secondary */
+.theme-space.dark, .theme-space {
+  --background: oklch(0.13 0.04 270);
+  --foreground: oklch(0.96 0.02 240);
+  --card: oklch(0.18 0.05 270);
+  --card-foreground: oklch(0.96 0.02 240);
+  --popover: oklch(0.18 0.05 270);
+  --popover-foreground: oklch(0.96 0.02 240);
+  --primary: oklch(0.72 0.18 250);
+  --primary-foreground: oklch(0.1 0.03 270);
+  --secondary: oklch(0.25 0.07 280);
+  --secondary-foreground: oklch(0.96 0.02 240);
+  --muted: oklch(0.22 0.05 270);
+  --muted-foreground: oklch(0.72 0.04 250);
+  --accent: oklch(0.6 0.22 310);
+  --accent-foreground: oklch(0.96 0.02 240);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.72 0.18 250);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.45 0.2 280), oklch(0.72 0.18 250));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.18 0.07 270), oklch(0.4 0.18 290));
+  --shadow-leaf: 0 12px 40px -12px oklch(0.5 0.2 280 / 0.55);
+}
+
+/* Custom — elegant slate/amber, for university */
+.theme-custom.dark, .theme-custom {
+  --background: oklch(0.16 0.01 250);
+  --foreground: oklch(0.96 0.01 90);
+  --card: oklch(0.21 0.015 250);
+  --card-foreground: oklch(0.96 0.01 90);
+  --popover: oklch(0.21 0.015 250);
+  --popover-foreground: oklch(0.96 0.01 90);
+  --primary: oklch(0.75 0.15 75);
+  --primary-foreground: oklch(0.18 0.02 250);
+  --secondary: oklch(0.26 0.02 250);
+  --secondary-foreground: oklch(0.96 0.01 90);
+  --muted: oklch(0.24 0.015 250);
+  --muted-foreground: oklch(0.72 0.02 90);
+  --accent: oklch(0.55 0.12 50);
+  --accent-foreground: oklch(0.96 0.01 90);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.75 0.15 75);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.55 0.12 50), oklch(0.75 0.15 75));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.2 0.02 250), oklch(0.45 0.1 60));
+  --shadow-leaf: 0 12px 40px -12px oklch(0.4 0.05 60 / 0.55);
+}
+
+/* Thinking dots animation */
+@keyframes ham-think {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+.ham-think-dot { animation: ham-think 1.2s ease-in-out infinite; }
+
 @layer base {
   * {
     border-color: var(--color-border);

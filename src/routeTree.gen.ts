@@ -17,6 +17,7 @@ import { Route as AuthenticatedTutorRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedTestsRouteImport } from './routes/_authenticated/tests'
 import { Route as AuthenticatedSyllabusRouteImport } from './routes/_authenticated/syllabus'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedNotesRouteImport } from './routes/_authenticated/notes'
 import { Route as AuthenticatedLabsRouteImport } from './routes/_authenticated/labs'
 import { Route as AuthenticatedIdentifyRouteImport } from './routes/_authenticated/identify'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -62,6 +63,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotesRoute = AuthenticatedNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLabsRoute = AuthenticatedLabsRouteImport.update({
   id: '/labs',
   path: '/labs',
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/identify': typeof AuthenticatedIdentifyRoute
   '/labs': typeof AuthenticatedLabsRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/syllabus': typeof AuthenticatedSyllabusRoute
   '/tests': typeof AuthenticatedTestsRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/identify': typeof AuthenticatedIdentifyRoute
   '/labs': typeof AuthenticatedLabsRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/syllabus': typeof AuthenticatedSyllabusRoute
   '/tests': typeof AuthenticatedTestsRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/identify': typeof AuthenticatedIdentifyRoute
   '/_authenticated/labs': typeof AuthenticatedLabsRoute
+  '/_authenticated/notes': typeof AuthenticatedNotesRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/syllabus': typeof AuthenticatedSyllabusRoute
   '/_authenticated/tests': typeof AuthenticatedTestsRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/identify'
     | '/labs'
+    | '/notes'
     | '/profile'
     | '/syllabus'
     | '/tests'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/identify'
     | '/labs'
+    | '/notes'
     | '/profile'
     | '/syllabus'
     | '/tests'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/identify'
     | '/_authenticated/labs'
+    | '/_authenticated/notes'
     | '/_authenticated/profile'
     | '/_authenticated/syllabus'
     | '/_authenticated/tests'
@@ -244,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notes': {
+      id: '/_authenticated/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AuthenticatedNotesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/labs': {
       id: '/_authenticated/labs'
       path: '/labs'
@@ -301,6 +320,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedIdentifyRoute: typeof AuthenticatedIdentifyRoute
   AuthenticatedLabsRoute: typeof AuthenticatedLabsRoute
+  AuthenticatedNotesRoute: typeof AuthenticatedNotesRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedSyllabusRoute: typeof AuthenticatedSyllabusRoute
   AuthenticatedTestsRoute: typeof AuthenticatedTestsRoute
@@ -312,6 +332,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedIdentifyRoute: AuthenticatedIdentifyRoute,
   AuthenticatedLabsRoute: AuthenticatedLabsRoute,
+  AuthenticatedNotesRoute: AuthenticatedNotesRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedSyllabusRoute: AuthenticatedSyllabusRoute,
   AuthenticatedTestsRoute: AuthenticatedTestsRoute,
