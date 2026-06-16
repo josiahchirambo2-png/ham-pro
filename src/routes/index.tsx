@@ -7,8 +7,8 @@ import { Bot, Camera, FlaskConical, BookOpen, Users, GraduationCap, Sparkles } f
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HAM PRO — Learn from primary to university, naturally" },
-      { name: "description", content: "AI tutor, 50+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups — all in one nature-themed learning hub." },
+      { title: "HAM PRO — Offline-ready AI learning, primary to university" },
+      { name: "description", content: "HAM PRO is an installable offline-ready AI learning app: HAM voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and private study groups." },
     ],
   }),
   component: Landing,
@@ -32,13 +32,13 @@ function Landing() {
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.18 0.05 150 / 0.55), oklch(0.18 0.05 150 / 0.9))" }} />
         <div className="relative mx-auto max-w-5xl px-4 py-24 md:py-36 text-center" style={{ color: "oklch(0.97 0.02 130)" }}>
           <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">
-            <Sparkles className="size-3.5" /> Nature-themed learning for every age
+            <Sparkles className="size-3.5" /> Installable · Voice-controlled · Works offline
           </div>
           <h1 className="mt-6 text-4xl md:text-6xl font-bold tracking-tight">
             Grow your mind with <span style={{ background: "var(--gradient-leaf)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>HAM PRO</span>
           </h1>
           <p className="mt-5 text-base md:text-lg max-w-2xl mx-auto opacity-90">
-            An all-in-one education app from primary school through university. AI tutor, interactive labs, photo identification with downloadable notes, multiple syllabuses including the Zambian curriculum, tests and live study groups.
+            An all-in-one learning app from primary school through university. Meet HAM — your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg"><Link to="/auth">Start learning free</Link></Button>
@@ -50,7 +50,7 @@ function Landing() {
 
       <section className="mx-auto max-w-6xl px-4 py-20">
         <h2 className="text-3xl font-bold text-center">Everything you need to learn</h2>
-        <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto">Built for primary, secondary and tertiary students — works beautifully on phones, tablets and desktops.</p>
+        <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto">Built for primary, secondary and university students — themes adapt to your level and the whole app installs to your phone, tablet or desktop.</p>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {FEATURES.map((f) => (
             <div key={f.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-[var(--shadow-leaf)] transition-shadow">
@@ -72,10 +72,10 @@ function Landing() {
 }
 
 const FEATURES = [
-  { icon: Bot, title: "AI Tutor chatbot", desc: "Ask anything, get clear step-by-step explanations from an AI tutor trained for school." },
-  { icon: FlaskConical, title: "50+ interactive labs", desc: "Hands-on simulations across physics, chemistry, biology, math and computing." },
-  { icon: Camera, title: "Identify with camera", desc: "Snap a photo or upload one — instantly get an explanation and downloadable notes." },
-  { icon: BookOpen, title: "Multiple syllabuses", desc: "Browse Zambian (ECZ), Cambridge, IB, common-core and university-level topics." },
-  { icon: GraduationCap, title: "Tests & quizzes", desc: "Generate practice tests by topic and grade level, then track your scores." },
-  { icon: Users, title: "Study groups", desc: "Chat live with classmates around the world in subject-based study rooms." },
+  { icon: Bot, title: "HAM — voice AI tutor", desc: "Talk to HAM with your voice, hear answers spoken back, adjust speed and voice gender. Quick voice commands like 'send' and 'stop'." },
+  { icon: FlaskConical, title: "60+ interactive labs", desc: "Hands-on physics, chemistry, biology, math and computing simulations — every lab is open and runs on-device." },
+  { icon: Camera, title: "Identify with camera", desc: "Snap or upload a photo and instantly get an explanation plus downloadable study notes." },
+  { icon: BookOpen, title: "Syllabus library", desc: "Browse Zambian (ECZ), Cambridge, IB, common-core and university-level topics, all in one place." },
+  { icon: GraduationCap, title: "Tests — even offline", desc: "Pick your own number of questions. Online uses AI; offline falls back to a built-in question bank automatically." },
+  { icon: Users, title: "Safe study groups", desc: "Chat live with classmates, edit messages after sending, and create private rooms for friends and family." },
 ];
