@@ -15,6 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { InstallPrompt } from "@/components/install-prompt";
 import { ThemeProvider } from "@/components/theme-provider";
+import { registerHamProSW } from "@/lib/pwa-register";
 
 function NotFoundComponent() {
   return (
@@ -140,6 +141,7 @@ function RootComponent() {
     });
     return () => sub.subscription.unsubscribe();
   }, [queryClient, router]);
+  useEffect(() => { void registerHamProSW(); }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
