@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { Lab3D } from "@/components/lab-3d";
 
 export type Param = { key: string; label: string; min: number; max: number; step?: number; unit?: string; default: number };
 export type LabConfig = {
@@ -46,11 +47,9 @@ export function LabSimulator({ config }: { config: LabConfig }) {
         )}
       </div>
       <div className="rounded-xl border bg-muted/40 p-4">
-        {config.render && (
-          <div className="aspect-video rounded-lg bg-background/60 mb-3 overflow-hidden flex items-center justify-center">
-            {config.render(values)}
-          </div>
-        )}
+        <div className="aspect-video rounded-lg bg-background/60 mb-3 overflow-hidden flex items-center justify-center relative">
+          {config.render ? config.render(values) : <Lab3D title={config.title} subject={config.subject} params={values} />}
+        </div>
         <div className="space-y-2">
           {outputs.map((o, i) => (
             <div key={i} className="flex items-center justify-between gap-3 text-sm rounded-lg bg-background/50 px-3 py-2">

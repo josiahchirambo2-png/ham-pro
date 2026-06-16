@@ -206,14 +206,17 @@ function Tutor() {
         })}
         {(status === "submitted" || status === "streaming") && (
           <div className="flex items-center gap-3">
-            <div className="size-8 rounded-full flex items-center justify-center" style={{ background: "var(--gradient-leaf)" }}>
-              <Bot className="size-4 text-white" />
+            <div className="ham-orb">
+              <div className="ring r1" />
+              <div className="ring r2" />
+              <div className="ring r3" />
+              <div className="core" />
+              <div className="spark s1" />
+              <div className="spark s2" />
+              <div className="spark s3" />
             </div>
-            <div className="flex items-center gap-1 px-3 py-2 rounded-2xl bg-muted/60">
-              <span className="size-2 rounded-full bg-primary ham-think-dot" style={{ animationDelay: "0s" }} />
-              <span className="size-2 rounded-full bg-primary ham-think-dot" style={{ animationDelay: "0.15s" }} />
-              <span className="size-2 rounded-full bg-primary ham-think-dot" style={{ animationDelay: "0.3s" }} />
-              <span className="ml-2 text-xs text-muted-foreground">HAM is thinking…</span>
+            <div className="px-3 py-2 rounded-2xl bg-muted/60">
+              <span className="text-xs font-medium ham-think-text">HAM is thinking…</span>
             </div>
           </div>
         )}
