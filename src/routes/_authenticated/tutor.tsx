@@ -149,7 +149,7 @@ function Tutor() {
       <div className="flex items-start justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2"><Bot className="text-primary" /> HAM — Your AI Tutor</h1>
-          <p className="text-sm text-muted-foreground">Ask anything from grade 1 to university.</p>
+          <p className="text-sm text-muted-foreground">Ask anything from grade 1 to university. Voice commands: "send", "stop", "mute", "faster", "slower", "male voice", "female voice".</p>
         </div>
         <div className="flex items-center gap-1">
           <Button size="icon" variant="ghost" onClick={() => { stopSpeaking(); setPref((p) => ({ ...p, enabled: !p.enabled })); }} title={pref.enabled ? "Mute HAM" : "Let HAM speak"}>
