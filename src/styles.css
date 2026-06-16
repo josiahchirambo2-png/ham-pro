@@ -215,12 +215,164 @@
   --shadow-leaf: 0 12px 40px -12px oklch(0.4 0.05 60 / 0.55);
 }
 
-/* Thinking dots animation */
-@keyframes ham-think {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-  40% { transform: scale(1); opacity: 1; }
+/* ===== HAM thinking — orbiting neural orb ===== */
+.ham-orb {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  perspective: 200px;
+  transform-style: preserve-3d;
 }
-.ham-think-dot { animation: ham-think 1.2s ease-in-out infinite; }
+.ham-orb .core {
+  position: absolute; inset: 35%;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, oklch(0.95 0.05 75), oklch(0.65 0.18 60));
+  box-shadow: 0 0 14px oklch(0.75 0.18 60 / 0.9), 0 0 28px oklch(0.7 0.18 60 / 0.5);
+  animation: ham-pulse 1.4s ease-in-out infinite;
+}
+.ham-orb .ring {
+  position: absolute; inset: 0;
+  border-radius: 9999px;
+  border: 1.5px solid oklch(0.75 0.15 75 / 0.7);
+  box-shadow: inset 0 0 8px oklch(0.75 0.15 75 / 0.25);
+}
+.ham-orb .ring.r1 { animation: ham-ring1 2.4s linear infinite; }
+.ham-orb .ring.r2 { animation: ham-ring2 2.8s linear infinite; border-color: oklch(0.7 0.18 200 / 0.7); }
+.ham-orb .ring.r3 { animation: ham-ring3 3.2s linear infinite; border-color: oklch(0.8 0.15 130 / 0.7); }
+.ham-orb .spark {
+  position: absolute; top: 50%; left: 50%;
+  width: 4px; height: 4px; border-radius: 9999px;
+  background: oklch(0.95 0.08 75);
+  box-shadow: 0 0 6px oklch(0.85 0.18 75);
+  margin: -2px 0 0 -2px;
+  transform-origin: 0 0;
+}
+.ham-orb .spark.s1 { animation: ham-spark1 1.6s ease-in-out infinite; }
+.ham-orb .spark.s2 { animation: ham-spark2 1.6s ease-in-out infinite .35s; }
+.ham-orb .spark.s3 { animation: ham-spark3 1.6s ease-in-out infinite .7s; }
+@keyframes ham-pulse {
+  0%, 100% { transform: scale(0.85); filter: brightness(0.95); }
+  50% { transform: scale(1.15); filter: brightness(1.25); }
+}
+@keyframes ham-ring1 { from { transform: rotateY(0deg) rotateX(65deg); } to { transform: rotateY(360deg) rotateX(65deg); } }
+@keyframes ham-ring2 { from { transform: rotateX(0deg) rotateZ(60deg); } to { transform: rotateX(360deg) rotateZ(60deg); } }
+@keyframes ham-ring3 { from { transform: rotateZ(0deg) rotateY(45deg); } to { transform: rotateZ(360deg) rotateY(45deg); } }
+@keyframes ham-spark1 { 0% { transform: rotate(0) translateX(22px) scale(0.4); opacity: 0; } 40% { opacity: 1; } 100% { transform: rotate(360deg) translateX(22px) scale(1); opacity: 0; } }
+@keyframes ham-spark2 { 0% { transform: rotate(120deg) translateX(22px) scale(0.4); opacity: 0; } 40% { opacity: 1; } 100% { transform: rotate(480deg) translateX(22px) scale(1); opacity: 0; } }
+@keyframes ham-spark3 { 0% { transform: rotate(240deg) translateX(22px) scale(0.4); opacity: 0; } 40% { opacity: 1; } 100% { transform: rotate(600deg) translateX(22px) scale(1); opacity: 0; } }
+.ham-think-text { background: linear-gradient(90deg, oklch(0.7 0.05 130), oklch(0.85 0.15 75), oklch(0.7 0.05 130)); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: ham-shimmer 2s linear infinite; }
+@keyframes ham-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* ===== Lab 3D scenes ===== */
+.lab3d-stage { width: 100%; height: 100%; perspective: 700px; display: flex; align-items: center; justify-content: center; }
+.lab3d-world { width: 100%; height: 100%; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; position: relative; }
+/* Atom */
+.lab3d-atom { width: 140px; height: 140px; position: relative; transform-style: preserve-3d; animation: spin-y 12s linear infinite; }
+.lab3d-nucleus { position: absolute; inset: 42%; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.95 0.08 75), oklch(0.55 0.2 60)); box-shadow: 0 0 14px oklch(0.7 0.18 60 / 0.7); }
+.lab3d-orbit { position: absolute; inset: 0; border-radius: 9999px; border: 1.5px solid oklch(0.75 0.15 75 / 0.6); }
+.lab3d-orbit span { position: absolute; top: 50%; left: -4px; width: 8px; height: 8px; border-radius: 9999px; background: oklch(0.85 0.18 200); box-shadow: 0 0 8px oklch(0.7 0.2 200); }
+.lab3d-o1 { transform: rotateX(70deg); animation: spin-y 3s linear infinite; }
+.lab3d-o2 { transform: rotateX(70deg) rotateY(60deg); animation: spin-y 4s linear infinite reverse; border-color: oklch(0.7 0.18 200 / 0.6); }
+.lab3d-o3 { transform: rotateX(70deg) rotateY(-60deg); animation: spin-y 5s linear infinite; border-color: oklch(0.8 0.15 130 / 0.6); }
+/* Pendulum */
+.lab3d-pend { position: relative; width: 200px; height: 180px; }
+.lab3d-pend-pivot { position: absolute; top: 8px; left: 50%; width: 14px; height: 14px; border-radius: 9999px; background: oklch(0.7 0.05 60); transform: translateX(-50%); box-shadow: 0 4px 8px oklch(0 0 0 / 0.4); }
+.lab3d-pend-arm { position: absolute; top: 14px; left: 50%; width: 2px; height: var(--len, 100px); transform-origin: top center; animation: pend var(--spd, 1.6s) ease-in-out infinite alternate; }
+.lab3d-pend-rope { width: 2px; height: 100%; background: oklch(0.85 0 0 / 0.7); }
+.lab3d-pend-bob { position: absolute; bottom: -10px; left: 50%; width: 22px; height: 22px; margin-left: -11px; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.85 0.1 75), oklch(0.45 0.15 60)); box-shadow: 0 6px 12px oklch(0 0 0 / 0.4), inset -2px -3px 6px oklch(0 0 0 / 0.4); }
+@keyframes pend { from { transform: rotate(-32deg); } to { transform: rotate(32deg); } }
+/* Circuit */
+.lab3d-circuit { position: relative; width: 200px; height: 130px; }
+.lab3d-battery { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 26px; height: 56px; border-radius: 4px; background: linear-gradient(180deg, oklch(0.85 0.1 75), oklch(0.55 0.15 60)); box-shadow: inset 0 0 4px oklch(0 0 0 / 0.5); }
+.lab3d-battery::after { content: "+"; color: oklch(0.2 0 0); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+.lab3d-wire { position: absolute; background: oklch(0.75 0.15 75); border-radius: 2px; }
+.lab3d-wire-top { left: 20px; right: 20px; top: 10px; height: 3px; }
+.lab3d-wire-bottom { left: 20px; right: 20px; bottom: 10px; height: 3px; }
+.lab3d-wire-left { left: 20px; top: 10px; bottom: 10px; width: 3px; }
+.lab3d-wire-right { right: 20px; top: 10px; bottom: 10px; width: 3px; }
+.lab3d-bulb { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.98 0.1 90), oklch(0.7 0.18 75)); box-shadow: 0 0 18px oklch(0.85 0.18 75 / 0.8); animation: bulb 1.6s ease-in-out infinite; }
+@keyframes bulb { 0%, 100% { box-shadow: 0 0 10px oklch(0.85 0.18 75 / 0.5); } 50% { box-shadow: 0 0 26px oklch(0.9 0.2 75); } }
+.lab3d-electrons { position: absolute; inset: 0; }
+.lab3d-electrons span { position: absolute; width: 6px; height: 6px; border-radius: 9999px; background: oklch(0.85 0.18 200); box-shadow: 0 0 6px oklch(0.7 0.2 200); offset-path: path("M20,10 L180,10 L180,120 L20,120 Z"); animation: electron 3s linear infinite; }
+@keyframes electron { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+/* Projectile */
+.lab3d-proj { position: relative; width: 220px; height: 140px; }
+.lab3d-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: oklch(0.55 0.05 130); border-radius: 2px; }
+.lab3d-cannon { position: absolute; left: 12px; bottom: 4px; width: 40px; height: 10px; background: linear-gradient(90deg, oklch(0.5 0.05 60), oklch(0.7 0.08 60)); border-radius: 4px; transform-origin: left bottom; }
+.lab3d-ball { position: absolute; left: 12px; bottom: 8px; width: 10px; height: 10px; border-radius: 9999px; background: oklch(0.85 0.15 75); box-shadow: 0 0 8px oklch(0.7 0.18 75); animation: launch 2.4s ease-out infinite; }
+@keyframes launch { 0% { transform: translate(0,0); } 50% { transform: translate(90px, -90px); } 100% { transform: translate(180px, 0); opacity: 0; } }
+/* Wave */
+.lab3d-wave { width: 100%; height: 100%; }
+/* Molecule (water-like) */
+.lab3d-mol { width: 160px; height: 140px; transform-style: preserve-3d; }
+.lab3d-mol-spin { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; animation: spin-y 8s linear infinite; }
+.lab3d-mol-atom { position: absolute; border-radius: 9999px; box-shadow: inset -3px -4px 8px oklch(0 0 0 / 0.4), 0 0 10px oklch(0 0 0 / 0.3); }
+.lab3d-mol-o { width: 56px; height: 56px; left: 50%; top: 30%; transform: translate(-50%, -50%); background: radial-gradient(circle at 30% 30%, oklch(0.9 0.1 25), oklch(0.45 0.2 25)); }
+.lab3d-mol-h1 { width: 32px; height: 32px; left: 16%; top: 70%; background: radial-gradient(circle at 30% 30%, oklch(0.95 0 0), oklch(0.65 0 0)); }
+.lab3d-mol-h2 { width: 32px; height: 32px; right: 16%; top: 70%; background: radial-gradient(circle at 30% 30%, oklch(0.95 0 0), oklch(0.65 0 0)); }
+.lab3d-mol-bond { position: absolute; left: 40%; top: 50%; width: 50px; height: 4px; background: oklch(0.75 0 0); border-radius: 2px; transform: rotate(50deg); transform-origin: left center; }
+.lab3d-mol-bond-2 { left: 60%; transform: rotate(130deg); }
+.lab3d-mol-c { display: none; }
+/* Beaker */
+.lab3d-beaker { width: 110px; height: 140px; position: relative; }
+.lab3d-beaker-glass { position: absolute; inset: 0; border: 2px solid oklch(0.85 0 0 / 0.5); border-top: none; border-radius: 0 0 14px 14px; background: linear-gradient(180deg, transparent 30%, oklch(0.95 0 0 / 0.05)); overflow: hidden; }
+.lab3d-liquid { position: absolute; left: 0; right: 0; bottom: 0; height: 65%; background: linear-gradient(180deg, oklch(0.7 0.18 200 / 0.85), oklch(0.45 0.2 220)); }
+.lab3d-liquid::before { content: ""; position: absolute; top: -6px; left: 0; right: 0; height: 12px; background: oklch(0.75 0.18 200 / 0.7); border-radius: 50%; animation: liquid 3s ease-in-out infinite; }
+@keyframes liquid { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+.lab3d-bubble { position: absolute; bottom: 5%; width: 8px; height: 8px; border-radius: 9999px; background: oklch(0.95 0.02 200 / 0.7); animation: bubble 2.4s ease-in infinite; }
+@keyframes bubble { 0% { transform: translateY(0) scale(0.6); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-90px) scale(1); opacity: 0; } }
+/* Cell */
+.lab3d-cell { width: 160px; height: 160px; border-radius: 9999px; position: relative; background: radial-gradient(circle at 30% 30%, oklch(0.85 0.08 130 / 0.6), oklch(0.45 0.1 150 / 0.6)); box-shadow: inset 0 0 30px oklch(0 0 0 / 0.4); animation: spin-y 18s linear infinite; }
+.lab3d-cell-membrane { position: absolute; inset: -3px; border-radius: 9999px; border: 2px dashed oklch(0.85 0.1 130 / 0.6); }
+.lab3d-cell-nucleus { position: absolute; inset: 32%; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.9 0.12 75), oklch(0.5 0.18 60)); box-shadow: inset -4px -6px 12px oklch(0 0 0 / 0.4); }
+.lab3d-organelle { position: absolute; width: 18px; height: 12px; border-radius: 9999px; background: oklch(0.8 0.12 200 / 0.8); top: calc(20% + var(--i) * 14%); left: calc(15% + var(--i) * 11%); }
+/* Planet */
+.lab3d-planet { width: 180px; height: 180px; position: relative; transform-style: preserve-3d; }
+.lab3d-sun { position: absolute; inset: 42%; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.98 0.12 90), oklch(0.7 0.2 60)); box-shadow: 0 0 26px oklch(0.85 0.2 75 / 0.9); }
+.lab3d-orbit-ring { position: absolute; inset: 0; border-radius: 9999px; border: 1.5px solid oklch(0.7 0.05 200 / 0.5); }
+.lab3d-or1 { transform: rotateX(70deg); animation: spin-y 6s linear infinite; }
+.lab3d-or2 { inset: 18%; transform: rotateX(70deg) rotateY(40deg); animation: spin-y 4s linear infinite reverse; border-color: oklch(0.7 0.18 200 / 0.5); }
+.lab3d-orbit-ring span { position: absolute; top: 50%; left: -6px; width: 12px; height: 12px; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.85 0.12 200), oklch(0.45 0.2 240)); box-shadow: 0 0 8px oklch(0.7 0.2 240); }
+.lab3d-or2 span { background: radial-gradient(circle at 30% 30%, oklch(0.85 0.1 25), oklch(0.5 0.2 25)); }
+/* Magnet */
+.lab3d-magnet { position: relative; width: 220px; height: 140px; display: flex; align-items: center; justify-content: center; }
+.lab3d-bar { width: 120px; height: 30px; border-radius: 4px; background: linear-gradient(90deg, oklch(0.55 0.2 25) 50%, oklch(0.55 0.05 250) 50%); box-shadow: 0 6px 10px oklch(0 0 0 / 0.4); position: relative; z-index: 2; }
+.lab3d-bar::before { content: "N"; position: absolute; left: 18%; top: 50%; transform: translate(-50%, -50%); color: white; font-weight: 700; font-size: 14px; }
+.lab3d-bar::after { content: "S"; position: absolute; left: 82%; top: 50%; transform: translate(-50%, -50%); color: white; font-weight: 700; font-size: 14px; }
+.lab3d-field { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Spring */
+.lab3d-spring { position: relative; width: 220px; height: 90px; display: flex; align-items: center; }
+.lab3d-spring-wall { width: 8px; height: 70px; background: oklch(0.55 0.03 60); border-radius: 2px; }
+.lab3d-spring-coil { flex: 1; height: 60px; animation: spring 1.4s ease-in-out infinite; transform-origin: left center; }
+@keyframes spring { 0%, 100% { transform: scaleX(0.85); } 50% { transform: scaleX(1.1); } }
+.lab3d-spring-mass { width: 36px; height: 36px; border-radius: 6px; background: radial-gradient(circle at 30% 30%, oklch(0.85 0.1 75), oklch(0.45 0.15 60)); box-shadow: 0 6px 10px oklch(0 0 0 / 0.4); animation: spring-mass 1.4s ease-in-out infinite; }
+@keyframes spring-mass { 0%, 100% { transform: translateX(-20px); } 50% { transform: translateX(15px); } }
+/* Lens */
+.lab3d-lens { position: relative; width: 220px; height: 120px; display: flex; align-items: center; justify-content: center; }
+.lab3d-lens-glass { width: 40px; height: 100px; border-radius: 50%; background: linear-gradient(90deg, oklch(0.85 0.08 200 / 0.4), oklch(0.95 0.05 200 / 0.7), oklch(0.85 0.08 200 / 0.4)); border: 1px solid oklch(0.85 0.05 200 / 0.6); box-shadow: 0 0 18px oklch(0.7 0.15 200 / 0.4); }
+.lab3d-ray { position: absolute; left: 0; right: 50%; height: 2px; background: linear-gradient(90deg, transparent, oklch(0.9 0.15 75)); }
+.lab3d-ray-1 { top: 30%; }
+.lab3d-ray-2 { top: 50%; }
+.lab3d-ray-3 { top: 70%; }
+/* Graph */
+.lab3d-graph { width: 100%; height: 100%; }
+/* Cube */
+.lab3d-cube { width: 110px; height: 110px; position: relative; transform-style: preserve-3d; animation: cube-spin 10s linear infinite; }
+.lab3d-cube-face { position: absolute; inset: 0; border: 1.5px solid oklch(0.75 0.15 75 / 0.7); background: linear-gradient(135deg, oklch(0.45 0.1 60 / 0.4), oklch(0.65 0.18 75 / 0.3)); box-shadow: inset 0 0 12px oklch(0.75 0.18 75 / 0.2); }
+.lab3d-cube-front { transform: translateZ(55px); }
+.lab3d-cube-back { transform: rotateY(180deg) translateZ(55px); }
+.lab3d-cube-right { transform: rotateY(90deg) translateZ(55px); }
+.lab3d-cube-left { transform: rotateY(-90deg) translateZ(55px); }
+.lab3d-cube-top { transform: rotateX(90deg) translateZ(55px); }
+.lab3d-cube-bottom { transform: rotateX(-90deg) translateZ(55px); }
+@keyframes cube-spin { from { transform: rotateX(-20deg) rotateY(0deg); } to { transform: rotateX(-20deg) rotateY(360deg); } }
+@keyframes spin-y { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+/* DNA */
+.lab3d-dna { width: 80px; height: 200px; position: relative; transform-style: preserve-3d; animation: spin-y 6s linear infinite; }
+.lab3d-dna-rung { position: absolute; left: 0; right: 0; top: calc(var(--i) * 14px + 4px); display: flex; align-items: center; justify-content: space-between; transform: rotateY(calc(var(--i) * 36deg)); }
+.lab3d-dna-rung span { width: 10px; height: 10px; border-radius: 9999px; background: oklch(0.8 0.15 75); box-shadow: 0 0 6px oklch(0.7 0.18 75); }
+.lab3d-dna-rung span:last-child { background: oklch(0.8 0.15 200); box-shadow: 0 0 6px oklch(0.7 0.18 200); }
+.lab3d-dna-rung i { flex: 1; height: 2px; margin: 0 4px; background: linear-gradient(90deg, oklch(0.7 0.15 75), oklch(0.7 0.18 200)); }
 
 @layer base {
   * {
