@@ -111,7 +111,22 @@ function Tutor() {
     rec.onend = () => {
       setListening(false);
       const text = (final || input).trim();
-      if (text) { sendMessage({ text }); setInput(""); }
+      if (!text) return;
+      const cmd = text.toLowerCase().replace(/[.!?,]+$/g, "").trim();
+      // Voice commands take priority over chat input
+      if (/^(ham\s+)?(stop|be quiet|quiet|silence)$/.test(cmd)) { stopSpeaking(); setInput(""); return; }
+      if (/^(ham\s+)?(mute|mute yourself)$/.test(cmd)) { stopSpeaking(); setPref((p) => ({ ...p, enabled: false })); setInput(""); return; }
+      if (/^(ham\s+)?(unmute|speak|talk)$/.test(cmd)) { setPref((p) => ({ ...p, enabled: true })); setInput(""); return; }
+      if (/^(ham\s+)?(clear|clear chat|reset)$/.test(cmd)) { spokenIdsRef.current = new Set(); setInput(""); window.location.reload(); return; }
+      if (/^(ham\s+)?(faster|speed up)$/.test(cmd)) { setPref((p) => ({ ...p, rate: Math.min(2, p.rate + 0.25) })); setInput(""); return; }
+      if (/^(ham\s+)?(slower|slow down)$/.test(cmd)) { setPref((p) => ({ ...p, rate: Math.max(0.5, p.rate - 0.25) })); setInput(""); return; }
+      if (/^(ham\s+)?(male voice|use male voice)$/.test(cmd)) { setPref((p) => ({ ...p, gender: "male" })); setInput(""); return; }
+      if (/^(ham\s+)?(female voice|use female voice)$/.test(cmd)) { setPref((p) => ({ ...p, gender: "female" })); setInput(""); return; }
+      if (/^(send|submit|go)$/.test(cmd)) {
+        const pending = input.trim(); if (pending) { sendMessage({ text: pending }); setInput(""); }
+        return;
+      }
+      sendMessage({ text }); setInput("");
     };
     recognitionRef.current = rec;
     setListening(true);
