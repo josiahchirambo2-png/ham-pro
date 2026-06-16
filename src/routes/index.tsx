@@ -20,10 +20,7 @@ function Landing() {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between">
           <Logo />
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost" size="sm"><Link to="/auth">Sign in</Link></Button>
-            <Button asChild size="sm"><Link to="/auth">Get started</Link></Button>
-          </div>
+          <span className="text-xs text-muted-foreground hidden sm:inline">Created by Josiah Brian Chirambo</span>
         </div>
       </header>
 
