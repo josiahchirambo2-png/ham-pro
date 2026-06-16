@@ -31,7 +31,7 @@ export const identifyImage = createServerFn({ method: "POST" })
     return { title: titleMatch?.[1]?.trim() ?? "Identified item", notes: text };
   });
 
-const TestInput = z.object({ subject: z.string().min(1), level: z.string().min(1), count: z.number().min(3).max(15).default(5) });
+const TestInput = z.object({ subject: z.string().min(1), level: z.string().min(1), count: z.number().min(3).max(30).default(5) });
 
 export const generateTest = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => TestInput.parse(d))
