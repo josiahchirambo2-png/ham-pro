@@ -1,12 +1,11 @@
-import { useMemo, useState, lazy, Suspense } from "react";
+import { useMemo, useState, useEffect, lazy, Suspense } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 
 // Lazy-load the 3D scene bundle so it only downloads when a lab is opened.
 // React unmounts the component when the dialog closes, releasing scene state.
-const Lab3D = lazy(() =>
-  import("@/components/lab-3d").then((m) => ({ default: m.Lab3D })),
-);
+const importLab3D = () => import("@/components/lab-3d");
+const Lab3D = lazy(() => importLab3D().then((m) => ({ default: m.Lab3D })));
 
 export type Param = { key: string; label: string; min: number; max: number; step?: number; unit?: string; default: number };
 export type LabConfig = {
@@ -25,6 +24,24 @@ export function LabSimulator({ config }: { config: LabConfig }) {
   const initial = useMemo(() => Object.fromEntries(config.params.map((p) => [p.key, p.default])), [config]);
   const [values, setValues] = useState<Record<string, number>>(initial);
   const outputs = config.compute(values);
+
+  // Warm the cache for the next likely lab + the tutor route so subsequent
+  // opens (and offline visits) are instant. Runs once per mount, idle-deferred.
+  useEffect(() => {
+    const run = () => {
+      // Lab3D shares one chunk across every lab — re-importing is a no-op
+      // after the first hit, but it ensures the SW caches it for offline use.
+      importLab3D().catch(() => {});
+      // Prefetch the tutor route bundle in the background.
+      import("@/routes/_authenticated/tutor").catch(() => {});
+    };
+    const w = typeof window !== "undefined" ? (window as any) : null;
+    const id = w?.requestIdleCallback ? w.requestIdleCallback(run, { timeout: 1500 }) : window.setTimeout(run, 400);
+    return () => {
+      if (w?.cancelIdleCallback && typeof id === "number") w.cancelIdleCallback(id);
+      else clearTimeout(id as number);
+    };
+  }, []);
 
   return (
     <div className="grid md:grid-cols-2 gap-5">
