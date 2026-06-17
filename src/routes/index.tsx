@@ -20,7 +20,6 @@ function Landing() {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between">
           <Logo />
-          <span className="text-xs text-muted-foreground hidden sm:inline">Created by Josiah Brian Chirambo</span>
         </div>
       </header>
 
@@ -41,7 +40,6 @@ function Landing() {
             <Button asChild size="lg"><Link to="/auth">Start learning free</Link></Button>
             <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white"><Link to="/auth">Sign in</Link></Button>
           </div>
-          <p className="mt-10 text-xs opacity-75">Crafted by Josiah Brian Chirambo</p>
         </div>
       </section>
 
