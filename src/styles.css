@@ -265,7 +265,30 @@
 
 /* ===== Lab 3D scenes ===== */
 .lab3d-stage { width: 100%; height: 100%; perspective: 700px; display: flex; align-items: center; justify-content: center; }
-.lab3d-world { width: 100%; height: 100%; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; position: relative; }
+.lab3d-stage { contain: strict; content-visibility: auto; contain-intrinsic-size: 320px 200px; }
+.lab3d-world { width: 100%; height: 100%; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; position: relative; will-change: transform; transform: translateZ(0); }
+
+/* Mobile + reduced-motion perf: drop expensive shadows/blurs, slow or pause animations
+   to keep the lab dialog smooth on low-power devices. */
+@media (max-width: 768px) {
+  .lab3d-stage { perspective: 500px; contain-intrinsic-size: 280px 180px; }
+  .lab3d-world *,
+  .lab3d-world *::before,
+  .lab3d-world *::after { box-shadow: none !important; filter: none !important; }
+  .lab3d-atom, .lab3d-cell, .lab3d-mol-spin, .lab3d-dna { animation-duration: 20s !important; }
+  .lab3d-o1 { animation-duration: 6s !important; }
+  .lab3d-o2 { animation-duration: 8s !important; }
+  .lab3d-o3 { animation-duration: 10s !important; }
+  .lab3d-electrons span { display: none; }
+  .lab3d-electrons span:nth-child(-n+2) { display: block; }
+  .lab3d-bubble { animation-duration: 4s !important; }
+  .lab3d-bulb { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab3d-world *,
+  .lab3d-world *::before,
+  .lab3d-world *::after { animation: none !important; transition: none !important; }
+}
 /* Atom */
 .lab3d-atom { width: 140px; height: 140px; position: relative; transform-style: preserve-3d; animation: spin-y 12s linear infinite; }
 .lab3d-nucleus { position: absolute; inset: 42%; border-radius: 9999px; background: radial-gradient(circle at 30% 30%, oklch(0.95 0.08 75), oklch(0.55 0.2 60)); box-shadow: 0 0 14px oklch(0.7 0.18 60 / 0.7); }
