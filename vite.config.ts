@@ -32,7 +32,7 @@ export default defineConfig({
             handler: "NetworkFirst",
             options: {
               cacheName: "hampro-pages",
-              networkTimeoutSeconds: 4,
+              networkTimeoutSeconds: 2,
               expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },
           },
