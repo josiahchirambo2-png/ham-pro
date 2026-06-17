@@ -65,7 +65,6 @@ function AuthPage() {
           <div>
             <p className="text-3xl font-semibold leading-tight">Learn, identify, and grow — together.</p>
             <p className="mt-3 opacity-80">An app for every learner, from primary school to university.</p>
-            <p className="mt-6 text-xs opacity-70">Built by Josiah Brian Chirambo</p>
           </div>
         </div>
       </div>
