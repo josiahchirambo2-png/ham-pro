@@ -1,7 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, lazy, Suspense } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { Lab3D } from "@/components/lab-3d";
+
+// Lazy-load the 3D scene bundle so it only downloads when a lab is opened.
+// React unmounts the component when the dialog closes, releasing scene state.
+const Lab3D = lazy(() =>
+  import("@/components/lab-3d").then((m) => ({ default: m.Lab3D })),
+);
 
 export type Param = { key: string; label: string; min: number; max: number; step?: number; unit?: string; default: number };
 export type LabConfig = {
@@ -48,7 +53,13 @@ export function LabSimulator({ config }: { config: LabConfig }) {
       </div>
       <div className="rounded-xl border bg-muted/40 p-4">
         <div className="aspect-video rounded-lg bg-background/60 mb-3 overflow-hidden flex items-center justify-center relative">
-          {config.render ? config.render(values) : <Lab3D title={config.title} subject={config.subject} params={values} />}
+          {config.render ? (
+            config.render(values)
+          ) : (
+            <Suspense fallback={<div className="lab3d-fallback" aria-label="Loading diagram" />}>
+              <Lab3D title={config.title} subject={config.subject} params={values} />
+            </Suspense>
+          )}
         </div>
         <div className="space-y-2">
           {outputs.map((o, i) => (
