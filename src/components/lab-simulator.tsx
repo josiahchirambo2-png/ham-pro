@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, lazy, Suspense } from "react";
+import { CheckCircle2, CloudDownload } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 
@@ -25,26 +26,72 @@ export function LabSimulator({ config }: { config: LabConfig }) {
   const [values, setValues] = useState<Record<string, number>>(initial);
   const outputs = config.compute(values);
 
+  // Track preload progress for the 2 background prefetches (Lab3D + Tutor).
+  const TOTAL_TASKS = 2;
+  const [done, setDone] = useState(0);
+  const [hideStatus, setHideStatus] = useState(false);
+
   // Warm the cache for the next likely lab + the tutor route so subsequent
   // opens (and offline visits) are instant. Runs once per mount, idle-deferred.
   useEffect(() => {
+    let cancelled = false;
+    const tick = () => { if (!cancelled) setDone((n) => n + 1); };
     const run = () => {
       // Lab3D shares one chunk across every lab — re-importing is a no-op
       // after the first hit, but it ensures the SW caches it for offline use.
-      importLab3D().catch(() => {});
+      importLab3D().then(tick, tick);
       // Prefetch the tutor route bundle in the background.
-      import("@/routes/_authenticated/tutor").catch(() => {});
+      import("@/routes/_authenticated/tutor").then(tick, tick);
     };
     const w = typeof window !== "undefined" ? (window as any) : null;
     const id = w?.requestIdleCallback ? w.requestIdleCallback(run, { timeout: 1500 }) : window.setTimeout(run, 400);
     return () => {
+      cancelled = true;
       if (w?.cancelIdleCallback && typeof id === "number") w.cancelIdleCallback(id);
       else clearTimeout(id as number);
     };
   }, []);
 
+  // Auto-hide the "Ready offline" chip a few seconds after completion.
+  useEffect(() => {
+    if (done < TOTAL_TASKS) return;
+    const t = setTimeout(() => setHideStatus(true), 3500);
+    return () => clearTimeout(t);
+  }, [done]);
+
+  const pct = Math.round((done / TOTAL_TASKS) * 100);
+  const complete = done >= TOTAL_TASKS;
+
   return (
     <div className="grid md:grid-cols-2 gap-5">
+      {!hideStatus && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="md:col-span-2 -mb-1 flex items-center gap-3 rounded-lg border bg-background/60 px-3 py-2 text-xs animate-fade-in"
+        >
+          {complete ? (
+            <CheckCircle2 className="size-4 text-primary shrink-0" />
+          ) : (
+            <CloudDownload className="size-4 text-primary shrink-0 animate-pulse" />
+          )}
+          <span className="font-medium">
+            {complete ? "Ready offline" : "Preloading next lab & tutor…"}
+          </span>
+          <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${pct}%`,
+                background: "var(--gradient-leaf, hsl(var(--primary)))",
+              }}
+            />
+          </div>
+          <span className="font-mono text-muted-foreground tabular-nums w-9 text-right">
+            {pct}%
+          </span>
+        </div>
+      )}
       <div className="space-y-4">
         <p className="text-sm text-muted-foreground">{config.description}</p>
         {config.params.map((p) => (
