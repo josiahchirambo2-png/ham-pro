@@ -186,6 +186,7 @@ export type Database = {
           created_by: string | null
           description: string | null
           id: string
+          invite_token: string
           is_private: boolean
           name: string
           subject: string | null
@@ -195,6 +196,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          invite_token?: string
           is_private?: boolean
           name: string
           subject?: string | null
@@ -204,6 +206,7 @@ export type Database = {
           created_by?: string | null
           description?: string | null
           id?: string
+          invite_token?: string
           is_private?: boolean
           name?: string
           subject?: string | null
@@ -249,10 +252,21 @@ export type Database = {
         Args: { _group_id: string; _user_id: string }
         Returns: boolean
       }
+      get_group_by_invite: {
+        Args: { _token: string }
+        Returns: {
+          description: string
+          id: string
+          is_private: boolean
+          name: string
+          subject: string
+        }[]
+      }
       is_group_member: {
         Args: { _group_id: string; _user_id: string }
         Returns: boolean
       }
+      join_group_by_invite: { Args: { _token: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
