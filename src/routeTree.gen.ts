@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
@@ -29,6 +30,10 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -40,38 +45,38 @@ const ApiChatRoute = ApiChatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppTutorRoute = AppTutorRouteImport.update({
-  id: '/_app/tutor',
+  id: '/tutor',
   path: '/tutor',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppTestsRoute = AppTestsRouteImport.update({
-  id: '/_app/tests',
+  id: '/tests',
   path: '/tests',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppSyllabusRoute = AppSyllabusRouteImport.update({
-  id: '/_app/syllabus',
+  id: '/syllabus',
   path: '/syllabus',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppLabsRoute = AppLabsRouteImport.update({
-  id: '/_app/labs',
+  id: '/labs',
   path: '/labs',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppIdentifyRoute = AppIdentifyRouteImport.update({
-  id: '/_app/identify',
+  id: '/identify',
   path: '/identify',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: '/_app/dashboard',
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
-  id: '/_app/_authenticated',
-  getParentRoute: () => rootRouteImport,
+  id: '/_authenticated',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppAuthenticatedProfileRoute = AppAuthenticatedProfileRouteImport.update({
   id: '/profile',
@@ -129,6 +134,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_app/_authenticated': typeof AppAuthenticatedRouteRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
@@ -177,6 +183,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_app'
     | '/auth'
     | '/_app/_authenticated'
     | '/_app/dashboard'
@@ -194,14 +201,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  AppAuthenticatedRouteRoute: typeof AppAuthenticatedRouteRouteWithChildren
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppIdentifyRoute: typeof AppIdentifyRoute
-  AppLabsRoute: typeof AppLabsRoute
-  AppSyllabusRoute: typeof AppSyllabusRoute
-  AppTestsRoute: typeof AppTestsRoute
-  AppTutorRoute: typeof AppTutorRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
@@ -212,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -233,49 +241,49 @@ declare module '@tanstack/react-router' {
       path: '/tutor'
       fullPath: '/tutor'
       preLoaderRoute: typeof AppTutorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/tests': {
       id: '/_app/tests'
       path: '/tests'
       fullPath: '/tests'
       preLoaderRoute: typeof AppTestsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/syllabus': {
       id: '/_app/syllabus'
       path: '/syllabus'
       fullPath: '/syllabus'
       preLoaderRoute: typeof AppSyllabusRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/labs': {
       id: '/_app/labs'
       path: '/labs'
       fullPath: '/labs'
       preLoaderRoute: typeof AppLabsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/identify': {
       id: '/_app/identify'
       path: '/identify'
       fullPath: '/identify'
       preLoaderRoute: typeof AppIdentifyRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/_authenticated': {
       id: '/_app/_authenticated'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/_authenticated/profile': {
       id: '/_app/_authenticated/profile'
@@ -340,9 +348,17 @@ const AppAuthenticatedRouteRouteWithChildren =
     AppAuthenticatedRouteRouteChildren,
   )
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthRoute: AuthRoute,
+interface AppRouteRouteChildren {
+  AppAuthenticatedRouteRoute: typeof AppAuthenticatedRouteRouteWithChildren
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppIdentifyRoute: typeof AppIdentifyRoute
+  AppLabsRoute: typeof AppLabsRoute
+  AppSyllabusRoute: typeof AppSyllabusRoute
+  AppTestsRoute: typeof AppTestsRoute
+  AppTutorRoute: typeof AppTutorRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAuthenticatedRouteRoute: AppAuthenticatedRouteRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppIdentifyRoute: AppIdentifyRoute,
@@ -350,6 +366,16 @@ const rootRouteChildren: RootRouteChildren = {
   AppSyllabusRoute: AppSyllabusRoute,
   AppTestsRoute: AppTestsRoute,
   AppTutorRoute: AppTutorRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport

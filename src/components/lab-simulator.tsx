@@ -41,7 +41,7 @@ export function LabSimulator({ config }: { config: LabConfig }) {
       // after the first hit, but it ensures the SW caches it for offline use.
       importLab3D().then(tick, tick);
       // Prefetch the tutor route bundle in the background.
-      import("@/routes/_authenticated/tutor").then(tick, tick);
+      import("@/routes/_app/tutor").then(tick, tick);
     };
     const w = typeof window !== "undefined" ? (window as any) : null;
     const id = w?.requestIdleCallback ? w.requestIdleCallback(run, { timeout: 1500 }) : window.setTimeout(run, 400);
