@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/identify")({
+export const Route = createFileRoute("/_app/identify")({
   head: () => ({ meta: [{ title: "Identify — HAM PRO" }] }),
   component: Identify,
 });

@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/tutor")({
+export const Route = createFileRoute("/_app/tutor")({
   head: () => ({ meta: [{ title: "AI Tutor — HAM PRO" }] }),
   component: Tutor,
 });

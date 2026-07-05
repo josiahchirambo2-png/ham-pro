@@ -7,7 +7,7 @@ import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock } from "lucide-react"
 import { moderateMessage } from "@/lib/moderation";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/community/$groupId")({
+export const Route = createFileRoute("/_app/_authenticated/community/$groupId")({
   head: () => ({ meta: [{ title: "Group chat — HAM PRO" }] }),
   component: GroupChat,
 });

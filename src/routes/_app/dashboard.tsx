@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bot, Camera, FlaskConical, BookOpen, GraduationCap, Users, User, NotebookPen } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/dashboard")({
+export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
   component: Dashboard,
 });

@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/community")({
+export const Route = createFileRoute("/_app/_authenticated/community")({
   head: () => ({ meta: [{ title: "Community — HAM PRO" }] }),
   component: Community,
 });

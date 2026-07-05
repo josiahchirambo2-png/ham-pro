@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Camera } from "lucide-react";
 import { setThemeFromLevel } from "@/components/theme-provider";
 
-export const Route = createFileRoute("/_authenticated/profile")({
+export const Route = createFileRoute("/_app/_authenticated/profile")({
   head: () => ({ meta: [{ title: "Profile — HAM PRO" }] }),
   component: Profile,
 });

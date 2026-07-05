@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BookOpen } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/syllabus")({
+export const Route = createFileRoute("/_app/syllabus")({
   head: () => ({ meta: [{ title: "Syllabuses — HAM PRO" }] }),
   component: Syllabus,
 });
