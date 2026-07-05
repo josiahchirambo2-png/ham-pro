@@ -105,6 +105,16 @@ function GroupChat() {
 
   const isOwner = !!group && !!me && group.created_by === me;
 
+  async function copyInviteLink(token: string) {
+    const url = `${window.location.origin}/join/${token}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Invite link copied — share it with anyone");
+    } catch {
+      toast.message("Invite link", { description: url });
+    }
+  }
+
   return (
     <div className="mt-6 rounded-2xl border bg-card flex flex-col" style={{ height: "calc(100dvh - 200px)" }}>
       <div className="border-b p-3 flex items-center gap-2 flex-wrap">
