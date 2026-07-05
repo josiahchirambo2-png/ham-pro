@@ -21,10 +21,20 @@ function AuthPage() {
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
 
+  function afterAuthDestination() {
+    if (typeof window === "undefined") return "/dashboard" as const;
+    const stored = sessionStorage.getItem("post_auth_redirect");
+    if (stored && stored.startsWith("/") && !stored.startsWith("//")) {
+      sessionStorage.removeItem("post_auth_redirect");
+      return stored;
+    }
+    return "/dashboard" as const;
+  }
+
   useEffect(() => {
     // Fast-path: skip the auth screen entirely if there's already a session.
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/dashboard", replace: true });
+      if (data.session) navigate({ to: afterAuthDestination() as any, replace: true });
     });
   }, [navigate]);
 
@@ -34,7 +44,7 @@ function AuthPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (error) return toast.error(error.message);
-    navigate({ to: "/dashboard", replace: true });
+    navigate({ to: afterAuthDestination() as any, replace: true });
   }
 
   async function signUp(e: React.FormEvent) {
@@ -48,13 +58,13 @@ function AuthPage() {
     setBusy(false);
     if (error) return toast.error(error.message);
     toast.success("Account created — you are signed in.");
-    navigate({ to: "/dashboard", replace: true });
+    navigate({ to: afterAuthDestination() as any, replace: true });
   }
 
   async function google() {
     const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (r.error) toast.error("Google sign-in failed");
-    else if (!r.redirected) navigate({ to: "/dashboard", replace: true });
+    else if (!r.redirected) navigate({ to: afterAuthDestination() as any, replace: true });
   }
 
   return (

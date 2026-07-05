@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock } from "lucide-react";
+import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock, Link2 } from "lucide-react";
 import { moderateMessage } from "@/lib/moderation";
 import { toast } from "sonner";
 
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_app/_authenticated/community/$groupId")(
 });
 
 type Msg = { id: string; user_id: string; content: string; created_at: string; edited_at: string | null };
-type Group = { id: string; name: string; is_private: boolean; created_by: string | null };
+type Group = { id: string; name: string; is_private: boolean; created_by: string | null; invite_token: string | null };
 
 function GroupChat() {
   const { groupId } = Route.useParams();
@@ -32,7 +32,7 @@ function GroupChat() {
   useEffect(() => { supabase.auth.getUser().then(({ data }) => setMe(data.user?.id ?? null)); }, []);
 
   useEffect(() => {
-    supabase.from("study_groups").select("id,name,is_private,created_by").eq("id", groupId).maybeSingle()
+    supabase.from("study_groups").select("id,name,is_private,created_by,invite_token").eq("id", groupId).maybeSingle()
       .then(({ data }) => setGroup((data as Group) ?? null));
     supabase.from("group_messages").select("*").eq("group_id", groupId).order("created_at", { ascending: true }).limit(200)
       .then(({ data }) => setMsgs((data as Msg[]) ?? []));
@@ -105,6 +105,16 @@ function GroupChat() {
 
   const isOwner = !!group && !!me && group.created_by === me;
 
+  async function copyInviteLink(token: string) {
+    const url = `${window.location.origin}/join/${token}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Invite link copied — share it with anyone");
+    } catch {
+      toast.message("Invite link", { description: url });
+    }
+  }
+
   return (
     <div className="mt-6 rounded-2xl border bg-card flex flex-col" style={{ height: "calc(100dvh - 200px)" }}>
       <div className="border-b p-3 flex items-center gap-2 flex-wrap">
@@ -115,10 +125,19 @@ function GroupChat() {
           </div>
         )}
         <div className="ml-auto">
-          {group?.is_private && isOwner && (
-            <Button size="sm" variant="outline" onClick={() => setShowInvite((v) => !v)}>
-              <UserPlus className="size-4" /> Invite
-            </Button>
+          {isOwner && (
+            <div className="flex items-center gap-2">
+              {group?.invite_token && (
+                <Button size="sm" variant="outline" onClick={() => copyInviteLink(group.invite_token!)}>
+                  <Link2 className="size-4" /> Copy invite link
+                </Button>
+              )}
+              {group?.is_private && (
+                <Button size="sm" variant="outline" onClick={() => setShowInvite((v) => !v)}>
+                  <UserPlus className="size-4" /> Invite by name
+                </Button>
+              )}
+            </div>
           )}
         </div>
       </div>
