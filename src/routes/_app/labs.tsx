@@ -6,7 +6,7 @@ import { LabSimulator } from "@/components/lab-simulator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/_authenticated/labs")({
+export const Route = createFileRoute("/_app/labs")({
   head: () => ({ meta: [{ title: "Interactive Labs — HAM PRO" }] }),
   component: Labs,
 });

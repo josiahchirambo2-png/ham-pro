@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Download, NotebookPen, Plus, Search, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
-export const Route = createFileRoute("/_authenticated/notes")({
+export const Route = createFileRoute("/_app/_authenticated/notes")({
   head: () => ({ meta: [{ title: "My Notes — HAM PRO" }] }),
   component: NotesPage,
 });

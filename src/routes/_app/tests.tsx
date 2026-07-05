@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { getOfflineQuestions } from "@/lib/offline-test-bank";
 
-export const Route = createFileRoute("/_authenticated/tests")({
+export const Route = createFileRoute("/_app/tests")({
   head: () => ({ meta: [{ title: "Tests — HAM PRO" }] }),
   component: Tests,
 });
