@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
 import { Route as AppTestsRouteImport } from './routes/_app/tests'
@@ -38,6 +39,11 @@ const AppRouteRoute = AppRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/join/$token': typeof JoinTokenRoute
   '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
@@ -134,6 +141,7 @@ export interface FileRoutesByTo {
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/join/$token': typeof JoinTokenRoute
   '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
@@ -153,6 +161,7 @@ export interface FileRoutesById {
   '/_app/tests': typeof AppTestsRoute
   '/_app/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/join/$token': typeof JoinTokenRoute
   '/_app/_authenticated/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/tests'
     | '/tutor'
     | '/api/chat'
+    | '/join/$token'
     | '/community'
     | '/notes'
     | '/profile'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/tests'
     | '/tutor'
     | '/api/chat'
+    | '/join/$token'
     | '/community'
     | '/notes'
     | '/profile'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/_app/tests'
     | '/_app/tutor'
     | '/api/chat'
+    | '/join/$token'
     | '/_app/_authenticated/community'
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
@@ -216,6 +228,7 @@ export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiChatRoute: typeof ApiChatRoute
+  JoinTokenRoute: typeof JoinTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join/$token': {
+      id: '/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof JoinTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/chat': {
@@ -398,6 +418,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
+  JoinTokenRoute: JoinTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
