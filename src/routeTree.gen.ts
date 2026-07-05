@@ -18,6 +18,7 @@ import { Route as AppTestsRouteImport } from './routes/_app/tests'
 import { Route as AppSyllabusRouteImport } from './routes/_app/syllabus'
 import { Route as AppLabsRouteImport } from './routes/_app/labs'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
+import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
@@ -69,6 +70,11 @@ const AppIdentifyRoute = AppIdentifyRouteImport.update({
   path: '/identify',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppHamiverseRoute = AppHamiverseRouteImport.update({
+  id: '/hamiverse',
+  path: '/hamiverse',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AppDashboardRoute
+  '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
   '/syllabus': typeof AppSyllabusRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AppDashboardRoute
+  '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
   '/syllabus': typeof AppSyllabusRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_app/_authenticated': typeof AppAuthenticatedRouteRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
   '/_app/labs': typeof AppLabsRoute
   '/_app/syllabus': typeof AppSyllabusRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/hamiverse'
     | '/identify'
     | '/labs'
     | '/syllabus'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/hamiverse'
     | '/identify'
     | '/labs'
     | '/syllabus'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_app/_authenticated'
     | '/_app/dashboard'
+    | '/_app/hamiverse'
     | '/_app/identify'
     | '/_app/labs'
     | '/_app/syllabus'
@@ -271,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIdentifyRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/hamiverse': {
+      id: '/_app/hamiverse'
+      path: '/hamiverse'
+      fullPath: '/hamiverse'
+      preLoaderRoute: typeof AppHamiverseRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -351,6 +370,7 @@ const AppAuthenticatedRouteRouteWithChildren =
 interface AppRouteRouteChildren {
   AppAuthenticatedRouteRoute: typeof AppAuthenticatedRouteRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
+  AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
   AppLabsRoute: typeof AppLabsRoute
   AppSyllabusRoute: typeof AppSyllabusRoute
@@ -361,6 +381,7 @@ interface AppRouteRouteChildren {
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAuthenticatedRouteRoute: AppAuthenticatedRouteRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
+  AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
   AppLabsRoute: AppLabsRoute,
   AppSyllabusRoute: AppSyllabusRoute,

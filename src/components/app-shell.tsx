@@ -2,7 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Logo } from "./logo";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "./ui/button";
-import { LogOut, Menu } from "lucide-react";
+import { LogIn, LogOut, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
@@ -15,6 +15,7 @@ const NAV = [
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
   { to: "/community", label: "Study Groups" },
+  { to: "/hamiverse", label: "HAMIVERSE" },
   { to: "/profile", label: "Profile" },
 ] as const;
 
@@ -22,6 +23,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => { if (mounted) setSignedIn(!!data.session); });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => setSignedIn(!!session));
+    return () => { mounted = false; sub.subscription.unsubscribe(); };
+  }, []);
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -50,9 +59,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <Button size="sm" variant="ghost" onClick={signOut} className="hidden md:inline-flex">
-              <LogOut className="size-4" /> Sign out
-            </Button>
+            {signedIn ? (
+              <Button size="sm" variant="ghost" onClick={signOut} className="hidden md:inline-flex">
+                <LogOut className="size-4" /> Sign out
+              </Button>
+            ) : (
+              <Button size="sm" variant="default" asChild className="hidden md:inline-flex">
+                <Link to="/auth"><LogIn className="size-4" /> Sign in</Link>
+              </Button>
+            )}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button size="icon" variant="ghost" className="md:hidden"><Menu /></Button>
@@ -69,9 +84,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       {n.label}
                     </Link>
                   ))}
-                  <Button variant="outline" className="mt-4" onClick={signOut}>
-                    <LogOut className="size-4" /> Sign out
-                  </Button>
+                  {signedIn ? (
+                    <Button variant="outline" className="mt-4" onClick={signOut}>
+                      <LogOut className="size-4" /> Sign out
+                    </Button>
+                  ) : (
+                    <Button className="mt-4" asChild>
+                      <Link to="/auth"><LogIn className="size-4" /> Sign in</Link>
+                    </Button>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>
