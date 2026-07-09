@@ -26,6 +26,7 @@ import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_aut
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
 import { Route as AppAuthenticatedCommunityRouteImport } from './routes/_app/_authenticated/community'
+import { Route as AppAuthenticatedStudySubjectRouteImport } from './routes/_app/_authenticated/study.$subject'
 import { Route as AppAuthenticatedCommunityGroupIdRouteImport } from './routes/_app/_authenticated/community.$groupId'
 
 const AuthRoute = AuthRouteImport.update({
@@ -113,6 +114,12 @@ const AppAuthenticatedCommunityRoute =
     path: '/community',
     getParentRoute: () => AppAuthenticatedRouteRoute,
   } as any)
+const AppAuthenticatedStudySubjectRoute =
+  AppAuthenticatedStudySubjectRouteImport.update({
+    id: '/study/$subject',
+    path: '/study/$subject',
+    getParentRoute: () => AppAuthenticatedRouteRoute,
+  } as any)
 const AppAuthenticatedCommunityGroupIdRoute =
   AppAuthenticatedCommunityGroupIdRouteImport.update({
     id: '/$groupId',
@@ -137,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -155,6 +163,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -176,6 +185,7 @@ export interface FileRoutesById {
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
   '/_app/_authenticated/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/_app/_authenticated/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/schedule'
     | '/community/$groupId'
+    | '/study/$subject'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/schedule'
     | '/community/$groupId'
+    | '/study/$subject'
   id:
     | '__root__'
     | '/'
@@ -234,6 +246,7 @@ export interface FileRouteTypes {
     | '/_app/_authenticated/profile'
     | '/_app/_authenticated/schedule'
     | '/_app/_authenticated/community/$groupId'
+    | '/_app/_authenticated/study/$subject'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedCommunityRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
+    '/_app/_authenticated/study/$subject': {
+      id: '/_app/_authenticated/study/$subject'
+      path: '/study/$subject'
+      fullPath: '/study/$subject'
+      preLoaderRoute: typeof AppAuthenticatedStudySubjectRouteImport
+      parentRoute: typeof AppAuthenticatedRouteRoute
+    }
     '/_app/_authenticated/community/$groupId': {
       id: '/_app/_authenticated/community/$groupId'
       path: '/$groupId'
@@ -395,6 +415,7 @@ interface AppAuthenticatedRouteRouteChildren {
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
   AppAuthenticatedScheduleRoute: typeof AppAuthenticatedScheduleRoute
+  AppAuthenticatedStudySubjectRoute: typeof AppAuthenticatedStudySubjectRoute
 }
 
 const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
@@ -402,6 +423,7 @@ const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
   AppAuthenticatedScheduleRoute: AppAuthenticatedScheduleRoute,
+  AppAuthenticatedStudySubjectRoute: AppAuthenticatedStudySubjectRoute,
 }
 
 const AppAuthenticatedRouteRouteWithChildren =
