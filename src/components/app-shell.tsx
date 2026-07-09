@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { LogIn, LogOut, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { isAdmin as checkAdmin } from "@/lib/subscription";
 
 const NAV = [
   { to: "/dashboard", label: "Home" },
@@ -14,8 +15,10 @@ const NAV = [
   { to: "/syllabus", label: "Syllabus" },
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
+  { to: "/schedule", label: "Schedule" },
   { to: "/community", label: "Study Groups" },
   { to: "/hamiverse", label: "HAMIVERSE" },
+  { to: "/subscription", label: "Subscription" },
   { to: "/profile", label: "Profile" },
 ] as const;
 
@@ -24,11 +27,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState<boolean>(false);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-    supabase.auth.getSession().then(({ data }) => { if (mounted) setSignedIn(!!data.session); });
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => setSignedIn(!!session));
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (!mounted) return;
+      setSignedIn(!!data.session);
+      if (data.session) setAdmin(await checkAdmin());
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange(async (_e, session) => {
+      setSignedIn(!!session);
+      setAdmin(session ? await checkAdmin() : false);
+    });
     return () => { mounted = false; sub.subscription.unsubscribe(); };
   }, []);
 
@@ -46,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between gap-4">
           <Link to="/dashboard"><Logo /></Link>
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1 overflow-x-auto">
             {NAV.map((n) => (
               <Link
                 key={n.to}
@@ -57,6 +68,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 {n.label}
               </Link>
             ))}
+            {admin && (
+              <Link to="/admin" className="px-3 py-1.5 rounded-md text-sm font-semibold text-primary hover:bg-accent/40"
+                activeProps={{ className: "px-3 py-1.5 rounded-md text-sm font-semibold text-primary bg-accent/60" }}>Admin</Link>
+            )}
           </nav>
           <div className="flex items-center gap-2">
             {signedIn ? (
@@ -84,6 +99,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       {n.label}
                     </Link>
                   ))}
+                  {admin && (
+                    <Link to="/admin" className="px-3 py-2.5 rounded-md text-base font-semibold text-primary hover:bg-accent/60">Admin</Link>
+                  )}
                   {signedIn ? (
                     <Button variant="outline" className="mt-4" onClick={signOut}>
                       <LogOut className="size-4" /> Sign out
