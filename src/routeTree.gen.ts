@@ -22,6 +22,7 @@ import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
+import { Route as AppAuthenticatedSubscriptionRouteImport } from './routes/_app/_authenticated/subscription'
 import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
@@ -92,6 +93,12 @@ const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppAuthenticatedSubscriptionRoute =
+  AppAuthenticatedSubscriptionRouteImport.update({
+    id: '/subscription',
+    path: '/subscription',
+    getParentRoute: () => AppAuthenticatedRouteRoute,
+  } as any)
 const AppAuthenticatedScheduleRoute =
   AppAuthenticatedScheduleRouteImport.update({
     id: '/schedule',
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
+  '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -162,6 +170,7 @@ export interface FileRoutesByTo {
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
+  '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -184,6 +193,7 @@ export interface FileRoutesById {
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
+  '/_app/_authenticated/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/_app/_authenticated/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
   '/_app/_authenticated/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/notes'
     | '/profile'
     | '/schedule'
+    | '/subscription'
     | '/community/$groupId'
     | '/study/$subject'
   fileRoutesByTo: FileRoutesByTo
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/notes'
     | '/profile'
     | '/schedule'
+    | '/subscription'
     | '/community/$groupId'
     | '/study/$subject'
   id:
@@ -245,6 +257,7 @@ export interface FileRouteTypes {
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
     | '/_app/_authenticated/schedule'
+    | '/_app/_authenticated/subscription'
     | '/_app/_authenticated/community/$groupId'
     | '/_app/_authenticated/study/$subject'
   fileRoutesById: FileRoutesById
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/_authenticated/subscription': {
+      id: '/_app/_authenticated/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof AppAuthenticatedSubscriptionRouteImport
+      parentRoute: typeof AppAuthenticatedRouteRoute
+    }
     '/_app/_authenticated/schedule': {
       id: '/_app/_authenticated/schedule'
       path: '/schedule'
@@ -415,6 +435,7 @@ interface AppAuthenticatedRouteRouteChildren {
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
   AppAuthenticatedScheduleRoute: typeof AppAuthenticatedScheduleRoute
+  AppAuthenticatedSubscriptionRoute: typeof AppAuthenticatedSubscriptionRoute
   AppAuthenticatedStudySubjectRoute: typeof AppAuthenticatedStudySubjectRoute
 }
 
@@ -423,6 +444,7 @@ const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
   AppAuthenticatedScheduleRoute: AppAuthenticatedScheduleRoute,
+  AppAuthenticatedSubscriptionRoute: AppAuthenticatedSubscriptionRoute,
   AppAuthenticatedStudySubjectRoute: AppAuthenticatedStudySubjectRoute,
 }
 
