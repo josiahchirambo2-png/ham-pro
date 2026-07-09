@@ -27,6 +27,7 @@ import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_aut
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
 import { Route as AppAuthenticatedCommunityRouteImport } from './routes/_app/_authenticated/community'
+import { Route as AppAuthenticatedAdminRouteImport } from './routes/_app/_authenticated/admin'
 import { Route as AppAuthenticatedStudySubjectRouteImport } from './routes/_app/_authenticated/study.$subject'
 import { Route as AppAuthenticatedCommunityGroupIdRouteImport } from './routes/_app/_authenticated/community.$groupId'
 
@@ -121,6 +122,11 @@ const AppAuthenticatedCommunityRoute =
     path: '/community',
     getParentRoute: () => AppAuthenticatedRouteRoute,
   } as any)
+const AppAuthenticatedAdminRoute = AppAuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppAuthenticatedRouteRoute,
+} as any)
 const AppAuthenticatedStudySubjectRoute =
   AppAuthenticatedStudySubjectRouteImport.update({
     id: '/study/$subject',
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
+  '/admin': typeof AppAuthenticatedAdminRoute
   '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
+  '/admin': typeof AppAuthenticatedAdminRoute
   '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/_app/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
+  '/_app/_authenticated/admin': typeof AppAuthenticatedAdminRoute
   '/_app/_authenticated/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/tutor'
     | '/api/chat'
     | '/join/$token'
+    | '/admin'
     | '/community'
     | '/notes'
     | '/profile'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/tutor'
     | '/api/chat'
     | '/join/$token'
+    | '/admin'
     | '/community'
     | '/notes'
     | '/profile'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/_app/tutor'
     | '/api/chat'
     | '/join/$token'
+    | '/_app/_authenticated/admin'
     | '/_app/_authenticated/community'
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
@@ -398,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedCommunityRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
+    '/_app/_authenticated/admin': {
+      id: '/_app/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AppAuthenticatedAdminRouteImport
+      parentRoute: typeof AppAuthenticatedRouteRoute
+    }
     '/_app/_authenticated/study/$subject': {
       id: '/_app/_authenticated/study/$subject'
       path: '/study/$subject'
@@ -431,6 +450,7 @@ const AppAuthenticatedCommunityRouteWithChildren =
   )
 
 interface AppAuthenticatedRouteRouteChildren {
+  AppAuthenticatedAdminRoute: typeof AppAuthenticatedAdminRoute
   AppAuthenticatedCommunityRoute: typeof AppAuthenticatedCommunityRouteWithChildren
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
@@ -440,6 +460,7 @@ interface AppAuthenticatedRouteRouteChildren {
 }
 
 const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
+  AppAuthenticatedAdminRoute: AppAuthenticatedAdminRoute,
   AppAuthenticatedCommunityRoute: AppAuthenticatedCommunityRouteWithChildren,
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
