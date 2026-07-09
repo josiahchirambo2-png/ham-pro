@@ -147,6 +147,48 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_submissions: {
+        Row: {
+          amount_usd: number
+          id: string
+          note: string | null
+          sender_name: string | null
+          sender_phone: string | null
+          status: string
+          submitted_at: string
+          txn_reference: string | null
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          amount_usd?: number
+          id?: string
+          note?: string | null
+          sender_name?: string | null
+          sender_phone?: string | null
+          status?: string
+          submitted_at?: string
+          txn_reference?: string | null
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          amount_usd?: number
+          id?: string
+          note?: string | null
+          sender_name?: string | null
+          sender_phone?: string | null
+          status?: string
+          submitted_at?: string
+          txn_reference?: string | null
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -177,6 +219,36 @@ export type Database = {
           id?: string
           syllabus?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      research_notes: {
+        Row: {
+          content: string | null
+          created_at: string
+          id: string
+          title: string
+          topic: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          title: string
+          topic: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          id?: string
+          title?: string
+          topic?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -213,6 +285,99 @@ export type Database = {
         }
         Relationships: []
       }
+      study_schedule: {
+        Row: {
+          created_at: string
+          day_of_week: number
+          duration_minutes: number
+          id: string
+          notify: boolean
+          subject: string
+          time_of_day: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: number
+          duration_minutes?: number
+          id?: string
+          notify?: boolean
+          subject: string
+          time_of_day: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: number
+          duration_minutes?: number
+          id?: string
+          notify?: boolean
+          subject?: string
+          time_of_day?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_sessions: {
+        Row: {
+          ended_at: string
+          id: string
+          quiz_score: number | null
+          quiz_total: number | null
+          seconds_spent: number
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          ended_at?: string
+          id?: string
+          quiz_score?: number | null
+          quiz_total?: number | null
+          seconds_spent?: number
+          subject: string
+          user_id: string
+        }
+        Update: {
+          ended_at?: string
+          id?: string
+          quiz_score?: number | null
+          quiz_total?: number | null
+          seconds_spent?: number
+          subject?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          admin_bypass: boolean
+          created_at: string
+          current_period_end: string | null
+          status: string
+          trial_ends_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_bypass?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          status?: string
+          trial_ends_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_bypass?: boolean
+          created_at?: string
+          current_period_end?: string | null
+          status?: string
+          trial_ends_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       test_attempts: {
         Row: {
           created_at: string
@@ -243,6 +408,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -262,14 +448,27 @@ export type Database = {
           subject: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
       is_group_member: {
         Args: { _group_id: string; _user_id: string }
         Returns: boolean
       }
       join_group_by_invite: { Args: { _token: string }; Returns: string }
+      reject_payment: { Args: { _payment_id: string }; Returns: undefined }
+      verify_payment: {
+        Args: { _months?: number; _payment_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -396,6 +595,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
