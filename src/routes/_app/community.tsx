@@ -41,7 +41,8 @@ function Community() {
 
   async function createGroup(e: React.FormEvent) {
     e.preventDefault();
-    if (!me || !name.trim()) return;
+    if (!name.trim()) return;
+    if (!me) { toast.error("Sign in to create a group"); return; }
     setCreating(true);
     const { data, error } = await supabase
       .from("study_groups")
