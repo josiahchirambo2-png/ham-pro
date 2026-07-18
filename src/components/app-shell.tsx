@@ -16,6 +16,7 @@ const NAV = [
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
   { to: "/schedule", label: "Schedule" },
+  { to: "/progress", label: "Progress" },
   { to: "/community", label: "Study Groups" },
   { to: "/hamiverse", label: "HAMIVERSE" },
   { to: "/subscription", label: "Subscription" },

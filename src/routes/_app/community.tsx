@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_app/_authenticated/community")({
+export const Route = createFileRoute("/_app/community")({
   head: () => ({ meta: [{ title: "Community — HAM PRO" }] }),
   component: Community,
 });
@@ -41,7 +41,8 @@ function Community() {
 
   async function createGroup(e: React.FormEvent) {
     e.preventDefault();
-    if (!me || !name.trim()) return;
+    if (!name.trim()) return;
+    if (!me) { toast.error("Sign in to create a group"); return; }
     setCreating(true);
     const { data, error } = await supabase
       .from("study_groups")
@@ -65,9 +66,14 @@ function Community() {
           <h1 className="text-3xl font-bold flex items-center gap-2"><Users className="text-primary" /> Study Groups</h1>
           <p className="text-muted-foreground mt-1">Education-focused chats. Public rooms for everyone, private rooms for friends &amp; family.</p>
         </div>
-        {!inChild && (
+        {!inChild && me && (
           <Button onClick={() => setShowCreate((v) => !v)} size="sm">
             {showCreate ? <><X className="size-4" /> Cancel</> : <><Plus className="size-4" /> New group</>}
+          </Button>
+        )}
+        {!inChild && !me && (
+          <Button asChild size="sm" variant="outline">
+            <Link to="/auth">Sign in to create groups</Link>
           </Button>
         )}
       </div>
