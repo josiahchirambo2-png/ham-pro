@@ -26,6 +26,7 @@ import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authen
 import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
 import { Route as AppAuthenticatedSubscriptionRouteImport } from './routes/_app/_authenticated/subscription'
 import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
+import { Route as AppAuthenticatedProgressRouteImport } from './routes/_app/_authenticated/progress'
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
 import { Route as AppAuthenticatedAdminRouteImport } from './routes/_app/_authenticated/admin'
@@ -116,6 +117,12 @@ const AppAuthenticatedScheduleRoute =
     path: '/schedule',
     getParentRoute: () => AppAuthenticatedRouteRoute,
   } as any)
+const AppAuthenticatedProgressRoute =
+  AppAuthenticatedProgressRouteImport.update({
+    id: '/progress',
+    path: '/progress',
+    getParentRoute: () => AppAuthenticatedRouteRoute,
+  } as any)
 const AppAuthenticatedProfileRoute = AppAuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -154,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
+  '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
@@ -175,6 +183,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
+  '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
@@ -199,6 +208,7 @@ export interface FileRoutesById {
   '/_app/_authenticated/admin': typeof AppAuthenticatedAdminRoute
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
+  '/_app/_authenticated/progress': typeof AppAuthenticatedProgressRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
   '/_app/_authenticated/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/_app/community/$groupId': typeof AppCommunityGroupIdRoute
@@ -222,6 +232,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/notes'
     | '/profile'
+    | '/progress'
     | '/schedule'
     | '/subscription'
     | '/community/$groupId'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/notes'
     | '/profile'
+    | '/progress'
     | '/schedule'
     | '/subscription'
     | '/community/$groupId'
@@ -266,6 +278,7 @@ export interface FileRouteTypes {
     | '/_app/_authenticated/admin'
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
+    | '/_app/_authenticated/progress'
     | '/_app/_authenticated/schedule'
     | '/_app/_authenticated/subscription'
     | '/_app/community/$groupId'
@@ -401,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedScheduleRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
+    '/_app/_authenticated/progress': {
+      id: '/_app/_authenticated/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof AppAuthenticatedProgressRouteImport
+      parentRoute: typeof AppAuthenticatedRouteRoute
+    }
     '/_app/_authenticated/profile': {
       id: '/_app/_authenticated/profile'
       path: '/profile'
@@ -436,6 +456,7 @@ interface AppAuthenticatedRouteRouteChildren {
   AppAuthenticatedAdminRoute: typeof AppAuthenticatedAdminRoute
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
+  AppAuthenticatedProgressRoute: typeof AppAuthenticatedProgressRoute
   AppAuthenticatedScheduleRoute: typeof AppAuthenticatedScheduleRoute
   AppAuthenticatedSubscriptionRoute: typeof AppAuthenticatedSubscriptionRoute
   AppAuthenticatedStudySubjectRoute: typeof AppAuthenticatedStudySubjectRoute
@@ -445,6 +466,7 @@ const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
   AppAuthenticatedAdminRoute: AppAuthenticatedAdminRoute,
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
+  AppAuthenticatedProgressRoute: AppAuthenticatedProgressRoute,
   AppAuthenticatedScheduleRoute: AppAuthenticatedScheduleRoute,
   AppAuthenticatedSubscriptionRoute: AppAuthenticatedSubscriptionRoute,
   AppAuthenticatedStudySubjectRoute: AppAuthenticatedStudySubjectRoute,
