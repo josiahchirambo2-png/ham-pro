@@ -197,6 +197,9 @@ export type Database = {
           display_name: string | null
           education_level: string | null
           id: string
+          notifications_enabled: boolean
+          quiet_hours_end: string | null
+          quiet_hours_start: string | null
           syllabus: string | null
           updated_at: string
         }
@@ -207,6 +210,9 @@ export type Database = {
           display_name?: string | null
           education_level?: string | null
           id: string
+          notifications_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
           syllabus?: string | null
           updated_at?: string
         }
@@ -217,6 +223,9 @@ export type Database = {
           display_name?: string | null
           education_level?: string | null
           id?: string
+          notifications_enabled?: boolean
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
           syllabus?: string | null
           updated_at?: string
         }
