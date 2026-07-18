@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { CalendarClock, Bell, Plus, Trash2, Play } from "lucide-react";
+import { CalendarClock, Bell, Plus, Trash2, Play, Moon } from "lucide-react";
 
 export const Route = createFileRoute("/_app/_authenticated/schedule")({
   head: () => ({ meta: [{ title: "Study Schedule — HAM PRO" }] }),
@@ -21,8 +21,44 @@ function SchedulePage() {
   const [time, setTime] = useState("18:00");
   const [duration, setDuration] = useState(30);
   const [permission, setPermission] = useState<NotificationPermission>("default");
+  const [notifEnabled, setNotifEnabled] = useState(true);
+  const [qhStart, setQhStart] = useState("");
+  const [qhEnd, setQhEnd] = useState("");
 
-  useEffect(() => { load(); if ("Notification" in window) setPermission(Notification.permission); }, []);
+  useEffect(() => {
+    load();
+    if ("Notification" in window) setPermission(Notification.permission);
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from("profiles").select("notifications_enabled,quiet_hours_start,quiet_hours_end").eq("id", user.id).maybeSingle();
+      if (data) {
+        setNotifEnabled((data as any).notifications_enabled ?? true);
+        setQhStart((data as any).quiet_hours_start ?? "");
+        setQhEnd((data as any).quiet_hours_end ?? "");
+      }
+    })();
+  }, []);
+
+  async function savePrefs(patch: Partial<{ notifications_enabled: boolean; quiet_hours_start: string | null; quiet_hours_end: string | null }>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    await supabase.from("profiles").update(patch).eq("id", user.id);
+    toast.success("Saved");
+  }
+
+  async function toggleItemNotify(id: string, next: boolean) {
+    await (supabase as any).from("study_schedule").update({ notify: next }).eq("id", id);
+    load();
+  }
+
+  function inQuietHours(hh: number, mm: number) {
+    if (!qhStart || !qhEnd) return false;
+    const [sh, sm] = qhStart.split(":").map(Number);
+    const [eh, em] = qhEnd.split(":").map(Number);
+    const cur = hh * 60 + mm, s = sh * 60 + sm, e = eh * 60 + em;
+    return s <= e ? cur >= s && cur < e : cur >= s || cur < e;
+  }
 
   async function load() {
     const { data } = await (supabase as any).from("study_schedule").select("*").order("day_of_week").order("time_of_day");
@@ -58,8 +94,10 @@ function SchedulePage() {
     const fired = new Set<string>();
     const t = setInterval(() => {
       if (Notification.permission !== "granted") return;
+      if (!notifEnabled) return;
       const now = new Date();
       const dow = now.getDay(), hh = now.getHours(), mm = now.getMinutes();
+      if (inQuietHours(hh, mm)) return;
       const key = `${dow}-${hh}:${mm}`;
       items.forEach((s) => {
         if (!s.notify) return;
@@ -72,7 +110,7 @@ function SchedulePage() {
       });
     }, 30_000);
     return () => clearInterval(t);
-  }, [items]);
+  }, [items, notifEnabled, qhStart, qhEnd]);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -84,6 +122,19 @@ function SchedulePage() {
           <Bell className="size-4" /> {permission === "granted" ? "Reminders on" : "Turn on reminders"}
         </Button>
         {permission !== "granted" && <span className="text-xs text-muted-foreground">Install as an app to get reminders while it's closed.</span>}
+      </div>
+
+      <div className="mt-4 rounded-2xl border bg-card p-4 space-y-3">
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={notifEnabled} onChange={(e) => { setNotifEnabled(e.target.checked); savePrefs({ notifications_enabled: e.target.checked }); }} />
+          Master reminders on
+        </label>
+        <div className="grid sm:grid-cols-3 gap-2 items-center text-sm">
+          <div className="flex items-center gap-2"><Moon className="size-4 text-primary" /> Quiet hours</div>
+          <Input type="time" value={qhStart} onChange={(e) => setQhStart(e.target.value)} onBlur={() => savePrefs({ quiet_hours_start: qhStart || null })} />
+          <Input type="time" value={qhEnd} onChange={(e) => setQhEnd(e.target.value)} onBlur={() => savePrefs({ quiet_hours_end: qhEnd || null })} />
+        </div>
+        <p className="text-xs text-muted-foreground">During quiet hours no reminders are sent.</p>
       </div>
 
       <div className="mt-6 rounded-2xl border bg-card p-4 grid sm:grid-cols-5 gap-2">
@@ -107,6 +158,9 @@ function SchedulePage() {
               <p className="font-medium">{s.subject}</p>
               <p className="text-xs text-muted-foreground">{DAYS[s.day_of_week]} • {s.time_of_day} • {s.duration_minutes} min</p>
             </div>
+            <label className="text-xs flex items-center gap-1 text-muted-foreground">
+              <input type="checkbox" checked={s.notify} onChange={(e) => toggleItemNotify(s.id, e.target.checked)} /> notify
+            </label>
             <Button size="sm" asChild>
               <Link to="/study/$subject" params={{ subject: s.subject }} search={{ minutes: s.duration_minutes }}>
                 <Play className="size-4" /> Start
