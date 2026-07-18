@@ -66,9 +66,14 @@ function Community() {
           <h1 className="text-3xl font-bold flex items-center gap-2"><Users className="text-primary" /> Study Groups</h1>
           <p className="text-muted-foreground mt-1">Education-focused chats. Public rooms for everyone, private rooms for friends &amp; family.</p>
         </div>
-        {!inChild && (
+        {!inChild && me && (
           <Button onClick={() => setShowCreate((v) => !v)} size="sm">
             {showCreate ? <><X className="size-4" /> Cancel</> : <><Plus className="size-4" /> New group</>}
+          </Button>
+        )}
+        {!inChild && !me && (
+          <Button asChild size="sm" variant="outline">
+            <Link to="/auth">Sign in to create groups</Link>
           </Button>
         )}
       </div>
