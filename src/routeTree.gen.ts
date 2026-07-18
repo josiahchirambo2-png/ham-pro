@@ -21,15 +21,15 @@ import { Route as AppLabsRouteImport } from './routes/_app/labs'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
+import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
 import { Route as AppAuthenticatedSubscriptionRouteImport } from './routes/_app/_authenticated/subscription'
 import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
-import { Route as AppAuthenticatedCommunityRouteImport } from './routes/_app/_authenticated/community'
 import { Route as AppAuthenticatedAdminRouteImport } from './routes/_app/_authenticated/admin'
 import { Route as AppAuthenticatedStudySubjectRouteImport } from './routes/_app/_authenticated/study.$subject'
-import { Route as AppAuthenticatedCommunityGroupIdRouteImport } from './routes/_app/_authenticated/community.$groupId'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -90,9 +90,19 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppCommunityRoute = AppCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const AppCommunityGroupIdRoute = AppCommunityGroupIdRouteImport.update({
+  id: '/$groupId',
+  path: '/$groupId',
+  getParentRoute: () => AppCommunityRoute,
 } as any)
 const AppAuthenticatedSubscriptionRoute =
   AppAuthenticatedSubscriptionRouteImport.update({
@@ -116,12 +126,6 @@ const AppAuthenticatedNotesRoute = AppAuthenticatedNotesRouteImport.update({
   path: '/notes',
   getParentRoute: () => AppAuthenticatedRouteRoute,
 } as any)
-const AppAuthenticatedCommunityRoute =
-  AppAuthenticatedCommunityRouteImport.update({
-    id: '/community',
-    path: '/community',
-    getParentRoute: () => AppAuthenticatedRouteRoute,
-  } as any)
 const AppAuthenticatedAdminRoute = AppAuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -133,16 +137,11 @@ const AppAuthenticatedStudySubjectRoute =
     path: '/study/$subject',
     getParentRoute: () => AppAuthenticatedRouteRoute,
   } as any)
-const AppAuthenticatedCommunityGroupIdRoute =
-  AppAuthenticatedCommunityGroupIdRouteImport.update({
-    id: '/$groupId',
-    path: '/$groupId',
-    getParentRoute: () => AppAuthenticatedCommunityRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/community': typeof AppCommunityRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
@@ -153,17 +152,17 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
   '/admin': typeof AppAuthenticatedAdminRoute
-  '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/subscription': typeof AppAuthenticatedSubscriptionRoute
-  '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/community/$groupId': typeof AppCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/community': typeof AppCommunityRouteWithChildren
   '/dashboard': typeof AppDashboardRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
@@ -174,12 +173,11 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
   '/admin': typeof AppAuthenticatedAdminRoute
-  '/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/subscription': typeof AppAuthenticatedSubscriptionRoute
-  '/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/community/$groupId': typeof AppCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesById {
@@ -188,6 +186,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_app/_authenticated': typeof AppAuthenticatedRouteRouteWithChildren
+  '/_app/community': typeof AppCommunityRouteWithChildren
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
@@ -198,12 +197,11 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/join/$token': typeof JoinTokenRoute
   '/_app/_authenticated/admin': typeof AppAuthenticatedAdminRoute
-  '/_app/_authenticated/community': typeof AppAuthenticatedCommunityRouteWithChildren
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
   '/_app/_authenticated/subscription': typeof AppAuthenticatedSubscriptionRoute
-  '/_app/_authenticated/community/$groupId': typeof AppAuthenticatedCommunityGroupIdRoute
+  '/_app/community/$groupId': typeof AppCommunityGroupIdRoute
   '/_app/_authenticated/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRouteTypes {
@@ -211,6 +209,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/community'
     | '/dashboard'
     | '/hamiverse'
     | '/identify'
@@ -221,7 +220,6 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/join/$token'
     | '/admin'
-    | '/community'
     | '/notes'
     | '/profile'
     | '/schedule'
@@ -232,6 +230,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/community'
     | '/dashboard'
     | '/hamiverse'
     | '/identify'
@@ -242,7 +241,6 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/join/$token'
     | '/admin'
-    | '/community'
     | '/notes'
     | '/profile'
     | '/schedule'
@@ -255,6 +253,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/auth'
     | '/_app/_authenticated'
+    | '/_app/community'
     | '/_app/dashboard'
     | '/_app/hamiverse'
     | '/_app/identify'
@@ -265,12 +264,11 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/join/$token'
     | '/_app/_authenticated/admin'
-    | '/_app/_authenticated/community'
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
     | '/_app/_authenticated/schedule'
     | '/_app/_authenticated/subscription'
-    | '/_app/_authenticated/community/$groupId'
+    | '/_app/community/$groupId'
     | '/_app/_authenticated/study/$subject'
   fileRoutesById: FileRoutesById
 }
@@ -368,12 +366,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/community': {
+      id: '/_app/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AppCommunityRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/_authenticated': {
       id: '/_app/_authenticated'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/_app/community/$groupId': {
+      id: '/_app/community/$groupId'
+      path: '/$groupId'
+      fullPath: '/community/$groupId'
+      preLoaderRoute: typeof AppCommunityGroupIdRouteImport
+      parentRoute: typeof AppCommunityRoute
     }
     '/_app/_authenticated/subscription': {
       id: '/_app/_authenticated/subscription'
@@ -403,13 +415,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedNotesRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
-    '/_app/_authenticated/community': {
-      id: '/_app/_authenticated/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof AppAuthenticatedCommunityRouteImport
-      parentRoute: typeof AppAuthenticatedRouteRoute
-    }
     '/_app/_authenticated/admin': {
       id: '/_app/_authenticated/admin'
       path: '/admin'
@@ -424,34 +429,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedStudySubjectRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
-    '/_app/_authenticated/community/$groupId': {
-      id: '/_app/_authenticated/community/$groupId'
-      path: '/$groupId'
-      fullPath: '/community/$groupId'
-      preLoaderRoute: typeof AppAuthenticatedCommunityGroupIdRouteImport
-      parentRoute: typeof AppAuthenticatedCommunityRoute
-    }
   }
 }
-
-interface AppAuthenticatedCommunityRouteChildren {
-  AppAuthenticatedCommunityGroupIdRoute: typeof AppAuthenticatedCommunityGroupIdRoute
-}
-
-const AppAuthenticatedCommunityRouteChildren: AppAuthenticatedCommunityRouteChildren =
-  {
-    AppAuthenticatedCommunityGroupIdRoute:
-      AppAuthenticatedCommunityGroupIdRoute,
-  }
-
-const AppAuthenticatedCommunityRouteWithChildren =
-  AppAuthenticatedCommunityRoute._addFileChildren(
-    AppAuthenticatedCommunityRouteChildren,
-  )
 
 interface AppAuthenticatedRouteRouteChildren {
   AppAuthenticatedAdminRoute: typeof AppAuthenticatedAdminRoute
-  AppAuthenticatedCommunityRoute: typeof AppAuthenticatedCommunityRouteWithChildren
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
   AppAuthenticatedScheduleRoute: typeof AppAuthenticatedScheduleRoute
@@ -461,7 +443,6 @@ interface AppAuthenticatedRouteRouteChildren {
 
 const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
   AppAuthenticatedAdminRoute: AppAuthenticatedAdminRoute,
-  AppAuthenticatedCommunityRoute: AppAuthenticatedCommunityRouteWithChildren,
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
   AppAuthenticatedScheduleRoute: AppAuthenticatedScheduleRoute,
@@ -474,8 +455,21 @@ const AppAuthenticatedRouteRouteWithChildren =
     AppAuthenticatedRouteRouteChildren,
   )
 
+interface AppCommunityRouteChildren {
+  AppCommunityGroupIdRoute: typeof AppCommunityGroupIdRoute
+}
+
+const AppCommunityRouteChildren: AppCommunityRouteChildren = {
+  AppCommunityGroupIdRoute: AppCommunityGroupIdRoute,
+}
+
+const AppCommunityRouteWithChildren = AppCommunityRoute._addFileChildren(
+  AppCommunityRouteChildren,
+)
+
 interface AppRouteRouteChildren {
   AppAuthenticatedRouteRoute: typeof AppAuthenticatedRouteRouteWithChildren
+  AppCommunityRoute: typeof AppCommunityRouteWithChildren
   AppDashboardRoute: typeof AppDashboardRoute
   AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
@@ -487,6 +481,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppAuthenticatedRouteRoute: AppAuthenticatedRouteRouteWithChildren,
+  AppCommunityRoute: AppCommunityRouteWithChildren,
   AppDashboardRoute: AppDashboardRoute,
   AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
