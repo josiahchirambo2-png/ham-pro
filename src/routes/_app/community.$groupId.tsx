@@ -179,10 +179,17 @@ function GroupChat() {
         })}
         <div ref={endRef} />
       </div>
-      <form onSubmit={send} className="border-t p-3 flex gap-2">
-        <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask a study question…" maxLength={1000} />
-        <Button type="submit" size="icon" disabled={!text.trim()}><Send className="size-4" /></Button>
-      </form>
+      {me ? (
+        <form onSubmit={send} className="border-t p-3 flex gap-2">
+          <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask a study question…" maxLength={1000} />
+          <Button type="submit" size="icon" disabled={!text.trim()}><Send className="size-4" /></Button>
+        </form>
+      ) : (
+        <div className="border-t p-3 flex items-center justify-between text-sm bg-muted/30">
+          <span className="text-muted-foreground">Sign in to post in this group.</span>
+          <Button asChild size="sm"><Link to="/auth">Sign in</Link></Button>
+        </div>
+      )}
     </div>
   );
 }
