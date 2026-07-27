@@ -11,6 +11,7 @@ const NAV = [
   { to: "/dashboard", label: "Home" },
   { to: "/tutor", label: "HAM Tutor" },
   { to: "/identify", label: "Identify" },
+  { to: "/visualize", label: "AI Visuals" },
   { to: "/notes", label: "Notes" },
   { to: "/syllabus", label: "Syllabus" },
   { to: "/tests", label: "Tests" },

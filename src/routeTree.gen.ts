@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AppVisualizeRouteImport } from './routes/_app/visualize'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
 import { Route as AppTestsRouteImport } from './routes/_app/tests'
 import { Route as AppSyllabusRouteImport } from './routes/_app/syllabus'
@@ -61,6 +62,11 @@ const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppVisualizeRoute = AppVisualizeRouteImport.update({
+  id: '/visualize',
+  path: '/visualize',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppTutorRoute = AppTutorRouteImport.update({
   id: '/tutor',
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/syllabus': typeof AppSyllabusRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
+  '/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/syllabus': typeof AppSyllabusRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
+  '/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/_app/syllabus': typeof AppSyllabusRoute
   '/_app/tests': typeof AppTestsRoute
   '/_app/tutor': typeof AppTutorRoute
+  '/_app/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/syllabus'
     | '/tests'
     | '/tutor'
+    | '/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/syllabus'
     | '/tests'
     | '/tutor'
+    | '/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/_app/syllabus'
     | '/_app/tests'
     | '/_app/tutor'
+    | '/_app/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
@@ -349,6 +361,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/visualize': {
+      id: '/_app/visualize'
+      path: '/visualize'
+      fullPath: '/visualize'
+      preLoaderRoute: typeof AppVisualizeRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/tutor': {
       id: '/_app/tutor'
@@ -519,6 +538,7 @@ interface AppRouteRouteChildren {
   AppSyllabusRoute: typeof AppSyllabusRoute
   AppTestsRoute: typeof AppTestsRoute
   AppTutorRoute: typeof AppTutorRoute
+  AppVisualizeRoute: typeof AppVisualizeRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
@@ -531,6 +551,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppSyllabusRoute: AppSyllabusRoute,
   AppTestsRoute: AppTestsRoute,
   AppTutorRoute: AppTutorRoute,
+  AppVisualizeRoute: AppVisualizeRoute,
 }
 
 const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
