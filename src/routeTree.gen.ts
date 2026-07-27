@@ -13,6 +13,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
+import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
 import { Route as AppTestsRouteImport } from './routes/_app/tests'
@@ -49,6 +50,11 @@ const IndexRoute = IndexRouteImport.update({
 const JoinTokenRoute = JoinTokenRouteImport.update({
   id: '/join/$token',
   path: '/join/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
+  id: '/api/generate-image',
+  path: '/api/generate-image',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
   '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
   '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/_app/tests': typeof AppTestsRoute
   '/_app/tutor': typeof AppTutorRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
   '/_app/_authenticated/admin': typeof AppAuthenticatedAdminRoute
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/tests'
     | '/tutor'
     | '/api/chat'
+    | '/api/generate-image'
     | '/join/$token'
     | '/admin'
     | '/notes'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/tests'
     | '/tutor'
     | '/api/chat'
+    | '/api/generate-image'
     | '/join/$token'
     | '/admin'
     | '/notes'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/_app/tests'
     | '/_app/tutor'
     | '/api/chat'
+    | '/api/generate-image'
     | '/join/$token'
     | '/_app/_authenticated/admin'
     | '/_app/_authenticated/notes'
@@ -290,6 +302,7 @@ export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   JoinTokenRoute: typeof JoinTokenRoute
 }
 
@@ -321,6 +334,13 @@ declare module '@tanstack/react-router' {
       path: '/join/$token'
       fullPath: '/join/$token'
       preLoaderRoute: typeof JoinTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/generate-image': {
+      id: '/api/generate-image'
+      path: '/api/generate-image'
+      fullPath: '/api/generate-image'
+      preLoaderRoute: typeof ApiGenerateImageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/chat': {
@@ -522,6 +542,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiGenerateImageRoute: ApiGenerateImageRoute,
   JoinTokenRoute: JoinTokenRoute,
 }
 export const routeTree = rootRouteImport
