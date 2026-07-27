@@ -29,7 +29,35 @@ const STYLES = [
   { v: "colourful friendly cartoon illustration for young learners, simple shapes, cheerful", l: "Kid-friendly illustration" },
   { v: "photorealistic educational reference image, high detail, neutral background", l: "Realistic image" },
   { v: "concept map / mind map with connected nodes, clean modern design, readable text", l: "Mind map" },
+  { v: "horizontal timeline with evenly spaced dated milestones on a central line, clean flat vector, readable labels, white background", l: "Timeline" },
 ];
+
+const TEMPLATES = [
+  {
+    l: "Mind map",
+    d: "Central topic with branching ideas",
+    p: "A mind map of the topic in the centre with 6 clearly labelled branches and sub-branches",
+    s: "concept map / mind map with connected nodes, clean modern design, readable text",
+  },
+  {
+    l: "Flowchart",
+    d: "Step-by-step process with arrows",
+    p: "A step-by-step flowchart of the process, from start to finish, with decision diamonds and arrows",
+    s: "flowchart / process diagram with boxes and arrows, clean minimal vector, readable labels, white background",
+  },
+  {
+    l: "Timeline",
+    d: "Events in order with dates",
+    p: "A horizontal timeline of the key events in order, each milestone dated and briefly labelled",
+    s: "horizontal timeline with evenly spaced dated milestones on a central line, clean flat vector, readable labels, white background",
+  },
+  {
+    l: "Biology cell",
+    d: "Labelled animal/plant cell",
+    p: "A labelled diagram of a plant cell and an animal cell side by side, showing nucleus, cytoplasm, cell membrane, cell wall, chloroplasts, mitochondria and vacuole",
+    s: "labelled science diagram, clean vector style, white background, clear black labels with leader lines, textbook accurate",
+  },
+] as const;
 
 const EXAMPLES = [
   "The human heart with chambers, valves and blood flow",
@@ -47,13 +75,14 @@ function Visualize() {
   const [isFinal, setIsFinal] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  async function generate() {
-    const topic = prompt.trim();
+  async function generate(override?: { prompt: string; style: string }) {
+    const topic = (override?.prompt ?? prompt).trim();
+    const styleUsed = override?.style ?? style;
     if (!topic) return toast.error("Describe what you want to see");
     setBusy(true); setSrc(null); setIsFinal(false);
     try {
       await streamImage(
-        `Educational visual for a student: ${topic}. Style: ${style}. Spelling of every label must be correct. No watermark.`,
+        `Educational visual for a student: ${topic}. Style: ${styleUsed}. Spelling of every label must be correct. No watermark.`,
         (dataUrl, final) => { setSrc(dataUrl); if (final) setIsFinal(true); },
       );
     } catch (e: any) {
@@ -61,6 +90,14 @@ function Visualize() {
     } finally {
       setBusy(false);
     }
+  }
+
+  function useTemplate(t: (typeof TEMPLATES)[number]) {
+    const topic = prompt.trim();
+    const finalPrompt = topic ? `${t.p}. Topic: ${topic}` : t.p.replace("the topic", "a study topic of your choice").replace("the process", "a common science process");
+    setPrompt(finalPrompt);
+    setStyle(t.s);
+    generate({ prompt: finalPrompt, style: t.s });
   }
 
   function download() {
@@ -106,7 +143,25 @@ function Visualize() {
               </button>
             ))}
           </div>
-          <Button className="mt-4 w-full" onClick={generate} disabled={busy}>
+          <div className="mt-4">
+            <Label>One-click templates</Label>
+            <div className="mt-1.5 grid grid-cols-2 gap-2">
+              {TEMPLATES.map((t) => (
+                <button
+                  key={t.l}
+                  disabled={busy}
+                  onClick={() => useTemplate(t)}
+                  className="rounded-xl border bg-background/40 p-3 text-left hover:bg-accent/40 hover:border-primary/40 transition disabled:opacity-50"
+                >
+                  <p className="text-sm font-semibold">{t.l}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{t.d}</p>
+                </button>
+              ))}
+            </div>
+            <p className="mt-1.5 text-[11px] text-muted-foreground">Type a topic above first to tailor a template to it.</p>
+          </div>
+
+          <Button className="mt-4 w-full" onClick={() => generate()} disabled={busy}>
             {busy ? <><Loader2 className="size-4 animate-spin" /> Drawing…</> : <><Sparkles className="size-4" /> Generate visual</>}
           </Button>
           <p className="mt-2 text-[11px] text-muted-foreground">Image generation needs an internet connection.</p>
