@@ -143,7 +143,25 @@ function Visualize() {
               </button>
             ))}
           </div>
-          <Button className="mt-4 w-full" onClick={generate} disabled={busy}>
+          <div className="mt-4">
+            <Label>One-click templates</Label>
+            <div className="mt-1.5 grid grid-cols-2 gap-2">
+              {TEMPLATES.map((t) => (
+                <button
+                  key={t.l}
+                  disabled={busy}
+                  onClick={() => useTemplate(t)}
+                  className="rounded-xl border bg-background/40 p-3 text-left hover:bg-accent/40 hover:border-primary/40 transition disabled:opacity-50"
+                >
+                  <p className="text-sm font-semibold">{t.l}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{t.d}</p>
+                </button>
+              ))}
+            </div>
+            <p className="mt-1.5 text-[11px] text-muted-foreground">Type a topic above first to tailor a template to it.</p>
+          </div>
+
+          <Button className="mt-4 w-full" onClick={() => generate()} disabled={busy}>
             {busy ? <><Loader2 className="size-4 animate-spin" /> Drawing…</> : <><Sparkles className="size-4" /> Generate visual</>}
           </Button>
           <p className="mt-2 text-[11px] text-muted-foreground">Image generation needs an internet connection.</p>
