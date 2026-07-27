@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Download, Loader2, Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Download, Loader2, Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { streamImage } from "@/lib/streamImage";
 
@@ -32,32 +33,39 @@ const STYLES = [
   { v: "horizontal timeline with evenly spaced dated milestones on a central line, clean flat vector, readable labels, white background", l: "Timeline" },
 ];
 
+const DIAGRAM = "labelled science diagram, clean vector style, white background, clear black labels with leader lines, textbook accurate";
+const FLOW = "flowchart / process diagram with boxes and arrows, clean minimal vector, readable labels, white background";
+const MAP = "concept map / mind map with connected nodes, clean modern design, readable text";
+const TIME = "horizontal timeline with evenly spaced dated milestones on a central line, clean flat vector, readable labels, white background";
+const CUT = "cutaway cross-section illustration with labels, educational textbook style, white background";
+const KID = "colourful friendly cartoon illustration for young learners, simple shapes, cheerful";
+
 const TEMPLATES = [
-  {
-    l: "Mind map",
-    d: "Central topic with branching ideas",
-    p: "A mind map of the topic in the centre with 6 clearly labelled branches and sub-branches",
-    s: "concept map / mind map with connected nodes, clean modern design, readable text",
-  },
-  {
-    l: "Flowchart",
-    d: "Step-by-step process with arrows",
-    p: "A step-by-step flowchart of the process, from start to finish, with decision diamonds and arrows",
-    s: "flowchart / process diagram with boxes and arrows, clean minimal vector, readable labels, white background",
-  },
-  {
-    l: "Timeline",
-    d: "Events in order with dates",
-    p: "A horizontal timeline of the key events in order, each milestone dated and briefly labelled",
-    s: "horizontal timeline with evenly spaced dated milestones on a central line, clean flat vector, readable labels, white background",
-  },
-  {
-    l: "Biology cell",
-    d: "Labelled animal/plant cell",
-    p: "A labelled diagram of a plant cell and an animal cell side by side, showing nucleus, cytoplasm, cell membrane, cell wall, chloroplasts, mitochondria and vacuole",
-    s: "labelled science diagram, clean vector style, white background, clear black labels with leader lines, textbook accurate",
-  },
+  { l: "Mind map", c: "Thinking tools", d: "Central topic with branching ideas", p: "A mind map of the topic in the centre with 6 clearly labelled branches and sub-branches", s: MAP },
+  { l: "Flowchart", c: "Thinking tools", d: "Step-by-step process with arrows", p: "A step-by-step flowchart of the process, from start to finish, with decision diamonds and arrows", s: FLOW },
+  { l: "Timeline", c: "Thinking tools", d: "Events in order with dates", p: "A horizontal timeline of the key events in order, each milestone dated and briefly labelled", s: TIME },
+  { l: "Compare & contrast", c: "Thinking tools", d: "Venn-style comparison", p: "A clear comparison diagram with two overlapping circles showing similarities in the middle and differences on each side", s: MAP },
+  { l: "Cycle diagram", c: "Thinking tools", d: "Repeating circular process", p: "A circular cycle diagram with 5 labelled stages and arrows showing the direction of the cycle", s: FLOW },
+
+  { l: "Biology cell", c: "Biology", d: "Labelled animal/plant cell", p: "A labelled diagram of a plant cell and an animal cell side by side, showing nucleus, cytoplasm, cell membrane, cell wall, chloroplasts, mitochondria and vacuole", s: DIAGRAM },
+  { l: "Body system", c: "Biology", d: "Organs and their labels", p: "A labelled diagram of the human body system showing every major organ with leader lines and correct names", s: DIAGRAM },
+  { l: "Food chain", c: "Biology", d: "Energy flow between species", p: "A food chain diagram showing producers, consumers and decomposers with arrows for energy flow, each organism labelled", s: FLOW },
+  { l: "Life cycle", c: "Biology", d: "Stages of growth", p: "A circular life cycle diagram of the organism with each stage drawn and labelled in order", s: DIAGRAM },
+
+  { l: "Circuit diagram", c: "Physics & Chemistry", d: "Components and symbols", p: "A clean electrical circuit diagram using standard symbols for the battery, switch, resistor, ammeter and bulb, with labels", s: DIAGRAM },
+  { l: "Force diagram", c: "Physics & Chemistry", d: "Arrows showing forces", p: "A free-body force diagram with labelled arrows showing every force acting on the object and its direction", s: DIAGRAM },
+  { l: "Atom / molecule", c: "Physics & Chemistry", d: "Structure and bonds", p: "A labelled atomic structure diagram showing protons, neutrons, electrons and electron shells, plus the bonding arrangement", s: DIAGRAM },
+  { l: "Apparatus setup", c: "Physics & Chemistry", d: "Lab equipment drawing", p: "A labelled laboratory apparatus setup drawing in textbook line-art style, each piece of equipment named", s: DIAGRAM },
+
+  { l: "Cross-section", c: "Earth & Geography", d: "Cutaway view with labels", p: "A labelled cutaway cross-section showing every internal layer clearly named", s: CUT },
+  { l: "Water cycle", c: "Earth & Geography", d: "Evaporation to rainfall", p: "A labelled water cycle diagram over a mountain, lake and sea showing evaporation, condensation, precipitation and runoff", s: DIAGRAM },
+  { l: "Map with key", c: "Earth & Geography", d: "Simple annotated map", p: "A simple clear map of the region with labelled features and a legend key in the corner", s: DIAGRAM },
+
+  { l: "Kid-friendly poster", c: "Young learners", d: "Bright, simple and fun", p: "A bright, simple and cheerful learning poster about the topic with big friendly labels", s: KID },
+  { l: "Counting / maths", c: "Young learners", d: "Visual maths helper", p: "A colourful visual maths helper showing the concept with countable objects and large clear numbers", s: KID },
 ] as const;
+
+const CATEGORIES = ["All", ...Array.from(new Set(TEMPLATES.map((t) => t.c)))];
 
 const EXAMPLES = [
   "The human heart with chambers, valves and blood flow",
@@ -74,6 +82,15 @@ function Visualize() {
   const [src, setSrc] = useState<string | null>(null);
   const [isFinal, setIsFinal] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("All");
+
+  const q = query.trim().toLowerCase();
+  const visibleTemplates = TEMPLATES.filter(
+    (t) =>
+      (category === "All" || t.c === category) &&
+      (!q || t.l.toLowerCase().includes(q) || t.d.toLowerCase().includes(q) || t.c.toLowerCase().includes(q)),
+  );
 
   async function generate(override?: { prompt: string; style: string }) {
     const topic = (override?.prompt ?? prompt).trim();
@@ -144,9 +161,33 @@ function Visualize() {
             ))}
           </div>
           <div className="mt-4">
-            <Label>One-click templates</Label>
-            <div className="mt-1.5 grid grid-cols-2 gap-2">
-              {TEMPLATES.map((t) => (
+            <Label>Template gallery</Label>
+            <div className="relative mt-1.5">
+              <Search className="size-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search templates…"
+                className="pl-8"
+              />
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCategory(c)}
+                  className={`text-xs rounded-full border px-2.5 py-1 transition ${
+                    category === c
+                      ? "border-primary/50 bg-primary/15 text-primary font-medium"
+                      : "text-muted-foreground hover:text-foreground hover:bg-accent/40"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2.5 grid grid-cols-2 gap-2 max-h-72 overflow-y-auto pr-1">
+              {visibleTemplates.map((t) => (
                 <button
                   key={t.l}
                   disabled={busy}
@@ -155,8 +196,12 @@ function Visualize() {
                 >
                   <p className="text-sm font-semibold">{t.l}</p>
                   <p className="text-[11px] text-muted-foreground mt-0.5 leading-snug">{t.d}</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-wide text-primary/70">{t.c}</p>
                 </button>
               ))}
+              {visibleTemplates.length === 0 && (
+                <p className="col-span-2 text-xs text-muted-foreground py-4 text-center">No templates match “{query}”.</p>
+              )}
             </div>
             <p className="mt-1.5 text-[11px] text-muted-foreground">Type a topic above first to tailor a template to it.</p>
           </div>
