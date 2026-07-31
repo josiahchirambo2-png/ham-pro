@@ -2,7 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Logo } from "./logo";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "./ui/button";
-import { LogIn, LogOut, Menu } from "lucide-react";
+import { LogIn, LogOut, Menu, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { isAdmin as checkAdmin } from "@/lib/subscription";
@@ -74,6 +74,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link to="/admin" className="px-3 py-1.5 rounded-md text-sm font-semibold text-primary hover:bg-accent/40"
                 activeProps={{ className: "px-3 py-1.5 rounded-md text-sm font-semibold text-primary bg-accent/60" }}>Admin</Link>
             )}
+            <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
+              className="px-3 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors whitespace-nowrap">
+              About the Developer
+            </a>
           </nav>
           <div className="flex items-center gap-2">
             {signedIn ? (
@@ -104,6 +108,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   {admin && (
                     <Link to="/admin" className="px-3 py-2.5 rounded-md text-base font-semibold text-primary hover:bg-accent/60">Admin</Link>
                   )}
+                  <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
+                    className="px-3 py-2.5 rounded-md text-base font-medium text-foreground hover:bg-accent/50 inline-flex items-center gap-2">
+                    <UserRound className="size-4" /> About the Developer
+                  </a>
                   {signedIn ? (
                     <Button variant="outline" className="mt-4" onClick={signOut}>
                       <LogOut className="size-4" /> Sign out
