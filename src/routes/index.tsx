@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import heroImg from "@/assets/nature-hero.jpg";
-import { Bot, Camera, FlaskConical, BookOpen, Users, GraduationCap, Sparkles } from "lucide-react";
+import { Bot, Camera, FlaskConical, BookOpen, Users, GraduationCap, Sparkles, UserRound, ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,6 +20,14 @@ function Landing() {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between">
           <Logo />
+          <a
+            href="https://brand-bios-showcase.lovable.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors"
+          >
+            <UserRound className="size-3.5" /> About the developer
+          </a>
         </div>
       </header>
 
@@ -56,6 +64,23 @@ function Landing() {
               <p className="mt-1 text-sm text-muted-foreground">{f.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 pb-20">
+        <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-sm">
+          <div className="mx-auto size-12 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
+            <UserRound className="size-6" />
+          </div>
+          <h2 className="mt-4 text-2xl font-bold">About the developer</h2>
+          <p className="mt-2 text-sm text-muted-foreground max-w-xl mx-auto">
+            HAM PRO was designed and built by Josiah Brian Chirambo. Read his full story, portfolio and other projects.
+          </p>
+          <Button asChild className="mt-5">
+            <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer">
+              Visit the developer's page <ExternalLink className="size-4" />
+            </a>
+          </Button>
         </div>
       </section>
 
