@@ -157,7 +157,9 @@ function GalaxyExplorer() {
         {selected && (
           <div className="mt-4 rounded-lg bg-muted/50 p-3 text-sm">
             <p className="font-semibold">{selected.name}</p>
-            <p className="text-xs text-muted-foreground mt-1">{selected.fact}</p>
+            <ul className="mt-2 space-y-1.5 text-xs text-muted-foreground list-disc pl-4">
+              {selected.facts.map((f) => <li key={f}>{f}</li>)}
+            </ul>
           </div>
         )}
       </div>
@@ -166,12 +168,84 @@ function GalaxyExplorer() {
 }
 
 const PLANETS = [
-  { name: "Mercury", orbit: 55, size: 3, speed: 1.2, color: "#a6a6a6", fact: "Smallest planet, closest to the Sun. A year is only 88 Earth days." },
-  { name: "Venus", orbit: 80, size: 5, speed: 0.9, color: "#e5c07b", fact: "Hottest planet due to a runaway greenhouse effect." },
-  { name: "Earth", orbit: 110, size: 5, speed: 0.7, color: "#4aa3ff", fact: "Our home — the only planet known to support life." },
-  { name: "Mars", orbit: 140, size: 4, speed: 0.55, color: "#e06b4d", fact: "Rusty iron dust gives Mars its red color." },
-  { name: "Jupiter", orbit: 180, size: 12, speed: 0.35, color: "#d8ba8b", fact: "Largest planet — could fit 1,300 Earths inside." },
-  { name: "Saturn", orbit: 215, size: 10, speed: 0.28, color: "#f0d68b", fact: "Famous for its icy ring system." },
+  {
+    name: "Mercury", orbit: 55, size: 3, speed: 1.2, color: "#a6a6a6",
+    facts: [
+      "Smallest planet in the Solar System, only slightly larger than Earth's Moon.",
+      "Closest planet to the Sun, orbiting at about 58 million kilometres.",
+      "One Mercury year lasts just 88 Earth days — the fastest orbit of all.",
+      "A single day on Mercury lasts about 59 Earth days because it spins slowly.",
+      "Daytime temperatures reach 430 °C while night falls to about -180 °C.",
+      "It has almost no atmosphere, so the sky stays black and there is no weather.",
+      "Its surface is covered in craters, much like the Moon, from ancient impacts.",
+      "It has a huge iron core making up roughly 85 percent of its radius.",
+    ],
+  },
+  {
+    name: "Venus", orbit: 80, size: 5, speed: 0.9, color: "#e5c07b",
+    facts: [
+      "Venus is the second planet from the Sun and Earth's nearest neighbour.",
+      "It is the hottest planet at about 465 °C, hotter even than Mercury.",
+      "A runaway greenhouse effect traps heat under thick carbon dioxide clouds.",
+      "Its clouds are made of sulfuric acid, so rain never reaches the ground.",
+      "Surface pressure is 92 times Earth's — like being 900 metres underwater.",
+      "Venus spins backwards, so the Sun rises in the west and sets in the east.",
+      "One Venus day is longer than its year: 243 Earth days versus 225.",
+      "It is often called Earth's twin because of its similar size and mass.",
+    ],
+  },
+  {
+    name: "Earth", orbit: 110, size: 5, speed: 0.7, color: "#4aa3ff",
+    facts: [
+      "Earth is the third planet from the Sun and the only known home of life.",
+      "About 71 percent of its surface is covered by liquid water oceans.",
+      "Its atmosphere is 78 percent nitrogen and 21 percent oxygen.",
+      "A magnetic field from its molten iron core shields us from solar radiation.",
+      "Earth completes one spin every 24 hours and one orbit every 365.25 days.",
+      "Its 23.5 degree tilt gives us the seasons as it travels around the Sun.",
+      "The Moon, our only natural satellite, drives the ocean tides.",
+      "Moving tectonic plates build mountains and cause earthquakes and volcanoes.",
+    ],
+  },
+  {
+    name: "Mars", orbit: 140, size: 4, speed: 0.55, color: "#e06b4d",
+    facts: [
+      "Mars is the fourth planet from the Sun and is known as the Red Planet.",
+      "Rusty iron oxide dust across its surface gives it the reddish colour.",
+      "It hosts Olympus Mons, the tallest volcano in the Solar System at 22 km.",
+      "Valles Marineris is a canyon system over 4,000 kilometres long.",
+      "A Martian day is 24 hours 37 minutes, very close to an Earth day.",
+      "Its thin carbon dioxide atmosphere is under one percent of Earth's pressure.",
+      "Polar ice caps hold frozen water and frozen carbon dioxide, or dry ice.",
+      "Two small moons, Phobos and Deimos, orbit Mars closely.",
+    ],
+  },
+  {
+    name: "Jupiter", orbit: 180, size: 12, speed: 0.35, color: "#d8ba8b",
+    facts: [
+      "Jupiter is the largest planet — over 1,300 Earths could fit inside it.",
+      "It is a gas giant made mostly of hydrogen and helium with no solid surface.",
+      "The Great Red Spot is a storm wider than Earth raging for centuries.",
+      "It spins fastest of all planets, completing a day in under 10 hours.",
+      "Jupiter has more than 90 known moons, including giant Ganymede.",
+      "Its four Galilean moons were first seen by Galileo in 1610.",
+      "Its magnetic field is the strongest of any planet in the Solar System.",
+      "Its powerful gravity shields inner planets by pulling in comets and asteroids.",
+    ],
+  },
+  {
+    name: "Saturn", orbit: 215, size: 10, speed: 0.28, color: "#f0d68b",
+    facts: [
+      "Saturn is the sixth planet from the Sun and the second largest.",
+      "It is famous for bright rings made of ice, rock and dust particles.",
+      "The rings stretch about 280,000 kilometres wide but are very thin.",
+      "It is the least dense planet and would float in a big enough ocean.",
+      "Saturn is a gas giant of hydrogen and helium with no solid ground.",
+      "One Saturn year equals about 29.5 Earth years.",
+      "It has over 140 moons, led by Titan with its thick orange atmosphere.",
+      "A six-sided hexagonal jet stream swirls around its north pole.",
+    ],
+  },
 ];
 
 function ResearchNotes() {
