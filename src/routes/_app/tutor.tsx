@@ -32,9 +32,10 @@ function cleanForSpeech(s: string) {
     .trim();
 }
 
-function pickVoice(voices: SpeechSynthesisVoice[], gender: "male" | "female") {
-  const en = voices.filter((v) => v.lang?.toLowerCase().startsWith("en"));
-  const pool = en.length ? en : voices;
+function pickVoice(voices: SpeechSynthesisVoice[], gender: "male" | "female", speechLang = "en-US") {
+  const base = speechLang.split("-")[0].toLowerCase();
+  const matching = voices.filter((v) => v.lang?.toLowerCase().startsWith(base));
+  const pool = matching.length ? matching : voices;
   const femaleHints = ["female", "samantha", "victoria", "karen", "moira", "tessa", "google uk english female", "google us english", "zira", "susan", "fiona", "amelie"];
   const maleHints = ["male", "daniel", "alex", "fred", "tom", "google uk english male", "david", "mark", "oliver"];
   const hints = gender === "female" ? femaleHints : maleHints;
