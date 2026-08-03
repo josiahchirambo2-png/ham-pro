@@ -15,8 +15,13 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
   async function check() {
     const { data } = await supabase.auth.getSession();
     if (!data.session) return setState("anon");
-    const [sub, admin] = await Promise.all([fetchSubscription(), isAdmin()]);
-    setState(admin || sub?.hasAccess ? "ok" : "locked");
+    // Admins always get full access — never gate them behind a subscription.
+    let admin = false;
+    try { admin = await isAdmin(); } catch { admin = false; }
+    if (admin) return setState("ok");
+    let sub = null;
+    try { sub = await fetchSubscription(); } catch { sub = null; }
+    setState(sub?.hasAccess ? "ok" : "locked");
   }
 
   useEffect(() => {
