@@ -169,6 +169,23 @@ function Tutor() {
             <PopoverTrigger asChild><Button size="icon" variant="ghost"><Settings2 className="size-4" /></Button></PopoverTrigger>
             <PopoverContent className="w-72 space-y-4">
               <div>
+                <Label className="text-xs">Language</Label>
+                <Select value={lang} onValueChange={(v) => { setLang(v); persistLanguage(v); }}>
+                  <SelectTrigger className="mt-2"><SelectValue placeholder="Language" /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {["Default", "Zambian", "European", "Asian"].map((g) => (
+                      <SelectGroup key={g}>
+                        <SelectLabel>{g}</SelectLabel>
+                        {LANGUAGES.filter((l) => l.group === g).map((l) => (
+                          <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="mt-1 text-[11px] text-muted-foreground">HAM will reply and speak in {activeLang.label}.</p>
+              </div>
+              <div>
                 <Label className="text-xs">Voice gender</Label>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   {(["female", "male"] as const).map((g) => (
