@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_app/_authenticated/subscription")({
   component: SubscriptionPage,
 });
 
-const PAY_TO = ["+260 977873761", "+260 953148307"];
+const PAY_TO = ["+260 977873761", "+260 977935215"];
 const PRICE = "5 US dollars / month";
 
 function SubscriptionPage() {
