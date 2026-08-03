@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import heroImg from "@/assets/nature-hero.jpg";
@@ -15,6 +17,17 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const navigate = useNavigate();
+
+  // Already signed in? Skip the landing/sign-in flow entirely.
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (active && data.session) navigate({ to: "/dashboard", replace: true });
+    });
+    return () => { active = false; };
+  }, [navigate]);
+
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
@@ -45,8 +58,7 @@ function Landing() {
             An all-in-one learning app from primary school through university. Meet HAM — your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg"><Link to="/auth">Start learning free</Link></Button>
-            <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white"><Link to="/auth">Sign in</Link></Button>
+            <Button asChild size="lg"><Link to="/auth">Get started</Link></Button>
           </div>
         </div>
       </section>

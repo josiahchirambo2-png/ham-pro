@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_app/_authenticated/subscription")({
   component: SubscriptionPage,
 });
 
-const PAY_TO = "+260 977873761";
+const PAY_TO = ["+260 977873761", "+260 953148307"];
 const PRICE = "5 US dollars / month";
 
 function SubscriptionPage() {
@@ -68,8 +68,10 @@ function SubscriptionPage() {
       <div className="mt-6 rounded-2xl border bg-card p-6 space-y-4">
         <div>
           <h2 className="font-semibold flex items-center gap-2"><Phone className="size-4" /> How to pay</h2>
-          <p className="text-sm text-muted-foreground mt-1">Send <b>{PRICE}</b> via mobile money to:</p>
-          <p className="mt-1 text-lg font-mono">{PAY_TO}</p>
+          <p className="text-sm text-muted-foreground mt-1">Send <b>{PRICE}</b> via mobile money to either number:</p>
+          <ul className="mt-1 space-y-1">
+            {PAY_TO.map((n) => (<li key={n} className="text-lg font-mono">{n}</li>))}
+          </ul>
           <p className="text-xs text-muted-foreground mt-1">After sending, paste the transaction reference below. An admin verifies within 24 hours.</p>
         </div>
         <div className="grid sm:grid-cols-2 gap-3">

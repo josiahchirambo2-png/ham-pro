@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Bot, User, Mic, MicOff, Volume2, VolumeX, Settings2 } from "lucide-react";
@@ -10,6 +10,8 @@ import { Slider } from "@/components/ui/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { LANGUAGES, getLanguage, setLanguage as persistLanguage, langByCode } from "@/lib/language";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_app/tutor")({
   head: () => ({ meta: [{ title: "AI Tutor — HAM PRO" }] }),
@@ -25,13 +27,15 @@ function cleanForSpeech(s: string) {
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/[#*_>`~]+/g, " ")
     .replace(/\$+/g, " ")
+    .replace(/[[\]]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function pickVoice(voices: SpeechSynthesisVoice[], gender: "male" | "female") {
-  const en = voices.filter((v) => v.lang?.toLowerCase().startsWith("en"));
-  const pool = en.length ? en : voices;
+function pickVoice(voices: SpeechSynthesisVoice[], gender: "male" | "female", speechLang = "en-US") {
+  const base = speechLang.split("-")[0].toLowerCase();
+  const matching = voices.filter((v) => v.lang?.toLowerCase().startsWith(base));
+  const pool = matching.length ? matching : voices;
   const femaleHints = ["female", "samantha", "victoria", "karen", "moira", "tessa", "google uk english female", "google us english", "zira", "susan", "fiona", "amelie"];
   const maleHints = ["male", "daniel", "alex", "fred", "tom", "google uk english male", "david", "mark", "oliver"];
   const hints = gender === "female" ? femaleHints : maleHints;
@@ -47,13 +51,18 @@ function Tutor() {
     catch { return DEFAULT_PREF; }
   });
   const [listening, setListening] = useState(false);
+  const [lang, setLang] = useState<string>("en");
+  useEffect(() => { setLang(getLanguage()); }, []);
+  const activeLang = langByCode(lang);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const recognitionRef = useRef<any>(null);
   const spokenIdsRef = useRef<Set<string>>(new Set());
 
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
+  const transport = useMemo(
+    () => new DefaultChatTransport({ api: "/api/chat", body: { language: activeLang.label } }),
+    [activeLang.label],
+  );
+  const { messages, sendMessage, status } = useChat({ transport });
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, status]);
   const busy = status === "submitted" || status === "streaming";
@@ -83,11 +92,12 @@ function Tutor() {
     const u = new SpeechSynthesisUtterance(text);
     u.rate = pref.rate;
     u.pitch = 1;
-    const v = pickVoice(voices, pref.gender);
+    const v = pickVoice(voices, pref.gender, activeLang.speech);
     if (v) u.voice = v;
+    u.lang = activeLang.speech;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(u);
-  }, [messages, status, pref, voices]);
+  }, [messages, status, pref, voices, activeLang]);
 
   function stopSpeaking() {
     if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -97,7 +107,7 @@ function Tutor() {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) { toast.error("Voice input isn't supported in this browser"); return; }
     const rec = new SR();
-    rec.lang = "en-US"; rec.interimResults = true; rec.continuous = false;
+    rec.lang = activeLang.speech; rec.interimResults = true; rec.continuous = false;
     let final = "";
     rec.onresult = (e: any) => {
       let interim = "";
@@ -158,6 +168,23 @@ function Tutor() {
           <Popover>
             <PopoverTrigger asChild><Button size="icon" variant="ghost"><Settings2 className="size-4" /></Button></PopoverTrigger>
             <PopoverContent className="w-72 space-y-4">
+              <div>
+                <Label className="text-xs">Language</Label>
+                <Select value={lang} onValueChange={(v) => { setLang(v); persistLanguage(v); }}>
+                  <SelectTrigger className="mt-2"><SelectValue placeholder="Language" /></SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {["Default", "Zambian", "European", "Asian"].map((g) => (
+                      <SelectGroup key={g}>
+                        <SelectLabel>{g}</SelectLabel>
+                        {LANGUAGES.filter((l) => l.group === g).map((l) => (
+                          <SelectItem key={l.code} value={l.code}>{l.label}</SelectItem>
+                        ))}
+                      </SelectGroup>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="mt-1 text-[11px] text-muted-foreground">HAM will reply and speak in {activeLang.label}.</p>
+              </div>
               <div>
                 <Label className="text-xs">Voice gender</Label>
                 <div className="mt-2 grid grid-cols-2 gap-2">
