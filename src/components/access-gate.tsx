@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useRouterState, Link } from "@tanstack/react-router";
+import { useRouterState, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchSubscription, isAdmin } from "@/lib/subscription";
 import { Button } from "./ui/button";
-import { Lock, Loader2 } from "lucide-react";
+import { Crown, Loader2 } from "lucide-react";
 
-const ALLOWED = ["/subscription", "/profile", "/admin"];
+// Only these areas require an active premium subscription. Everything else is free.
+const PREMIUM_PATHS = ["/hamiverse", "/visualize", "/community", "/schedule", "/progress"];
+
+const isPremiumPath = (p: string) => PREMIUM_PATHS.some((x) => p === x || p.startsWith(x + "/"));
 
 export function AccessGate({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [state, setState] = useState<"loading" | "ok" | "locked" | "anon">("loading");
 
@@ -30,10 +32,8 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (state === "anon") navigate({ to: "/auth", replace: true });
-    if (state === "locked" && !ALLOWED.includes(pathname)) navigate({ to: "/subscription", replace: true });
-  }, [state, pathname]);
+  // Free areas render immediately, signed in or not.
+  if (!isPremiumPath(pathname)) return <>{children}</>;
 
   if (state === "loading") {
     return (
@@ -43,15 +43,19 @@ export function AccessGate({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (state === "anon") return null;
-
-  if (state === "locked" && !ALLOWED.includes(pathname)) {
+  if (state === "anon" || state === "locked") {
     return (
       <div className="mx-auto max-w-md px-4 py-20 text-center">
-        <Lock className="mx-auto size-8 text-primary" />
-        <h1 className="mt-4 text-2xl font-bold">Subscription required</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Your free trial has ended. Subscribe to unlock HAM PRO again.</p>
-        <Button asChild className="mt-5"><Link to="/subscription">Go to subscription</Link></Button>
+        <Crown className="mx-auto size-8 text-primary" />
+        <h1 className="mt-4 text-2xl font-bold">Premium feature</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          HAMIVERSE, AI Visuals, Study Groups, Schedule and Progress are premium. The rest of HAM PRO stays free.
+        </p>
+        {state === "anon" ? (
+          <Button asChild className="mt-5"><Link to="/auth">Sign in to continue</Link></Button>
+        ) : (
+          <Button asChild className="mt-5"><Link to="/subscription">Go to Premium</Link></Button>
+        )}
       </div>
     );
   }

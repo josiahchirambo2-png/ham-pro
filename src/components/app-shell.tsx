@@ -20,7 +20,7 @@ const NAV = [
   { to: "/progress", label: "Progress" },
   { to: "/community", label: "Study Groups" },
   { to: "/hamiverse", label: "HAMIVERSE" },
-  { to: "/subscription", label: "Subscription" },
+  { to: "/subscription", label: "Premium" },
   { to: "/profile", label: "Profile" },
 ] as const;
 
