@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { CreditCard, Phone, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { Crown, Phone, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { fetchSubscription, type SubStatus } from "@/lib/subscription";
 
 export const Route = createFileRoute("/_app/_authenticated/subscription")({
@@ -15,6 +15,13 @@ export const Route = createFileRoute("/_app/_authenticated/subscription")({
 
 const PAY_TO = ["+260 977873761", "+260 977935215"];
 const PRICE = "5 US dollars / month";
+const PREMIUM_FEATURES = [
+  { name: "HAMIVERSE", desc: "Labs, Galaxy Explorer and My Research" },
+  { name: "AI Visuals", desc: "Generate diagrams, mind maps and illustrations" },
+  { name: "Study Groups", desc: "Create groups and chat with classmates" },
+  { name: "Schedule", desc: "Study timetable with reminders" },
+  { name: "Progress", desc: "Weekly study time and quiz score dashboard" },
+];
 
 function SubscriptionPage() {
   const [sub, setSub] = useState<SubStatus | null>(null);
@@ -49,7 +56,19 @@ function SubscriptionPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="text-3xl font-bold flex items-center gap-2"><CreditCard className="text-primary" /> Subscription</h1>
+      <h1 className="text-3xl font-bold flex items-center gap-2"><Crown className="text-primary" /> Premium</h1>
+      <p className="text-sm text-muted-foreground mt-1">
+        HAM Tutor, Identify, Notes, Syllabus, Tests and Labs are free forever. Premium unlocks these extras:
+      </p>
+
+      <div className="mt-4 grid sm:grid-cols-2 gap-3">
+        {PREMIUM_FEATURES.map((f) => (
+          <div key={f.name} className="rounded-xl border bg-card p-4">
+            <p className="font-semibold text-sm">{f.name}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{f.desc}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="mt-4 rounded-2xl border bg-card p-6">
         {sub?.adminBypass ? (
@@ -61,7 +80,7 @@ function SubscriptionPage() {
             {sub.currentPeriodEnd && <> Renews before {new Date(sub.currentPeriodEnd).toLocaleDateString()}.</>}
           </p>
         ) : (
-          <p className="text-sm text-destructive">Your trial has ended. Please subscribe below to keep learning.</p>
+          <p className="text-sm text-destructive">Premium is not active. Subscribe below to unlock the premium tabs.</p>
         )}
       </div>
 
