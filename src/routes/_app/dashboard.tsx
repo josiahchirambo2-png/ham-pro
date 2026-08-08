@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bot, Camera, FlaskConical, BookOpen, GraduationCap, Users, User, NotebookPen } from "lucide-react";
+import { Bot, Camera, FlaskConical, BookOpen, GraduationCap, Crown, User, NotebookPen } from "lucide-react";
 
 export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
@@ -13,7 +13,7 @@ const TILES = [
   { to: "/syllabus", icon: BookOpen, title: "Syllabuses", desc: "Zambian (ECZ), Cambridge, IB, Common Core & more." },
   { to: "/tests", icon: GraduationCap, title: "Tests", desc: "Generate practice tests by subject and level." },
   { to: "/labs", icon: FlaskConical, title: "Interactive Labs", desc: "50+ science, math & computing simulations." },
-  { to: "/community", icon: Users, title: "Study Groups", desc: "Chat live with classmates around the world." },
+  { to: "/subscription", icon: Crown, title: "Premium Library", desc: "HAMIVERSE, AI Visuals, Study Groups, Schedule & Progress." },
   { to: "/profile", icon: User, title: "My Profile", desc: "Picture, display name, education level." },
 ] as const;
 
