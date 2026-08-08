@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Crown, Phone, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { Crown, Phone, CheckCircle2, Clock, XCircle, Sparkles, Users, CalendarDays, TrendingUp, Rocket } from "lucide-react";
 import { fetchSubscription, type SubStatus } from "@/lib/subscription";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/_authenticated/subscription")({
   head: () => ({ meta: [{ title: "Subscription — HAM PRO" }] }),
@@ -16,12 +17,12 @@ export const Route = createFileRoute("/_app/_authenticated/subscription")({
 const PAY_TO = ["+260 977873761", "+260 977935215"];
 const PRICE = "5 US dollars / month";
 const PREMIUM_FEATURES = [
-  { name: "HAMIVERSE", desc: "Labs, Galaxy Explorer and My Research" },
-  { name: "AI Visuals", desc: "Generate diagrams, mind maps and illustrations" },
-  { name: "Study Groups", desc: "Create groups and chat with classmates" },
-  { name: "Schedule", desc: "Study timetable with reminders" },
-  { name: "Progress", desc: "Weekly study time and quiz score dashboard" },
-];
+  { to: "/hamiverse", icon: Rocket, name: "HAMIVERSE", desc: "Labs, Galaxy Explorer and My Research" },
+  { to: "/visualize", icon: Sparkles, name: "AI Visuals", desc: "Generate diagrams, mind maps and illustrations" },
+  { to: "/community", icon: Users, name: "Study Groups", desc: "Create groups and chat with classmates" },
+  { to: "/schedule", icon: CalendarDays, name: "Schedule", desc: "Study timetable with reminders" },
+  { to: "/progress", icon: TrendingUp, name: "Progress", desc: "Weekly study time and quiz score dashboard" },
+] as const;
 
 function SubscriptionPage() {
   const [sub, setSub] = useState<SubStatus | null>(null);
@@ -55,18 +56,23 @@ function SubscriptionPage() {
   const trialLeft = sub?.trialEndsAt ? Math.max(0, Math.ceil((new Date(sub.trialEndsAt).getTime() - Date.now()) / 86400000)) : 0;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <h1 className="text-3xl font-bold flex items-center gap-2"><Crown className="text-primary" /> Premium</h1>
-      <p className="text-sm text-muted-foreground mt-1">
-        HAM Tutor, Identify, Notes, Syllabus, Tests and Labs are free forever. Premium unlocks these extras:
-      </p>
+    <div className="mx-auto max-w-5xl px-4 py-8">
+      <div className="rounded-3xl p-8 md:p-10 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
+        <h1 className="text-3xl md:text-4xl font-bold flex items-center gap-2"><Crown /> Premium Library</h1>
+        <p className="mt-2 opacity-90 max-w-xl">
+          HAM Tutor, Identify, Notes, Syllabus, Tests and Labs stay free. These extras live here.
+        </p>
+      </div>
 
-      <div className="mt-4 grid sm:grid-cols-2 gap-3">
+      <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {PREMIUM_FEATURES.map((f) => (
-          <div key={f.name} className="rounded-xl border bg-card p-4">
-            <p className="font-semibold text-sm">{f.name}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{f.desc}</p>
-          </div>
+          <Link key={f.name} to={f.to} className="group rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-[var(--shadow-leaf)] transition">
+            <div className="size-11 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
+              <f.icon className="size-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">{f.name}</h3>
+            <p className="text-sm text-muted-foreground mt-1">{f.desc}</p>
+          </Link>
         ))}
       </div>
 
