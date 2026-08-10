@@ -81,6 +81,35 @@ export type Database = {
           },
         ]
       }
+      group_secrets: {
+        Row: {
+          created_at: string
+          group_id: string
+          password_hash: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          group_id: string
+          password_hash: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          group_id?: string
+          password_hash?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_secrets_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: true
+            referencedRelation: "study_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       identifications: {
         Row: {
           created_at: string
@@ -454,9 +483,11 @@ export type Database = {
           id: string
           is_private: boolean
           name: string
+          requires_password: boolean
           subject: string
         }[]
       }
+      group_has_password: { Args: { _group_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -469,8 +500,15 @@ export type Database = {
         Args: { _group_id: string; _user_id: string }
         Returns: boolean
       }
-      join_group_by_invite: { Args: { _token: string }; Returns: string }
+      join_group_by_invite: {
+        Args: { _password?: string; _token: string }
+        Returns: string
+      }
       reject_payment: { Args: { _payment_id: string }; Returns: undefined }
+      set_group_password: {
+        Args: { _group_id: string; _password: string }
+        Returns: undefined
+      }
       verify_payment: {
         Args: { _months?: number; _payment_id: string }
         Returns: undefined
