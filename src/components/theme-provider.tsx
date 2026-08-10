@@ -1,66 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-
-export type AppTheme = "nature" | "graphic" | "space" | "custom";
-
-const THEME_KEY = "hampro_theme";
-
-function levelToTheme(level: string | null | undefined): AppTheme {
-  if (!level) return "nature";
-  const l = level.toLowerCase();
-  // University
-  if (/(univ|college|tertiary|year\s*[1-6]|under?grad|post\s*grad|masters?|phd)/.test(l)) return "custom";
-  // Try to parse a grade/age number
-  const num = parseInt(l.replace(/[^0-9]/g, ""), 10);
-  if (!Number.isNaN(num)) {
-    // Grade numbers
-    if (num <= 7) return "graphic";
-    if (num <= 12) return "space";
-  }
-  if (/(primary|kinder|grade\s*[1-7]\b|under\s*1[23]|elementary)/.test(l)) return "graphic";
-  if (/(secondary|high\s*school|junior|senior|gcse|igcse|a-?level|ib|year\s*[7-9]|year\s*1[0-3])/.test(l)) return "space";
-  return "nature";
-}
-
-function apply(theme: AppTheme) {
-  if (typeof document === "undefined") return;
-  const html = document.documentElement;
-  html.classList.remove("theme-nature", "theme-graphic", "theme-space", "theme-custom");
-  html.classList.add(`theme-${theme}`);
-  try { localStorage.setItem(THEME_KEY, theme); } catch {}
-}
+import { applyAppearance, getCourseId, getScheme, saveLevelText } from "@/lib/appearance";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [, setTheme] = useState<AppTheme>("nature");
-
   useEffect(() => {
-    // Apply cached theme immediately to avoid flash
-    try {
-      const cached = (localStorage.getItem(THEME_KEY) as AppTheme | null) ?? "nature";
-      apply(cached);
-      setTheme(cached);
-    } catch { apply("nature"); }
+    applyAppearance(getScheme(), getCourseId());
+
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const onSystemChange = () => {
+      if (getScheme() === "system") applyAppearance("system", getCourseId());
+    };
+    mq.addEventListener("change", onSystemChange);
 
     let mounted = true;
-    async function refresh() {
+    async function refreshLevel() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user || !mounted) return;
-      const { data: p } = await supabase.from("profiles").select("education_level").eq("id", user.id).maybeSingle();
-      const t = levelToTheme(p?.education_level ?? null);
-      if (mounted) { apply(t); setTheme(t); }
+      const { data: p } = await supabase
+        .from("profiles").select("education_level").eq("id", user.id).maybeSingle();
+      if (mounted) saveLevelText(p?.education_level ?? "");
     }
-    refresh();
+    refreshLevel();
 
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN" || event === "USER_UPDATED") refresh();
-      if (event === "SIGNED_OUT") { apply("nature"); setTheme("nature"); }
+      if (event === "SIGNED_IN" || event === "USER_UPDATED") refreshLevel();
+      if (event === "SIGNED_OUT") saveLevelText("");
     });
-    return () => { mounted = false; sub.subscription.unsubscribe(); };
+    return () => {
+      mounted = false;
+      mq.removeEventListener("change", onSystemChange);
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   return <>{children}</>;
 }
 
+// Kept for the profile page: level now drives the mascots, not the palette.
 export function setThemeFromLevel(level: string | null | undefined) {
-  apply(levelToTheme(level));
+  saveLevelText(level ?? "");
 }
