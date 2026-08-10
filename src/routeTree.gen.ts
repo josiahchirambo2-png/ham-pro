@@ -18,7 +18,6 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppVisualizeRouteImport } from './routes/_app/visualize'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
 import { Route as AppTestsRouteImport } from './routes/_app/tests'
-import { Route as AppSyllabusRouteImport } from './routes/_app/syllabus'
 import { Route as AppLabsRouteImport } from './routes/_app/labs'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
@@ -26,12 +25,10 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
 import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
-import { Route as AppAuthenticatedSubscriptionRouteImport } from './routes/_app/_authenticated/subscription'
 import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
 import { Route as AppAuthenticatedProgressRouteImport } from './routes/_app/_authenticated/progress'
 import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
-import { Route as AppAuthenticatedAdminRouteImport } from './routes/_app/_authenticated/admin'
 import { Route as AppAuthenticatedStudySubjectRouteImport } from './routes/_app/_authenticated/study.$subject'
 
 const AuthRoute = AuthRouteImport.update({
@@ -78,11 +75,6 @@ const AppTestsRoute = AppTestsRouteImport.update({
   path: '/tests',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppSyllabusRoute = AppSyllabusRouteImport.update({
-  id: '/syllabus',
-  path: '/syllabus',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppLabsRoute = AppLabsRouteImport.update({
   id: '/labs',
   path: '/labs',
@@ -117,12 +109,6 @@ const AppCommunityGroupIdRoute = AppCommunityGroupIdRouteImport.update({
   path: '/$groupId',
   getParentRoute: () => AppCommunityRoute,
 } as any)
-const AppAuthenticatedSubscriptionRoute =
-  AppAuthenticatedSubscriptionRouteImport.update({
-    id: '/subscription',
-    path: '/subscription',
-    getParentRoute: () => AppAuthenticatedRouteRoute,
-  } as any)
 const AppAuthenticatedScheduleRoute =
   AppAuthenticatedScheduleRouteImport.update({
     id: '/schedule',
@@ -145,11 +131,6 @@ const AppAuthenticatedNotesRoute = AppAuthenticatedNotesRouteImport.update({
   path: '/notes',
   getParentRoute: () => AppAuthenticatedRouteRoute,
 } as any)
-const AppAuthenticatedAdminRoute = AppAuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AppAuthenticatedRouteRoute,
-} as any)
 const AppAuthenticatedStudySubjectRoute =
   AppAuthenticatedStudySubjectRouteImport.update({
     id: '/study/$subject',
@@ -165,19 +146,16 @@ export interface FileRoutesByFullPath {
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
-  '/syllabus': typeof AppSyllabusRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
-  '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
-  '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -189,19 +167,16 @@ export interface FileRoutesByTo {
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
-  '/syllabus': typeof AppSyllabusRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
-  '/admin': typeof AppAuthenticatedAdminRoute
   '/notes': typeof AppAuthenticatedNotesRoute
   '/profile': typeof AppAuthenticatedProfileRoute
   '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
-  '/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -216,19 +191,16 @@ export interface FileRoutesById {
   '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
   '/_app/labs': typeof AppLabsRoute
-  '/_app/syllabus': typeof AppSyllabusRoute
   '/_app/tests': typeof AppTestsRoute
   '/_app/tutor': typeof AppTutorRoute
   '/_app/visualize': typeof AppVisualizeRoute
   '/api/chat': typeof ApiChatRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/join/$token': typeof JoinTokenRoute
-  '/_app/_authenticated/admin': typeof AppAuthenticatedAdminRoute
   '/_app/_authenticated/notes': typeof AppAuthenticatedNotesRoute
   '/_app/_authenticated/profile': typeof AppAuthenticatedProfileRoute
   '/_app/_authenticated/progress': typeof AppAuthenticatedProgressRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
-  '/_app/_authenticated/subscription': typeof AppAuthenticatedSubscriptionRoute
   '/_app/community/$groupId': typeof AppCommunityGroupIdRoute
   '/_app/_authenticated/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
@@ -242,19 +214,16 @@ export interface FileRouteTypes {
     | '/hamiverse'
     | '/identify'
     | '/labs'
-    | '/syllabus'
     | '/tests'
     | '/tutor'
     | '/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
-    | '/admin'
     | '/notes'
     | '/profile'
     | '/progress'
     | '/schedule'
-    | '/subscription'
     | '/community/$groupId'
     | '/study/$subject'
   fileRoutesByTo: FileRoutesByTo
@@ -266,19 +235,16 @@ export interface FileRouteTypes {
     | '/hamiverse'
     | '/identify'
     | '/labs'
-    | '/syllabus'
     | '/tests'
     | '/tutor'
     | '/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
-    | '/admin'
     | '/notes'
     | '/profile'
     | '/progress'
     | '/schedule'
-    | '/subscription'
     | '/community/$groupId'
     | '/study/$subject'
   id:
@@ -292,19 +258,16 @@ export interface FileRouteTypes {
     | '/_app/hamiverse'
     | '/_app/identify'
     | '/_app/labs'
-    | '/_app/syllabus'
     | '/_app/tests'
     | '/_app/tutor'
     | '/_app/visualize'
     | '/api/chat'
     | '/api/generate-image'
     | '/join/$token'
-    | '/_app/_authenticated/admin'
     | '/_app/_authenticated/notes'
     | '/_app/_authenticated/profile'
     | '/_app/_authenticated/progress'
     | '/_app/_authenticated/schedule'
-    | '/_app/_authenticated/subscription'
     | '/_app/community/$groupId'
     | '/_app/_authenticated/study/$subject'
   fileRoutesById: FileRoutesById
@@ -383,13 +346,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTestsRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/syllabus': {
-      id: '/_app/syllabus'
-      path: '/syllabus'
-      fullPath: '/syllabus'
-      preLoaderRoute: typeof AppSyllabusRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/labs': {
       id: '/_app/labs'
       path: '/labs'
@@ -439,13 +395,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCommunityGroupIdRouteImport
       parentRoute: typeof AppCommunityRoute
     }
-    '/_app/_authenticated/subscription': {
-      id: '/_app/_authenticated/subscription'
-      path: '/subscription'
-      fullPath: '/subscription'
-      preLoaderRoute: typeof AppAuthenticatedSubscriptionRouteImport
-      parentRoute: typeof AppAuthenticatedRouteRoute
-    }
     '/_app/_authenticated/schedule': {
       id: '/_app/_authenticated/schedule'
       path: '/schedule'
@@ -474,13 +423,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedNotesRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
-    '/_app/_authenticated/admin': {
-      id: '/_app/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AppAuthenticatedAdminRouteImport
-      parentRoute: typeof AppAuthenticatedRouteRoute
-    }
     '/_app/_authenticated/study/$subject': {
       id: '/_app/_authenticated/study/$subject'
       path: '/study/$subject'
@@ -492,22 +434,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppAuthenticatedRouteRouteChildren {
-  AppAuthenticatedAdminRoute: typeof AppAuthenticatedAdminRoute
   AppAuthenticatedNotesRoute: typeof AppAuthenticatedNotesRoute
   AppAuthenticatedProfileRoute: typeof AppAuthenticatedProfileRoute
   AppAuthenticatedProgressRoute: typeof AppAuthenticatedProgressRoute
   AppAuthenticatedScheduleRoute: typeof AppAuthenticatedScheduleRoute
-  AppAuthenticatedSubscriptionRoute: typeof AppAuthenticatedSubscriptionRoute
   AppAuthenticatedStudySubjectRoute: typeof AppAuthenticatedStudySubjectRoute
 }
 
 const AppAuthenticatedRouteRouteChildren: AppAuthenticatedRouteRouteChildren = {
-  AppAuthenticatedAdminRoute: AppAuthenticatedAdminRoute,
   AppAuthenticatedNotesRoute: AppAuthenticatedNotesRoute,
   AppAuthenticatedProfileRoute: AppAuthenticatedProfileRoute,
   AppAuthenticatedProgressRoute: AppAuthenticatedProgressRoute,
   AppAuthenticatedScheduleRoute: AppAuthenticatedScheduleRoute,
-  AppAuthenticatedSubscriptionRoute: AppAuthenticatedSubscriptionRoute,
   AppAuthenticatedStudySubjectRoute: AppAuthenticatedStudySubjectRoute,
 }
 
@@ -535,7 +473,6 @@ interface AppRouteRouteChildren {
   AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
   AppLabsRoute: typeof AppLabsRoute
-  AppSyllabusRoute: typeof AppSyllabusRoute
   AppTestsRoute: typeof AppTestsRoute
   AppTutorRoute: typeof AppTutorRoute
   AppVisualizeRoute: typeof AppVisualizeRoute
@@ -548,7 +485,6 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
   AppLabsRoute: AppLabsRoute,
-  AppSyllabusRoute: AppSyllabusRoute,
   AppTestsRoute: AppTestsRoute,
   AppTutorRoute: AppTutorRoute,
   AppVisualizeRoute: AppVisualizeRoute,
@@ -569,13 +505,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
