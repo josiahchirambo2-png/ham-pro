@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import { Lock, Users, Loader2, LogIn } from "lucide-react";
+import { Lock, Users, Loader2, LogIn, KeyRound } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/join/$token")({
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/join/$token")({
   component: JoinPage,
 });
 
-type GroupPreview = { id: string; name: string; description: string | null; subject: string | null; is_private: boolean };
+type GroupPreview = { id: string; name: string; description: string | null; subject: string | null; is_private: boolean; requires_password?: boolean };
 
 function JoinPage() {
   const { token } = Route.useParams();
@@ -27,6 +28,7 @@ function JoinPage() {
   const [loading, setLoading] = useState(true);
   const [signedIn, setSignedIn] = useState(false);
   const [joining, setJoining] = useState(false);
+  const [password, setPassword] = useState("");
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
@@ -56,8 +58,9 @@ function JoinPage() {
       navigate({ to: "/auth" });
       return;
     }
+    if (group?.requires_password && !password.trim()) { toast.error("This group needs the password from your invite"); return; }
     setJoining(true);
-    const { data, error } = await supabase.rpc("join_group_by_invite", { _token: token });
+    const { data, error } = await (supabase as any).rpc("join_group_by_invite", { _token: token, _password: password.trim() || null });
     setJoining(false);
     if (error) { toast.error(error.message); return; }
     toast.success(`Joined ${group?.name ?? "the group"}`);
@@ -91,6 +94,16 @@ function JoinPage() {
             </h1>
             {group.subject && <p className="mt-1 text-sm text-muted-foreground">{group.subject}</p>}
             {group.description && <p className="mt-3 text-sm">{group.description}</p>}
+            {group.requires_password && (
+              <div className="mt-5 text-left">
+                <label className="text-xs flex items-center gap-1.5 text-muted-foreground">
+                  <KeyRound className="size-3.5" /> Group password
+                </label>
+                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off"
+                  className="mt-1" placeholder="Sent with your invite" maxLength={64}
+                  onKeyDown={(e) => { if (e.key === "Enter") accept(); }} />
+              </div>
+            )}
             <Button className="mt-6 w-full" size="lg" onClick={accept} disabled={joining}>
               {joining ? <><Loader2 className="size-4 animate-spin" /> Joining…</>
                 : signedIn ? <>Accept invite &amp; open chat</>
