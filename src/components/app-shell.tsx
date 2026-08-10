@@ -72,35 +72,35 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </Link>
-          <nav className="hidden md:flex items-center gap-1 overflow-x-auto">
+          <nav className="hidden lg:flex items-center gap-0.5 overflow-x-auto no-scrollbar max-w-[62vw]">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
-                className="px-3 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors"
-                activeProps={{ className: "px-3 py-1.5 rounded-md text-sm font-medium text-primary bg-accent/50" }}
+                className="px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors"
+                activeProps={{ className: "px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-primary bg-accent/50" }}
               >
                 {n.label}
               </Link>
             ))}
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors whitespace-nowrap">
+              className="px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors whitespace-nowrap">
               About the Developer
             </a>
           </nav>
           <div className="flex items-center gap-2">
             {signedIn ? (
-              <Button size="sm" variant="ghost" onClick={signOut} className="hidden md:inline-flex">
+              <Button size="sm" variant="ghost" onClick={signOut} className="hidden lg:inline-flex">
                 <LogOut className="size-4" /> Sign out
               </Button>
             ) : (
-              <Button size="sm" variant="default" asChild className="hidden md:inline-flex">
+              <Button size="sm" variant="default" asChild className="hidden lg:inline-flex">
                 <Link to="/auth"><LogIn className="size-4" /> Sign in</Link>
               </Button>
             )}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button size="icon" variant="ghost" className="md:hidden"><Menu /></Button>
+                <Button size="icon" variant="ghost" className="lg:hidden"><Menu /></Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-72">
                 <div className="mt-8 flex flex-col gap-1">
