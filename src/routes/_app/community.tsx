@@ -23,6 +23,7 @@ function Community() {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [isPrivate, setIsPrivate] = useState(true);
+  const [groupPassword, setGroupPassword] = useState("");
   const [creating, setCreating] = useState(false);
   const matchRoute = useMatchRoute();
   const inChild = !!matchRoute({ to: "/community/$groupId" });
@@ -52,9 +53,13 @@ function Community() {
     if (error || !data) { setCreating(false); toast.error(error?.message ?? "Could not create group"); return; }
     if (isPrivate) {
       await supabase.from("group_members").insert({ group_id: data.id, user_id: me, added_by: me });
+      if (groupPassword.trim().length >= 4) {
+        const { error: pwErr } = await (supabase as any).rpc("set_group_password", { _group_id: data.id, _password: groupPassword.trim() });
+        if (pwErr) toast.error(`Group created, but the password failed: ${pwErr.message}`);
+      }
     }
     setCreating(false); setShowCreate(false);
-    setName(""); setSubject(""); setDescription(""); setIsPrivate(true);
+    setName(""); setSubject(""); setDescription(""); setIsPrivate(true); setGroupPassword("");
     toast.success("Group created");
     load();
   }
@@ -89,6 +94,16 @@ function Community() {
             <input type="checkbox" checked={isPrivate} onChange={(e) => setIsPrivate(e.target.checked)} />
             Private — only people you invite can see or chat here
           </label>
+          {isPrivate && (
+            <div className="space-y-1">
+              <Label>Group password (optional, min 4 characters)</Label>
+              <Input type="password" value={groupPassword} onChange={(e) => setGroupPassword(e.target.value)}
+                placeholder="Sent along with your invite link" maxLength={64} autoComplete="new-password" />
+              <p className="text-xs text-muted-foreground">
+                Anyone opening your invite link must type this password to join. You can change it any time from inside the group.
+              </p>
+            </div>
+          )}
           <Button type="submit" disabled={creating || !name.trim()}>{creating ? "Creating…" : "Create group"}</Button>
         </form>
       )}
