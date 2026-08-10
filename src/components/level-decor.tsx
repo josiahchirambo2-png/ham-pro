@@ -5,7 +5,10 @@ import { APPEARANCE_EVENT, getLevelText } from "@/lib/appearance";
 export function useLevelTier(): LevelTier {
   const [tier, setTier] = useState<LevelTier>("secondary");
   useEffect(() => {
-    const read = () => setTier(detectTier(getLevelText()));
+    const read = () => {
+      const text = getLevelText();
+      setTier(text ? detectTier(text) : "secondary");
+    };
     read();
     window.addEventListener(APPEARANCE_EVENT, read);
     return () => window.removeEventListener(APPEARANCE_EVENT, read);
