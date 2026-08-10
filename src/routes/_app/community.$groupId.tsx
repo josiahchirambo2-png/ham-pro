@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock, Link2 } from "lucide-react";
+import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock, Link2, KeyRound } from "lucide-react";
 import { moderateMessage } from "@/lib/moderation";
 import { toast } from "sonner";
 
@@ -27,6 +27,10 @@ function GroupChat() {
   const [showInvite, setShowInvite] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviting, setInviting] = useState(false);
+  const [showPw, setShowPw] = useState(false);
+  const [newPw, setNewPw] = useState("");
+  const [savingPw, setSavingPw] = useState(false);
+  const [hasPw, setHasPw] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { supabase.auth.getUser().then(({ data }) => setMe(data.user?.id ?? null)); }, []);
@@ -43,6 +47,11 @@ function GroupChat() {
         (p) => setMsgs((m) => m.map((x) => x.id === (p.new as Msg).id ? (p.new as Msg) : x)))
       .subscribe();
     return () => { supabase.removeChannel(ch); };
+  }, [groupId]);
+
+  useEffect(() => {
+    (supabase as any).rpc("group_has_password", { _group_id: groupId })
+      .then(({ data }: { data: boolean | null }) => setHasPw(!!data));
   }, [groupId]);
 
   useEffect(() => {
@@ -105,11 +114,27 @@ function GroupChat() {
 
   const isOwner = !!group && !!me && group.created_by === me;
 
+  async function savePassword(e: React.FormEvent) {
+    e.preventDefault();
+    const pw = newPw.trim();
+    if (pw && pw.length < 4) { toast.error("Password must be at least 4 characters"); return; }
+    setSavingPw(true);
+    const { error } = await (supabase as any).rpc("set_group_password", { _group_id: groupId, _password: pw || null });
+    setSavingPw(false);
+    if (error) { toast.error(error.message); return; }
+    setHasPw(!!pw);
+    setNewPw(""); setShowPw(false);
+    toast.success(pw ? "Group password updated — share it with your invite link" : "Group password removed");
+  }
+
   async function copyInviteLink(token: string) {
     const url = `${window.location.origin}/join/${token}`;
+    const text = hasPw
+      ? `Join my HAM PRO study group: ${url}\nGroup password: (ask me — set by the group owner)`
+      : url;
     try {
-      await navigator.clipboard.writeText(url);
-      toast.success("Invite link copied — share it with anyone");
+      await navigator.clipboard.writeText(text);
+      toast.success(hasPw ? "Invite copied — remember to send the password too" : "Invite link copied — share it with anyone");
     } catch {
       toast.message("Invite link", { description: url });
     }
@@ -137,10 +162,23 @@ function GroupChat() {
                   <UserPlus className="size-4" /> Invite by name
                 </Button>
               )}
+              {group?.is_private && (
+                <Button size="sm" variant="outline" onClick={() => setShowPw((v) => !v)}>
+                  <KeyRound className="size-4" /> {hasPw ? "Change password" : "Set password"}
+                </Button>
+              )}
             </div>
           )}
         </div>
       </div>
+      {showPw && isOwner && (
+        <form onSubmit={savePassword} className="border-b p-3 flex flex-wrap gap-2 items-center bg-muted/30">
+          <Input type="password" value={newPw} onChange={(e) => setNewPw(e.target.value)} autoComplete="new-password"
+            placeholder={hasPw ? "New password (leave blank to remove)" : "New group password (min 4 characters)"} className="flex-1 min-w-48" maxLength={64} />
+          <Button type="submit" size="sm" disabled={savingPw}>{savingPw ? "Saving…" : "Save"}</Button>
+          <p className="w-full text-xs text-muted-foreground">Send this password together with the invite link. Only you can change it.</p>
+        </form>
+      )}
       {showInvite && (
         <form onSubmit={invite} className="border-b p-3 flex gap-2 bg-muted/30">
           <Input value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="Friend's display name" />
