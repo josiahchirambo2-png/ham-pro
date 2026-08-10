@@ -5,17 +5,23 @@ import { Button } from "./ui/button";
 import { LogIn, LogOut, Menu, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { isAdmin as checkAdmin } from "@/lib/subscription";
+import { APPEARANCE_EVENT, getCourseId } from "@/lib/appearance";
+import { courseById } from "@/lib/courses";
 
 const NAV = [
   { to: "/dashboard", label: "Home" },
+  { to: "/courses", label: "Courses" },
   { to: "/tutor", label: "HAM Tutor" },
   { to: "/identify", label: "Identify" },
   { to: "/notes", label: "Notes" },
-  { to: "/syllabus", label: "Syllabus" },
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
-  { to: "/subscription", label: "Premium" },
+  { to: "/hamiverse", label: "HAMIVERSE" },
+  { to: "/visualize", label: "AI Visuals" },
+  { to: "/community", label: "Study Groups" },
+  { to: "/schedule", label: "Schedule" },
+  { to: "/progress", label: "Progress" },
+  { to: "/appearance", label: "Scheme" },
   { to: "/profile", label: "Profile" },
 ] as const;
 
@@ -24,18 +30,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState<boolean>(false);
-  const [admin, setAdmin] = useState(false);
+  const [courseId, setCourseId] = useState("general");
+
+  useEffect(() => {
+    const read = () => setCourseId(getCourseId());
+    read();
+    window.addEventListener(APPEARANCE_EVENT, read);
+    return () => window.removeEventListener(APPEARANCE_EVENT, read);
+  }, []);
 
   useEffect(() => {
     let mounted = true;
-    supabase.auth.getSession().then(async ({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       if (!mounted) return;
       setSignedIn(!!data.session);
-      if (data.session) setAdmin(await checkAdmin());
     });
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_e, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       setSignedIn(!!session);
-      setAdmin(session ? await checkAdmin() : false);
     });
     return () => { mounted = false; sub.subscription.unsubscribe(); };
   }, []);
@@ -53,7 +64,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-dvh flex flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between gap-4">
-          <Link to="/dashboard"><Logo /></Link>
+          <Link to="/dashboard" className="flex items-center gap-2">
+            <Logo />
+            {courseId !== "general" && (
+              <span className="hidden sm:inline text-[11px] rounded-full border border-border px-2 py-0.5 text-muted-foreground">
+                {courseById(courseId).emoji} {courseById(courseId).name}
+              </span>
+            )}
+          </Link>
           <nav className="hidden md:flex items-center gap-1 overflow-x-auto">
             {NAV.map((n) => (
               <Link
@@ -65,10 +83,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 {n.label}
               </Link>
             ))}
-            {admin && (
-              <Link to="/admin" className="px-3 py-1.5 rounded-md text-sm font-semibold text-primary hover:bg-accent/40"
-                activeProps={{ className: "px-3 py-1.5 rounded-md text-sm font-semibold text-primary bg-accent/60" }}>Admin</Link>
-            )}
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors whitespace-nowrap">
               About the Developer
@@ -100,9 +114,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       {n.label}
                     </Link>
                   ))}
-                  {admin && (
-                    <Link to="/admin" className="px-3 py-2.5 rounded-md text-base font-semibold text-primary hover:bg-accent/60">Admin</Link>
-                  )}
                   <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
                     className="px-3 py-2.5 rounded-md text-base font-medium text-foreground hover:bg-accent/50 inline-flex items-center gap-2">
                     <UserRound className="size-4" /> About the Developer
