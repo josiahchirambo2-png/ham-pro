@@ -1,23 +1,58 @@
+/* ---------------------------------------------------------------------------
+ * TESTS MODULE  ·  hand-written by Josiah Brian Chirambo
+ * Two engines live in this file:
+ *   1. instantTest()  - AI generated practice paper (falls back to the local
+ *                       bank whenever the network or the model is unavailable)
+ *   2. openPaper()    - ECZ past papers, typed out by hand, zero latency
+ * Everything below is plain React state. No form library, no query cache.
+ * ------------------------------------------------------------------------- */
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { generateTest } from "@/lib/identify.functions";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, GraduationCap, CheckCircle2, XCircle, WifiOff } from "lucide-react";
+import { Loader2, GraduationCap, CheckCircle2, XCircle, WifiOff, FileText, Terminal, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { getOfflineQuestions } from "@/lib/offline-test-bank";
+import { ECZ_PAPERS, type EczPaper } from "@/lib/ecz-past-papers";
 
 export const Route = createFileRoute("/_app/tests")({
-  head: () => ({ meta: [{ title: "Tests — HAM PRO" }] }),
+  head: () => ({
+    meta: [
+      { title: "Tests and ECZ Past Papers — HAM PRO" },
+      { name: "description", content: "Generate an instant practice test on any subject, or open real ECZ past papers and answer them question by question." },
+      { property: "og:title", content: "Tests and ECZ Past Papers — HAM PRO" },
+      { property: "og:description", content: "Instant AI practice tests plus hand-typed ECZ past papers, online or offline." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Tests,
 });
 
 type Q = { q: string; options: string[]; answer: number; explanation: string };
 
+/* A tiny source-stamp strip. It exists so the app wears its craft openly:
+   these parts were typed by hand, not scaffolded. */
+function SourceStamp({ file, note }: { file: string; note: string }) {
+  return (
+    <div className="mt-4 flex items-start gap-2 rounded-lg border border-dashed bg-muted/40 px-3 py-2 font-mono text-[11px] leading-relaxed text-muted-foreground">
+      <Terminal className="mt-0.5 size-3.5 shrink-0" />
+      <span>
+        <span className="text-foreground">{file}</span> — {note}
+      </span>
+    </div>
+  );
+}
+
 function Tests() {
+  const [tab, setTab] = useState("practice");
+
+  // ---- practice engine state -------------------------------------------
   const [subject, setSubject] = useState("Mathematics");
   const [level, setLevel] = useState("Grade 8 (Zambian ECZ)");
   const [count, setCount] = useState(5);
@@ -25,8 +60,8 @@ function Tests() {
   const [qs, setQs] = useState<Q[]>([]);
   const [picks, setPicks] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [source, setSource] = useState<string>("");
   const [online, setOnline] = useState<boolean>(() => (typeof navigator === "undefined" ? true : navigator.onLine));
-  const [usedOffline, setUsedOffline] = useState(false);
   const gen = useServerFn(generateTest);
 
   useEffect(() => {
@@ -37,24 +72,37 @@ function Tests() {
     return () => { window.removeEventListener("online", on); window.removeEventListener("offline", off); };
   }, []);
 
+  function loadQuestions(list: Q[], label: string) {
+    setQs(list); setPicks({}); setSubmitted(false); setSource(label);
+  }
+
   function startOffline(reason?: string) {
-    const c = Math.max(3, Math.min(30, Math.round(count)));
+    const c = clamp(count);
     const offline = getOfflineQuestions(subject, c);
-    if (offline.length === 0) { toast.error("No offline questions for this subject"); return; }
-    setQs(offline); setUsedOffline(true);
+    if (offline.length === 0) { toast.error("No offline questions for this subject yet — try Mathematics, Science or English."); return; }
+    loadQuestions(offline, "built-in question bank");
     if (reason) toast.message(reason);
   }
 
-  async function start() {
-    setBusy(true); setSubmitted(false); setPicks({}); setUsedOffline(false);
-    const c = Math.max(3, Math.min(30, Math.round(count)));
-    if (!online) { startOffline("You're offline — using built-in question bank."); setBusy(false); return; }
+  async function instantTest() {
+    setBusy(true);
+    const c = clamp(count);
+    if (!online) { startOffline("You are offline — using the built-in question bank."); setBusy(false); return; }
     try {
       const r = await gen({ data: { subject, level, count: c } });
-      setQs(r.questions);
+      if (!r?.questions?.length) throw new Error("empty response");
+      loadQuestions(r.questions, `HAM generated · ${subject} · ${level}`);
     } catch (e: any) {
-      startOffline(`Couldn't reach AI — using offline questions. (${e?.message ?? "network error"})`);
+      startOffline(`HAM could not be reached — switched to offline questions. (${e?.message ?? "network error"})`);
     } finally { setBusy(false); }
+  }
+
+  function openPaper(p: EczPaper) {
+    loadQuestions(p.questions, `ECZ ${p.subject} ${p.level} ${p.year} ${p.paper}`);
+    setSubject(p.subject);
+    setLevel(`${p.level} (Zambian ECZ)`);
+    setTab("practice");
+    toast.success(`Opened ECZ ${p.subject} ${p.year}`);
   }
 
   const score = qs.reduce((n, q, i) => n + (picks[i] === q.answer ? 1 : 0), 0);
@@ -65,39 +113,73 @@ function Tests() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) await supabase.from("test_attempts").insert({ user_id: user.id, subject, level, score, total: qs.length });
-    } catch { /* offline / network — silent */ }
+    } catch { /* offline or signed out — scoring still works locally */ }
   }
+
+  const papersBySubject = useMemo(() => {
+    const map = new Map<string, EczPaper[]>();
+    for (const p of ECZ_PAPERS) map.set(p.subject, [...(map.get(p.subject) ?? []), p]);
+    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  }, []);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-3xl font-bold flex items-center gap-2"><GraduationCap className="text-primary" /> Tests</h1>
-      <p className="text-muted-foreground mt-1">Generate an instant practice test for any subject and level. Works offline too.</p>
+      <p className="text-muted-foreground mt-1">Generate a practice test in one tap, or sit a real ECZ past paper.</p>
+
       {!online && (
         <div className="mt-4 flex items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm">
-          <WifiOff className="size-4" /> You're offline — tests use the built-in question bank.
+          <WifiOff className="size-4" /> You are offline — tests fall back to the built-in bank and past papers still open.
         </div>
       )}
-      <div className="mt-6 grid sm:grid-cols-2 gap-3 rounded-2xl border bg-card p-5">
-        <div><Label>Subject</Label><Input value={subject} onChange={(e) => setSubject(e.target.value)} /></div>
-        <div><Label>Level</Label><Input value={level} onChange={(e) => setLevel(e.target.value)} /></div>
-        <div>
-          <Label>Number of questions</Label>
-          <Input type="number" min={3} max={30} value={count} onChange={(e) => setCount(Number(e.target.value) || 5)} />
-        </div>
-        <div className="flex items-end">
-          <Button onClick={start} disabled={busy} className="w-full">
-            {busy ? <><Loader2 className="size-4 animate-spin" /> Generating…</> : `Generate ${Math.max(3, Math.min(30, Math.round(count)))} questions`}
-          </Button>
-        </div>
-        <Button variant="outline" onClick={() => startOffline()} disabled={busy} className="sm:col-span-2">
-          Use offline question bank
-        </Button>
-      </div>
+
+      <Tabs value={tab} onValueChange={setTab} className="mt-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="practice"><Zap className="size-4 mr-1" /> Practice test</TabsTrigger>
+          <TabsTrigger value="ecz"><FileText className="size-4 mr-1" /> ECZ past papers</TabsTrigger>
+        </TabsList>
+
+        {/* -------------------- PRACTICE -------------------- */}
+        <TabsContent value="practice" className="mt-4">
+          <div className="rounded-2xl border bg-card p-5">
+            <Button onClick={instantTest} disabled={busy} size="lg" className="w-full">
+              {busy ? <><Loader2 className="size-4 animate-spin" /> Building your test…</> : <>Generate a test instantly</>}
+            </Button>
+            <div className="mt-4 grid sm:grid-cols-3 gap-3">
+              <div><Label>Subject</Label><Input value={subject} onChange={(e) => setSubject(e.target.value)} /></div>
+              <div><Label>Level</Label><Input value={level} onChange={(e) => setLevel(e.target.value)} /></div>
+              <div><Label>Questions</Label><Input type="number" min={3} max={30} value={count} onChange={(e) => setCount(Number(e.target.value) || 5)} /></div>
+            </div>
+            <Button variant="outline" onClick={() => startOffline()} disabled={busy} className="mt-3 w-full">
+              Use the offline question bank
+            </Button>
+            <SourceStamp file="tests.tsx · instantTest()" note="hand-written fallback chain: AI first, local bank second, never a blank screen." />
+          </div>
+        </TabsContent>
+
+        {/* -------------------- ECZ PAST PAPERS -------------------- */}
+        <TabsContent value="ecz" className="mt-4 space-y-5">
+          {papersBySubject.map(([subj, papers]) => (
+            <div key={subj} className="rounded-2xl border bg-card p-5">
+              <h2 className="font-semibold">{subj}</h2>
+              <div className="mt-3 grid sm:grid-cols-2 gap-2">
+                {papers.map((p) => (
+                  <button key={p.id} onClick={() => openPaper(p)}
+                    className="text-left rounded-xl border px-4 py-3 transition hover:border-primary hover:bg-accent/40">
+                    <div className="font-medium text-sm">{p.level} · {p.year}</div>
+                    <div className="text-xs text-muted-foreground">{p.paper} · {p.questions.length} questions</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          <SourceStamp file="ecz-past-papers.ts" note="past papers typed out by hand by Josiah Brian Chirambo — no fetch, no AI, instant offline." />
+        </TabsContent>
+      </Tabs>
+
       {qs.length > 0 && (
         <div className="mt-6 space-y-4">
-          {usedOffline && (
-            <div className="text-xs text-muted-foreground">Showing offline questions from the built-in bank.</div>
-          )}
+          {source && <div className="text-xs text-muted-foreground">Source: {source}</div>}
           {qs.map((q, i) => (
             <div key={i} className="rounded-xl border bg-card p-5">
               <p className="font-medium">{i + 1}. {q.q}</p>
@@ -130,3 +212,6 @@ function Tests() {
     </div>
   );
 }
+
+// clamp the requested question count into a sane range
+function clamp(n: number) { return Math.max(3, Math.min(30, Math.round(n || 5))); }
