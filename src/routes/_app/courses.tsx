@@ -57,7 +57,9 @@ function Courses() {
               className={`text-left rounded-2xl border bg-card p-6 transition hover:shadow-[var(--shadow-leaf)] ${active ? "border-primary ring-2 ring-primary/40" : "border-border"}`}
             >
               <div className="flex items-start justify-between">
-                <span className="text-3xl" aria-hidden="true">{c.emoji}</span>
+                <span className="size-11 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
+                  <c.icon className="size-5" aria-hidden="true" />
+                </span>
                 {active && <Check className="size-5 text-primary" />}
               </div>
               <h2 className="mt-3 font-semibold">{c.name}</h2>

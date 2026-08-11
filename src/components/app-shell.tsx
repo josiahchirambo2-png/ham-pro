@@ -68,7 +68,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Logo />
             {courseId !== "general" && (
               <span className="hidden sm:inline text-[11px] rounded-full border border-border px-2 py-0.5 text-muted-foreground">
-                {courseById(courseId).emoji} {courseById(courseId).name}
+                {(() => { const C = courseById(courseId).icon; return <C className="size-3 inline-block mr-1 -mt-0.5" aria-hidden="true" />; })()}
+                {courseById(courseId).name}
               </span>
             )}
           </Link>

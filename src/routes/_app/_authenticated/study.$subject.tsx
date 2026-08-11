@@ -115,7 +115,7 @@ function StudyPage() {
 
       {phase === "done" && quiz && (
         <div className="mt-8 rounded-2xl border bg-card p-6 space-y-4">
-          <h2 className="text-2xl font-bold">Nice work! 🎉</h2>
+          <h2 className="text-2xl font-bold">Nice work</h2>
           {quiz.questions.map((q, i) => {
             const correct = answers[i] === q.answerIndex;
             return (

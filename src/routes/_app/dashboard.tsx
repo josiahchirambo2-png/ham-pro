@@ -45,7 +45,7 @@ function Dashboard() {
       <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
         <LevelDecor tier={tier} />
         <div className="relative">
-          <p className="text-xs uppercase tracking-wide opacity-80">{course.emoji} {course.name}</p>
+          <p className="text-xs uppercase tracking-wide opacity-80 flex items-center gap-1.5"><course.icon className="size-3.5" aria-hidden="true" /> {course.name}</p>
           <h1 className="mt-1 text-3xl md:text-4xl font-bold">Welcome back</h1>
           <p className="mt-2 opacity-90 max-w-xl">{course.greeting}</p>
           <div className="mt-4 flex flex-wrap gap-2">
