@@ -1,7 +1,13 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  Sprout, Microscope, Ruler, Laptop, Stethoscope, Cog, TrendingUp,
+  Scale, Palette, Wheat, Languages,
+} from "lucide-react";
+
 export type Course = {
   id: string;
   name: string;
-  emoji: string;
+  icon: LucideIcon;
   tagline: string;
   greeting: string;
   subjects: readonly string[];
@@ -11,7 +17,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "general",
     name: "General Learning",
-    emoji: "🌱",
+    icon: Sprout,
     tagline: "A bit of everything — the classic HAM PRO experience.",
     greeting: "Pick a tool below to keep growing your knowledge.",
     subjects: ["Mathematics", "English", "Science", "Social Studies"],
@@ -19,7 +25,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "sciences",
     name: "Pure Sciences",
-    emoji: "🔬",
+    icon: Microscope,
     tagline: "Physics, chemistry and biology, lab-first.",
     greeting: "Run an experiment, then let HAM explain the theory behind it.",
     subjects: ["Physics", "Chemistry", "Biology", "Environmental Science"],
@@ -27,7 +33,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "maths",
     name: "Mathematics",
-    emoji: "📐",
+    icon: Ruler,
     tagline: "Numbers, proofs and problem solving.",
     greeting: "Work a problem step by step — HAM shows every line.",
     subjects: ["Algebra", "Geometry", "Calculus", "Statistics"],
@@ -35,7 +41,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "computing",
     name: "Computer Science",
-    emoji: "💻",
+    icon: Laptop,
     tagline: "Code, algorithms and how machines think.",
     greeting: "Build, break and debug — HAM reviews your logic.",
     subjects: ["Programming", "Algorithms", "Databases", "Networks"],
@@ -43,7 +49,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "medicine",
     name: "Medicine & Health",
-    emoji: "🩺",
+    icon: Stethoscope,
     tagline: "Anatomy, physiology and clinical thinking.",
     greeting: "Study a system of the body, then test yourself on it.",
     subjects: ["Anatomy", "Physiology", "Biochemistry", "Public Health"],
@@ -51,7 +57,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "engineering",
     name: "Engineering",
-    emoji: "⚙️",
+    icon: Cog,
     tagline: "Mechanics, circuits and design.",
     greeting: "Model it, simulate it, then prove it with the maths.",
     subjects: ["Mechanics", "Electronics", "Thermodynamics", "Materials"],
@@ -59,7 +65,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "business",
     name: "Business & Economics",
-    emoji: "📈",
+    icon: TrendingUp,
     tagline: "Markets, money and management.",
     greeting: "Ask HAM to turn any concept into a real-world example.",
     subjects: ["Economics", "Accounting", "Marketing", "Entrepreneurship"],
@@ -67,7 +73,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "law",
     name: "Law & Civics",
-    emoji: "⚖️",
+    icon: Scale,
     tagline: "Rules, rights and reasoning.",
     greeting: "Argue both sides — HAM will challenge your reasoning.",
     subjects: ["Constitutional Law", "Civics", "Ethics", "Legal Writing"],
@@ -75,7 +81,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "arts",
     name: "Arts & Literature",
-    emoji: "🎨",
+    icon: Palette,
     tagline: "Stories, language and creative expression.",
     greeting: "Read closely, write boldly — HAM helps you edit.",
     subjects: ["Literature", "History", "Creative Writing", "Art"],
@@ -83,7 +89,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "agriculture",
     name: "Agriculture",
-    emoji: "🌾",
+    icon: Wheat,
     tagline: "Soil, crops, livestock and food systems.",
     greeting: "From seed to harvest — learn the science of growing.",
     subjects: ["Crop Science", "Soil Science", "Animal Husbandry", "Agribusiness"],
@@ -91,7 +97,7 @@ export const COURSES: readonly Course[] = [
   {
     id: "languages",
     name: "Languages",
-    emoji: "🗣️",
+    icon: Languages,
     tagline: "Speak, read and write in any language.",
     greeting: "Practise out loud — HAM speaks your language.",
     subjects: ["English", "French", "Bemba", "Nyanja"],
