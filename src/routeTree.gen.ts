@@ -26,6 +26,7 @@ import { Route as AppCoursesRouteImport } from './routes/_app/courses'
 import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppAppearanceRouteImport } from './routes/_app/appearance'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
+import { Route as ApiPublicQuestionsRouteImport } from './routes/api/public/questions'
 import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
 import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
 import { Route as AppAuthenticatedProgressRouteImport } from './routes/_app/_authenticated/progress'
@@ -116,6 +117,11 @@ const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const ApiPublicQuestionsRoute = ApiPublicQuestionsRouteImport.update({
+  id: '/api/public/questions',
+  path: '/api/public/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppCommunityGroupIdRoute = AppCommunityGroupIdRouteImport.update({
   id: '/$groupId',
   path: '/$groupId',
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
+  '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesByTo {
@@ -194,6 +201,7 @@ export interface FileRoutesByTo {
   '/progress': typeof AppAuthenticatedProgressRoute
   '/schedule': typeof AppAuthenticatedScheduleRoute
   '/community/$groupId': typeof AppCommunityGroupIdRoute
+  '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRoutesById {
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/_app/_authenticated/progress': typeof AppAuthenticatedProgressRoute
   '/_app/_authenticated/schedule': typeof AppAuthenticatedScheduleRoute
   '/_app/community/$groupId': typeof AppCommunityGroupIdRoute
+  '/api/public/questions': typeof ApiPublicQuestionsRoute
   '/_app/_authenticated/study/$subject': typeof AppAuthenticatedStudySubjectRoute
 }
 export interface FileRouteTypes {
@@ -245,6 +254,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/schedule'
     | '/community/$groupId'
+    | '/api/public/questions'
     | '/study/$subject'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -268,6 +278,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/schedule'
     | '/community/$groupId'
+    | '/api/public/questions'
     | '/study/$subject'
   id:
     | '__root__'
@@ -293,6 +304,7 @@ export interface FileRouteTypes {
     | '/_app/_authenticated/progress'
     | '/_app/_authenticated/schedule'
     | '/_app/community/$groupId'
+    | '/api/public/questions'
     | '/_app/_authenticated/study/$subject'
   fileRoutesById: FileRoutesById
 }
@@ -303,6 +315,7 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   JoinTokenRoute: typeof JoinTokenRoute
+  ApiPublicQuestionsRoute: typeof ApiPublicQuestionsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -426,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/api/public/questions': {
+      id: '/api/public/questions'
+      path: '/api/public/questions'
+      fullPath: '/api/public/questions'
+      preLoaderRoute: typeof ApiPublicQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/community/$groupId': {
       id: '/_app/community/$groupId'
       path: '/$groupId'
@@ -543,17 +563,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   ApiGenerateImageRoute: ApiGenerateImageRoute,
   JoinTokenRoute: JoinTokenRoute,
+  ApiPublicQuestionsRoute: ApiPublicQuestionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
