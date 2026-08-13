@@ -74,19 +74,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </Link>
-          <nav className="hidden lg:flex items-center gap-0.5 overflow-x-auto no-scrollbar max-w-[62vw]">
+          <nav className="hidden lg:flex items-center gap-0 overflow-x-auto no-scrollbar max-w-[62vw]">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
-                className="px-2.5 py-1.5 rounded-full text-[12px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors"
-                activeProps={{ className: "px-2.5 py-1.5 rounded-full text-[12px] tracking-wide uppercase whitespace-nowrap font-semibold text-primary bg-accent/40 az-glow-ring" }}
+                className="px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors"
+                activeProps={{ className: "px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-semibold text-primary bg-accent/40 az-glow-ring" }}
               >
                 {n.label}
               </Link>
             ))}
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
-              className="px-2.5 py-1.5 rounded-full text-[12px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors">
+              className="px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors">
               About the Developer
             </a>
           </nav>
