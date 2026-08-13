@@ -442,3 +442,57 @@
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ===== Aurelis UI kit — instrument-panel surfaces, tracked display type ===== */
+body { font-family: var(--font-sans); }
+
+.az-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+.az-eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+.az-gradient-text {
+  background: var(--gradient-leaf);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.az-panel {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 6px);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+.az-panel-hover { transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+.az-panel-hover:hover {
+  border-color: color-mix(in oklab, var(--primary) 55%, transparent);
+  box-shadow: var(--shadow-leaf);
+  transform: translateY(-2px);
+}
+.az-hairline { border-top: 1px solid color-mix(in oklab, var(--primary) 28%, transparent); }
+.az-grid-bg {
+  background-image:
+    linear-gradient(to right, var(--aurelis-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--aurelis-grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.az-glow-ring { box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent), 0 0 28px -8px color-mix(in oklab, var(--primary) 55%, transparent); }
+.az-dot {
+  width: 8px; height: 8px; border-radius: 9999px;
+  background: var(--primary);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--primary) 80%, transparent);
+}
+.az-meter { height: 3px; border-radius: 9999px; background: color-mix(in oklab, var(--foreground) 12%, transparent); overflow: hidden; }
+.az-meter > span { display: block; height: 100%; background: var(--gradient-leaf); }
+@media (prefers-reduced-motion: reduce) {
+  .az-panel-hover:hover { transform: none; }
+}
