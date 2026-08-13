@@ -42,16 +42,19 @@ function Dashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-12 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
         <LevelDecor tier={tier} />
+        <div className="pointer-events-none absolute inset-0 az-grid-bg opacity-40" aria-hidden="true" />
         <div className="relative">
-          <p className="text-xs uppercase tracking-wide opacity-80 flex items-center gap-1.5"><course.icon className="size-3.5" aria-hidden="true" /> {course.name}</p>
-          <h1 className="mt-1 text-3xl md:text-4xl font-bold">Welcome back</h1>
-          <p className="mt-2 opacity-90 max-w-xl">{course.greeting}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <p className="az-eyebrow inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 opacity-90 backdrop-blur">
+            <course.icon className="size-3.5" aria-hidden="true" /> {course.name}
+          </p>
+          <h1 className="az-display mt-4 text-4xl md:text-6xl leading-[1.05]">Welcome back</h1>
+          <p className="mt-3 opacity-85 max-w-xl text-[15px] leading-relaxed">{course.greeting}</p>
+          <div className="mt-6 flex flex-wrap gap-2">
             {course.subjects.map((s) => (
               <Link key={s} to="/study/$subject" params={{ subject: s }}
-                className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs backdrop-blur hover:bg-white/20 transition">
+                className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.14em] backdrop-blur hover:bg-white/20 hover:border-white/50 transition">
                 {s}
               </Link>
             ))}
@@ -59,14 +62,21 @@ function Dashboard() {
           <LevelMascots tier={tier} className="mt-6 md:hidden" />
         </div>
       </div>
-      <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {TILES.map((t) => (
-          <Link key={t.to} to={t.to} className="group rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-[var(--shadow-leaf)] transition">
-            <div className="size-11 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
+      <div className="mt-10 flex items-center justify-between gap-4">
+        <h2 className="az-display text-sm text-muted-foreground">Your path</h2>
+        <span className="hidden sm:block h-px flex-1 bg-border" aria-hidden="true" />
+        <span className="az-eyebrow inline-flex items-center gap-2 text-muted-foreground"><span className="az-dot" aria-hidden="true" /> Live</span>
+      </div>
+      <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {TILES.map((t, i) => (
+          <Link key={t.to} to={t.to} className="group az-panel az-panel-hover overflow-hidden p-6">
+            <span className="az-eyebrow text-muted-foreground/70">{String(i + 1).padStart(2, "0")}</span>
+            <div className="mt-3 size-11 rounded-xl flex items-center justify-center text-primary-foreground az-glow-ring" style={{ background: "var(--gradient-leaf)" }}>
               <t.icon className="size-5" />
             </div>
-            <h3 className="mt-4 font-semibold">{t.title}</h3>
-            <p className="text-sm text-muted-foreground mt-1">{t.desc}</p>
+            <h3 className="az-display mt-5 text-[15px]">{t.title}</h3>
+            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t.desc}</p>
+            <div className="az-meter mt-5"><span style={{ width: `${35 + ((i * 13) % 60)}%` }} /></div>
           </Link>
         ))}
       </div>
