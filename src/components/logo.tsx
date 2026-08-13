@@ -11,7 +11,7 @@ export function Logo({ className = "", size = 32 }: { className?: string; size?:
         className="dark:invert"
         style={{ width: size, height: size }}
       />
-      <span className="font-bold tracking-tight text-lg">HAM PRO</span>
+      <span className="az-display text-lg az-gradient-text">HAM PRO</span>
     </div>
   );
 }

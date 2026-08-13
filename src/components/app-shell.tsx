@@ -61,31 +61,32 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <div className="min-h-dvh flex flex-col bg-background">
-      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+    <div className="min-h-dvh flex flex-col bg-background az-grid-bg">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between gap-4">
-          <Link to="/dashboard" className="flex items-center gap-2">
+          <Link to="/dashboard" className="flex items-center gap-2.5">
+            <span className="az-dot" aria-hidden="true" />
             <Logo />
             {courseId !== "general" && (
-              <span className="hidden sm:inline text-[11px] rounded-full border border-border px-2 py-0.5 text-muted-foreground">
+              <span className="az-eyebrow hidden sm:inline rounded-full border border-border px-2.5 py-0.5 text-muted-foreground">
                 {(() => { const C = courseById(courseId).icon; return <C className="size-3 inline-block mr-1 -mt-0.5" aria-hidden="true" />; })()}
                 {courseById(courseId).name}
               </span>
             )}
           </Link>
-          <nav className="hidden lg:flex items-center gap-0.5 overflow-x-auto no-scrollbar max-w-[62vw]">
+          <nav className="hidden lg:flex items-center gap-0 overflow-x-auto no-scrollbar max-w-[62vw]">
             {NAV.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
-                className="px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors"
-                activeProps={{ className: "px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-primary bg-accent/50" }}
+                className="px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors"
+                activeProps={{ className: "px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-semibold text-primary bg-accent/40 az-glow-ring" }}
               >
                 {n.label}
               </Link>
             ))}
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer"
-              className="px-2.5 py-1.5 rounded-md text-[13px] whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors whitespace-nowrap">
+              className="px-2 py-1.5 rounded-full text-[11px] tracking-wide uppercase whitespace-nowrap font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors">
               About the Developer
             </a>
           </nav>
@@ -135,8 +136,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-border py-4 text-center text-[11px] text-muted-foreground/80">
-        HAM PRO © Josiah Brian Chirambo
+      <footer className="border-t border-border py-5 text-center">
+        <p className="az-eyebrow text-muted-foreground/80">HAM PRO © Josiah Brian Chirambo</p>
       </footer>
     </div>
   );
