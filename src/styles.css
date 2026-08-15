@@ -19,8 +19,6 @@
  */
 
 @theme inline {
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Orbitron", "Space Grotesk", ui-sans-serif, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -65,31 +63,30 @@
 
 :root {
   --radius: 0.75rem;
-  /* Aurelis light — cool porcelain with cyan/violet instrument accents */
-  --background: oklch(0.985 0.006 240);
-  --foreground: oklch(0.21 0.04 255);
+  /* Nature theme — leaf greens, bark browns, sky */
+  --background: oklch(0.985 0.012 130);
+  --foreground: oklch(0.22 0.04 150);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.04 255);
+  --card-foreground: oklch(0.22 0.04 150);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.04 255);
-  --primary: oklch(0.58 0.15 232);
-  --primary-foreground: oklch(0.99 0.005 240);
-  --primary-glow: oklch(0.72 0.16 210);
-  --secondary: oklch(0.95 0.02 245);
-  --secondary-foreground: oklch(0.3 0.05 255);
-  --muted: oklch(0.955 0.012 245);
-  --muted-foreground: oklch(0.48 0.03 250);
-  --accent: oklch(0.9 0.06 275);
-  --accent-foreground: oklch(0.24 0.06 275);
-  --destructive: oklch(0.6 0.2 22);
-  --destructive-foreground: oklch(0.99 0.005 240);
-  --border: oklch(0.9 0.015 245);
-  --input: oklch(0.93 0.012 245);
-  --ring: oklch(0.62 0.16 240);
-  --gradient-leaf: linear-gradient(135deg, oklch(0.72 0.16 210), oklch(0.55 0.2 285));
-  --gradient-canopy: linear-gradient(150deg, oklch(0.32 0.1 250), oklch(0.45 0.16 275) 55%, oklch(0.6 0.16 205));
-  --shadow-leaf: 0 18px 50px -18px oklch(0.5 0.16 255 / 0.45);
-  --aurelis-grid: oklch(0.55 0.05 250 / 0.1);
+  --popover-foreground: oklch(0.22 0.04 150);
+  --primary: oklch(0.48 0.13 152);
+  --primary-foreground: oklch(0.985 0.012 130);
+  --primary-glow: oklch(0.66 0.16 145);
+  --secondary: oklch(0.94 0.04 130);
+  --secondary-foreground: oklch(0.32 0.07 152);
+  --muted: oklch(0.95 0.02 140);
+  --muted-foreground: oklch(0.45 0.04 150);
+  --accent: oklch(0.88 0.09 110);
+  --accent-foreground: oklch(0.22 0.06 150);
+  --destructive: oklch(0.6 0.2 28);
+  --destructive-foreground: oklch(0.985 0.012 130);
+  --border: oklch(0.88 0.03 140);
+  --input: oklch(0.92 0.02 140);
+  --ring: oklch(0.55 0.13 150);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.48 0.13 152), oklch(0.66 0.16 145));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.32 0.08 152), oklch(0.55 0.14 145));
+  --shadow-leaf: 0 12px 40px -12px oklch(0.48 0.13 152 / 0.35);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -106,31 +103,29 @@
 }
 
 .dark {
-  /* Aurelis dark — observatory night, cyan → violet instrumentation */
-  --background: oklch(0.15 0.03 250);
-  --foreground: oklch(0.96 0.015 235);
-  --card: oklch(0.19 0.035 252);
-  --card-foreground: oklch(0.96 0.015 235);
-  --popover: oklch(0.19 0.035 252);
-  --popover-foreground: oklch(0.96 0.015 235);
-  --primary: oklch(0.78 0.15 205);
-  --primary-foreground: oklch(0.14 0.03 250);
-  --primary-glow: oklch(0.68 0.19 285);
-  --secondary: oklch(0.25 0.05 258);
-  --secondary-foreground: oklch(0.96 0.015 235);
-  --muted: oklch(0.23 0.04 255);
-  --muted-foreground: oklch(0.74 0.03 240);
-  --accent: oklch(0.42 0.14 285);
-  --accent-foreground: oklch(0.96 0.015 235);
-  --destructive: oklch(0.65 0.2 25);
-  --destructive-foreground: oklch(0.96 0.015 235);
-  --border: oklch(0.85 0.06 220 / 16%);
-  --input: oklch(0.85 0.06 220 / 20%);
-  --ring: oklch(0.78 0.15 205);
-  --gradient-leaf: linear-gradient(135deg, oklch(0.72 0.16 205), oklch(0.58 0.21 288));
-  --gradient-canopy: linear-gradient(150deg, oklch(0.17 0.05 250), oklch(0.26 0.12 275) 55%, oklch(0.4 0.14 205));
-  --shadow-leaf: 0 20px 60px -20px oklch(0.55 0.18 250 / 0.55);
-  --aurelis-grid: oklch(0.85 0.06 220 / 0.07);
+  --background: oklch(0.18 0.03 150);
+  --foreground: oklch(0.95 0.02 130);
+  --card: oklch(0.22 0.04 150);
+  --card-foreground: oklch(0.95 0.02 130);
+  --popover: oklch(0.22 0.04 150);
+  --popover-foreground: oklch(0.95 0.02 130);
+  --primary: oklch(0.7 0.16 145);
+  --primary-foreground: oklch(0.18 0.03 150);
+  --primary-glow: oklch(0.8 0.17 140);
+  --secondary: oklch(0.28 0.05 150);
+  --secondary-foreground: oklch(0.95 0.02 130);
+  --muted: oklch(0.26 0.04 150);
+  --muted-foreground: oklch(0.7 0.03 140);
+  --accent: oklch(0.4 0.1 130);
+  --accent-foreground: oklch(0.95 0.02 130);
+  --destructive: oklch(0.65 0.2 28);
+  --destructive-foreground: oklch(0.95 0.02 130);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.7 0.16 145);
+  --gradient-leaf: linear-gradient(135deg, oklch(0.4 0.12 152), oklch(0.65 0.16 145));
+  --gradient-canopy: linear-gradient(180deg, oklch(0.2 0.05 152), oklch(0.4 0.12 145));
+  --shadow-leaf: 0 12px 40px -12px oklch(0 0 0 / 0.6);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -442,57 +437,3 @@
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
-
-/* ===== Aurelis UI kit — instrument-panel surfaces, tracked display type ===== */
-body { font-family: var(--font-sans); }
-
-.az-display {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
-}
-.az-eyebrow {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.6875rem;
-  font-weight: 500;
-}
-.az-gradient-text {
-  background: var(--gradient-leaf);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.az-panel {
-  position: relative;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) + 6px);
-  background: color-mix(in oklab, var(--card) 88%, transparent);
-  backdrop-filter: blur(10px);
-}
-.az-panel-hover { transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
-.az-panel-hover:hover {
-  border-color: color-mix(in oklab, var(--primary) 55%, transparent);
-  box-shadow: var(--shadow-leaf);
-  transform: translateY(-2px);
-}
-.az-hairline { border-top: 1px solid color-mix(in oklab, var(--primary) 28%, transparent); }
-.az-grid-bg {
-  background-image:
-    linear-gradient(to right, var(--aurelis-grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--aurelis-grid) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-.az-glow-ring { box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent), 0 0 28px -8px color-mix(in oklab, var(--primary) 55%, transparent); }
-.az-dot {
-  width: 8px; height: 8px; border-radius: 9999px;
-  background: var(--primary);
-  box-shadow: 0 0 10px color-mix(in oklab, var(--primary) 80%, transparent);
-}
-.az-meter { height: 3px; border-radius: 9999px; background: color-mix(in oklab, var(--foreground) 12%, transparent); overflow: hidden; }
-.az-meter > span { display: block; height: 100%; background: var(--gradient-leaf); }
-@media (prefers-reduced-motion: reduce) {
-  .az-panel-hover:hover { transform: none; }
-}
