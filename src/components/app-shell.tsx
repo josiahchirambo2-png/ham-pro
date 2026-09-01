@@ -62,8 +62,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh flex flex-col bg-background">
-      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
+
           <Link to="/dashboard" className="flex items-center gap-2">
             <Logo />
             {courseId !== "general" && (

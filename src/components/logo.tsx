@@ -1,17 +1,21 @@
-import logoSrc from "@/assets/logo.png";
+import logoSrc from "@/assets/logo-chrome.png";
 
-export function Logo({ className = "", size = 32 }: { className?: string; size?: number }) {
+export function Logo({ className = "", size = 30 }: { className?: string; size?: number }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <img
-        src={logoSrc}
-        alt="HAM PRO logo"
-        width={size}
-        height={size}
-        className="dark:invert"
-        style={{ width: size, height: size }}
-      />
-      <span className="font-bold tracking-tight text-lg">HAM PRO</span>
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <span
+        className="grid place-items-center rounded-full border border-border bg-secondary/40 p-1"
+        style={{ width: size + 10, height: size + 10 }}
+      >
+        <img
+          src={logoSrc}
+          alt="HAM PRO chrome chip logo"
+          width={1024}
+          height={1024}
+          style={{ width: size, height: size }}
+        />
+      </span>
+      <span className="font-semibold uppercase tracking-[0.22em] text-sm">HAM PRO</span>
     </div>
   );
 }
