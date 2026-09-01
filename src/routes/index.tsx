@@ -3,14 +3,19 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
-import heroImg from "@/assets/nature-hero.jpg";
-import { Bot, Camera, FlaskConical, BookOpen, Users, GraduationCap, Sparkles, UserRound, ExternalLink } from "lucide-react";
+import heroImg from "@/assets/chrome-blob.jpg";
+import {
+  Bot, Camera, FlaskConical, BookOpen, Users, GraduationCap, Mic,
+  UserRound, ExternalLink, ArrowRight, ChevronRight, WifiOff, Smartphone,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "HAM PRO — Offline-ready AI learning, primary to university" },
       { name: "description", content: "HAM PRO is an installable offline-ready AI learning app: HAM voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and private study groups." },
+      { property: "og:title", content: "HAM PRO — Offline-ready AI learning" },
+      { property: "og:description", content: "HAM voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups — installable and offline-ready." },
     ],
   }),
   component: Landing,
@@ -29,66 +34,109 @@ function Landing() {
   }, [navigate]);
 
   return (
-    <div className="min-h-dvh bg-background text-foreground">
-      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between">
-          <Logo />
+    <div className="dark min-h-dvh bg-background text-foreground antialiased">
+      {/* Floating pill header */}
+      <header className="fixed inset-x-0 top-4 z-40 px-4">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between rounded-full px-4 glass-panel">
+          <Logo size={26} />
           <a
             href="https://brand-bios-showcase.lovable.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-accent/40 transition-colors"
+            className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary/40 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            <UserRound className="size-3.5" /> About the developer
+            About the developer <ChevronRight className="size-3.5" />
           </a>
         </div>
       </header>
 
+      {/* Hero */}
       <section className="relative overflow-hidden">
-        <img src={heroImg} alt="Forest canopy" className="absolute inset-0 h-full w-full object-cover" width={1536} height={1024} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.18 0.05 150 / 0.55), oklch(0.18 0.05 150 / 0.9))" }} />
-        <div className="relative mx-auto max-w-5xl px-4 py-24 md:py-36 text-center" style={{ color: "oklch(0.97 0.02 130)" }}>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">
-            <Sparkles className="size-3.5" /> Installable · Voice-controlled · Works offline
+        <img
+          src={heroImg}
+          alt="Liquid chrome sculpture"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[92vh] w-full object-cover opacity-90"
+          width={1536}
+          height={1024}
+        />
+        <div className="absolute inset-0" style={{ background: "var(--gradient-veil)" }} />
+        <div className="relative mx-auto max-w-3xl px-4 pb-16 pt-[62vh]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] text-muted-foreground backdrop-blur">
+            <Mic className="size-3.5" /> Installable · Voice · Offline
           </div>
-          <h1 className="mt-6 text-4xl md:text-6xl font-bold tracking-tight">
-            Grow your mind with <span style={{ background: "var(--gradient-leaf)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>HAM PRO</span>
+          <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl">
+            Grow your mind
+            <br />
+            with <span className="chrome-text">HAM PRO</span>
           </h1>
-          <p className="mt-5 text-base md:text-lg max-w-2xl mx-auto opacity-90">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
             An all-in-one learning app from primary school through university. Meet HAM — your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg"><Link to="/auth">Get started</Link></Button>
+          <div className="mt-9">
+            <Button asChild size="lg" className="rounded-full px-8 shadow-[var(--shadow-chrome)]" style={{ background: "var(--gradient-chrome)", color: "oklch(15% 0 0)" }}>
+              <Link to="/auth">Get started <ArrowRight className="size-4" /></Link>
+            </Button>
+          </div>
+
+          <div className="mt-14 flex items-center gap-4 rounded-3xl px-5 py-4 glass-panel">
+            <span className="grid size-10 shrink-0 place-items-center rounded-full border border-border bg-secondary/50">
+              <WifiOff className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-medium">Works without internet</p>
+              <p className="text-xs text-muted-foreground">Labs, notes and tests keep running offline</p>
+            </div>
+            <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <h2 className="text-3xl font-bold text-center">Everything you need to learn</h2>
-        <p className="text-center text-muted-foreground mt-2 max-w-2xl mx-auto">Built for primary, secondary and university students — themes adapt to your level and the whole app installs to your phone, tablet or desktop.</p>
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {/* Features */}
+      <section id="features" className="mx-auto max-w-3xl px-4 py-20">
+        <h2 className="text-3xl font-semibold tracking-tight">Everything you need to learn</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Built for primary, secondary and university students — themes adapt to your level and the whole app installs to your phone, tablet or desktop.
+        </p>
+        <div className="mt-10 grid gap-4">
           {FEATURES.map((f) => (
-            <div key={f.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-[var(--shadow-leaf)] transition-shadow">
-              <div className="size-11 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
-                <f.icon className="size-5" />
-              </div>
-              <h3 className="mt-4 font-semibold text-lg">{f.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{f.desc}</p>
+            <div key={f.title} className="rounded-3xl p-6 glass-panel transition-shadow hover:shadow-[var(--shadow-chrome)]">
+              <span className="grid size-10 place-items-center rounded-full border border-border bg-secondary/50">
+                <f.icon className="size-4" />
+              </span>
+              <h3 className="mt-5 text-base font-medium">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 pb-20">
-        <div className="rounded-3xl border border-border bg-card p-8 text-center shadow-sm">
-          <div className="mx-auto size-12 rounded-xl flex items-center justify-center text-primary-foreground" style={{ background: "var(--gradient-leaf)" }}>
-            <UserRound className="size-6" />
-          </div>
-          <h2 className="mt-4 text-2xl font-bold">About the developer</h2>
-          <p className="mt-2 text-sm text-muted-foreground max-w-xl mx-auto">
+      {/* Install */}
+      <section className="mx-auto max-w-3xl px-4 pb-20">
+        <div className="rounded-[2rem] p-10 text-center glass-panel">
+          <span className="mx-auto grid size-12 place-items-center rounded-full border border-border bg-secondary/50">
+            <Smartphone className="size-5" />
+          </span>
+          <h2 className="mt-5 text-2xl font-semibold tracking-tight">Install HAM PRO on any device</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+            Phone, tablet or desktop — add it to your home screen once and your study hub is always a tap away.
+          </p>
+          <Button asChild className="mt-7 rounded-full px-7" style={{ background: "var(--gradient-chrome)", color: "oklch(15% 0 0)" }}>
+            <Link to="/auth">Get started <ArrowRight className="size-4" /></Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Developer */}
+      <section className="mx-auto max-w-3xl px-4 pb-20">
+        <div className="rounded-[2rem] p-10 text-center glass-panel">
+          <span className="mx-auto grid size-12 place-items-center rounded-full border border-border bg-secondary/50">
+            <UserRound className="size-5" />
+          </span>
+          <h2 className="mt-5 text-2xl font-semibold tracking-tight">About the developer</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
             HAM PRO was designed and built by Josiah Brian Chirambo. Read his full story, portfolio and other projects.
           </p>
-          <Button asChild className="mt-5">
+          <Button asChild variant="outline" className="mt-7 rounded-full px-7">
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer">
               Visit the developer's page <ExternalLink className="size-4" />
             </a>
@@ -96,8 +144,8 @@ function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} HAM PRO — Created by <span className="font-semibold text-foreground">Josiah Brian Chirambo</span>
+      <footer className="border-t border-border py-10 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} HAM PRO — Created by <span className="text-foreground">Josiah Brian Chirambo</span>
       </footer>
     </div>
   );
