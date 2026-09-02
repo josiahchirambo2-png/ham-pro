@@ -49,7 +49,7 @@ export async function decryptMessage(payload: string, key: CryptoKey | null): Pr
     const plain = await crypto.subtle.decrypt(
       { name: "AES-GCM", iv: unb64(ivPart) },
       key,
-      unb64(ctPart) as unknown as BufferSource,
+      unb64(ctPart),
     );
     return new TextDecoder().decode(plain);
   } catch {
