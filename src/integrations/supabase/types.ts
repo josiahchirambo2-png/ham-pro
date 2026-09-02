@@ -51,6 +51,7 @@ export type Database = {
           content: string
           created_at: string
           edited_at: string | null
+          encrypted: boolean
           group_id: string
           id: string
           user_id: string
@@ -59,6 +60,7 @@ export type Database = {
           content: string
           created_at?: string
           edited_at?: string | null
+          encrypted?: boolean
           group_id: string
           id?: string
           user_id: string
@@ -67,6 +69,7 @@ export type Database = {
           content?: string
           created_at?: string
           edited_at?: string | null
+          encrypted?: boolean
           group_id?: string
           id?: string
           user_id?: string
@@ -220,41 +223,56 @@ export type Database = {
       }
       profiles: {
         Row: {
+          age: number | null
           avatar_url: string | null
           bio: string | null
           created_at: string
+          degree: string | null
           display_name: string | null
           education_level: string | null
           id: string
           notifications_enabled: boolean
+          onboarded_at: string | null
+          preferred_language: string | null
           quiet_hours_end: string | null
           quiet_hours_start: string | null
+          referral_source: string | null
           syllabus: string | null
           updated_at: string
         }
         Insert: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string
+          degree?: string | null
           display_name?: string | null
           education_level?: string | null
           id: string
           notifications_enabled?: boolean
+          onboarded_at?: string | null
+          preferred_language?: string | null
           quiet_hours_end?: string | null
           quiet_hours_start?: string | null
+          referral_source?: string | null
           syllabus?: string | null
           updated_at?: string
         }
         Update: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string
+          degree?: string | null
           display_name?: string | null
           education_level?: string | null
           id?: string
           notifications_enabled?: boolean
+          onboarded_at?: string | null
+          preferred_language?: string | null
           quiet_hours_end?: string | null
           quiet_hours_start?: string | null
+          referral_source?: string | null
           syllabus?: string | null
           updated_at?: string
         }
@@ -488,6 +506,13 @@ export type Database = {
         }[]
       }
       group_has_password: { Args: { _group_id: string }; Returns: boolean }
+      group_member_names: {
+        Args: { _group_id: string }
+        Returns: {
+          display_name: string
+          id: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -508,6 +533,10 @@ export type Database = {
       set_group_password: {
         Args: { _group_id: string; _password: string }
         Returns: undefined
+      }
+      verify_group_key: {
+        Args: { _group_id: string; _password: string }
+        Returns: boolean
       }
       verify_payment: {
         Args: { _months?: number; _payment_id: string }
