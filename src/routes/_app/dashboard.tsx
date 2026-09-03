@@ -2,11 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Bot, Camera, FlaskConical, GraduationCap, User, NotebookPen,
-  Rocket, Sparkles, Users, CalendarDays, TrendingUp, Palette, Layers,
+  Rocket, Sparkles, Users, CalendarDays, TrendingUp, Palette, Layers, Crown,
 } from "lucide-react";
 import { APPEARANCE_EVENT, getCourseId } from "@/lib/appearance";
 import { courseById } from "@/lib/courses";
-import { LevelDecor, LevelMascots, useLevelTier } from "@/components/level-decor";
 
 export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
@@ -25,12 +24,12 @@ const TILES = [
   { to: "/community", icon: Users, title: "Study Groups", desc: "Public rooms plus password-protected private groups." },
   { to: "/schedule", icon: CalendarDays, title: "Schedule", desc: "Study timetable with reminders." },
   { to: "/progress", icon: TrendingUp, title: "Progress", desc: "Weekly study time and quiz scores." },
+  { to: "/plans", icon: Crown, title: "Plans", desc: "Free, Pro and Unlimited — pick what fits you." },
   { to: "/appearance", icon: Palette, title: "Scheme", desc: "Light, dark or match your device." },
   { to: "/profile", icon: User, title: "My Profile", desc: "Picture, display name, education level." },
 ] as const;
 
 function Dashboard() {
-  const tier = useLevelTier();
   const [courseId, setCourseId] = useState("general");
   useEffect(() => {
     const read = () => setCourseId(getCourseId());
@@ -43,7 +42,6 @@ function Dashboard() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
-        <LevelDecor tier={tier} />
         <div className="relative">
           <p className="text-xs uppercase tracking-wide opacity-80 flex items-center gap-1.5"><course.icon className="size-3.5" aria-hidden="true" /> {course.name}</p>
           <h1 className="mt-1 text-3xl md:text-4xl font-bold">Welcome back</h1>
@@ -56,7 +54,6 @@ function Dashboard() {
               </Link>
             ))}
           </div>
-          <LevelMascots tier={tier} className="mt-6 md:hidden" />
         </div>
       </div>
       <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

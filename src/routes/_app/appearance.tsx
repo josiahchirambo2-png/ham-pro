@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Moon, Sun, MonitorSmartphone, Palette, Check } from "lucide-react";
 import { APPEARANCE_EVENT, getScheme, saveScheme, type Scheme } from "@/lib/appearance";
-import { LevelMascots, TIER_DECOR_LABEL, useLevelTier } from "@/components/level-decor";
 
 export const Route = createFileRoute("/_app/appearance")({
   head: () => ({
@@ -23,7 +22,6 @@ const OPTIONS: { id: Scheme; label: string; desc: string; icon: typeof Sun }[] =
 ];
 
 function Appearance() {
-  const tier = useLevelTier();
   const [scheme, setScheme] = useState<Scheme>("light");
   useEffect(() => {
     const read = () => setScheme(getScheme());
@@ -58,13 +56,6 @@ function Appearance() {
         })}
       </div>
 
-      <div className="mt-8 rounded-2xl border bg-card p-6">
-        <h2 className="font-semibold">Your characters</h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          Based on your education level in your profile: <b>{TIER_DECOR_LABEL[tier]}</b>.
-        </p>
-        <LevelMascots tier={tier} className="mt-4" />
-      </div>
     </div>
   );
 }

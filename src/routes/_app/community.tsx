@@ -22,7 +22,6 @@ function Community() {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
   const [groupPassword, setGroupPassword] = useState("");
   const [creating, setCreating] = useState(false);
   const matchRoute = useMatchRoute();
@@ -47,19 +46,17 @@ function Community() {
     setCreating(true);
     const { data, error } = await supabase
       .from("study_groups")
-      .insert({ name: name.trim(), subject: subject.trim() || null, description: description.trim() || null, is_private: isPrivate, created_by: me })
+      .insert({ name: name.trim(), subject: subject.trim() || null, description: description.trim() || null, is_private: true, created_by: me })
       .select("id")
       .single();
     if (error || !data) { setCreating(false); toast.error(error?.message ?? "Could not create group"); return; }
-    if (isPrivate) {
-      await supabase.from("group_members").insert({ group_id: data.id, user_id: me, added_by: me });
-      if (groupPassword.trim().length >= 4) {
-        const { error: pwErr } = await (supabase as any).rpc("set_group_password", { _group_id: data.id, _password: groupPassword.trim() });
-        if (pwErr) toast.error(`Group created, but the password failed: ${pwErr.message}`);
-      }
+    await supabase.from("group_members").insert({ group_id: data.id, user_id: me, added_by: me });
+    if (groupPassword.trim().length >= 4) {
+      const { error: pwErr } = await (supabase as any).rpc("set_group_password", { _group_id: data.id, _password: groupPassword.trim() });
+      if (pwErr) toast.error(`Group created, but the room key failed: ${pwErr.message}`);
     }
     setCreating(false); setShowCreate(false);
-    setName(""); setSubject(""); setDescription(""); setIsPrivate(true); setGroupPassword("");
+    setName(""); setSubject(""); setDescription(""); setGroupPassword("");
     toast.success("Group created");
     load();
   }
@@ -69,7 +66,7 @@ function Community() {
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2"><Users className="text-primary" /> Study Groups</h1>
-          <p className="text-muted-foreground mt-1">Education-focused chats. Public rooms for everyone, private rooms for friends &amp; family.</p>
+          <p className="text-muted-foreground mt-1">Education-focused chats. Every room is private — invite friends &amp; family with a link and a room key.</p>
         </div>
         {!inChild && me && (
           <Button onClick={() => setShowCreate((v) => !v)} size="sm">
@@ -90,20 +87,14 @@ function Community() {
             <div className="space-y-1"><Label>Subject</Label><Input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Math, Biology, …" maxLength={40} /></div>
           </div>
           <div className="space-y-1"><Label>Description</Label><Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What will you study together?" maxLength={300} /></div>
-          <label className="flex items-center gap-2 text-sm">
-            <input type="checkbox" checked={isPrivate} onChange={(e) => setIsPrivate(e.target.checked)} />
-            Private — only people you invite can see or chat here
-          </label>
-          {isPrivate && (
-            <div className="space-y-1">
-              <Label>Group password (optional, min 4 characters)</Label>
-              <Input type="password" value={groupPassword} onChange={(e) => setGroupPassword(e.target.value)}
-                placeholder="Sent along with your invite link" maxLength={64} autoComplete="new-password" />
-              <p className="text-xs text-muted-foreground">
-                Anyone opening your invite link must type this password to join. You can change it any time from inside the group.
-              </p>
-            </div>
-          )}
+          <div className="space-y-1">
+            <Label>Room key (optional, min 4 characters)</Label>
+            <Input type="password" value={groupPassword} onChange={(e) => setGroupPassword(e.target.value)}
+              placeholder="Sent along with your invite link" maxLength={64} autoComplete="new-password" />
+            <p className="text-xs text-muted-foreground">
+              Every room is private. Anyone opening your invite link must type this key to join, and you can change it any time from inside the group.
+            </p>
+          </div>
           <Button type="submit" disabled={creating || !name.trim()}>{creating ? "Creating…" : "Create group"}</Button>
         </form>
       )}

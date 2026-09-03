@@ -4,7 +4,6 @@ import { Check, Layers } from "lucide-react";
 import { COURSES, courseById } from "@/lib/courses";
 import { APPEARANCE_EVENT, getCourseId, saveCourse } from "@/lib/appearance";
 import { Button } from "@/components/ui/button";
-import { LevelMascots, useLevelTier } from "@/components/level-decor";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/courses")({
@@ -20,7 +19,6 @@ export const Route = createFileRoute("/_app/courses")({
 });
 
 function Courses() {
-  const tier = useLevelTier();
   const [selected, setSelected] = useState("general");
   useEffect(() => {
     const read = () => setSelected(getCourseId());
@@ -43,7 +41,6 @@ function Courses() {
             Pick what you're studying. HAM PRO changes its colours, home screen and subject shortcuts to match your course.
           </p>
         </div>
-        <LevelMascots tier={tier} className="hidden sm:flex" />
       </div>
 
       <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
