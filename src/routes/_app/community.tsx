@@ -22,7 +22,6 @@ function Community() {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
   const [groupPassword, setGroupPassword] = useState("");
   const [creating, setCreating] = useState(false);
   const matchRoute = useMatchRoute();
