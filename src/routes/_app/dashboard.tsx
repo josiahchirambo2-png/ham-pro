@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Bot, Camera, FlaskConical, GraduationCap, User, NotebookPen,
-  Rocket, Sparkles, Users, CalendarDays, TrendingUp, Palette, Layers,
+  Rocket, Sparkles, Users, CalendarDays, TrendingUp, Palette, Layers, Crown,
 } from "lucide-react";
 import { APPEARANCE_EVENT, getCourseId } from "@/lib/appearance";
 import { courseById } from "@/lib/courses";
@@ -24,6 +24,7 @@ const TILES = [
   { to: "/community", icon: Users, title: "Study Groups", desc: "Public rooms plus password-protected private groups." },
   { to: "/schedule", icon: CalendarDays, title: "Schedule", desc: "Study timetable with reminders." },
   { to: "/progress", icon: TrendingUp, title: "Progress", desc: "Weekly study time and quiz scores." },
+  { to: "/plans", icon: Crown, title: "Plans", desc: "Free, Pro and Unlimited — pick what fits you." },
   { to: "/appearance", icon: Palette, title: "Scheme", desc: "Light, dark or match your device." },
   { to: "/profile", icon: User, title: "My Profile", desc: "Picture, display name, education level." },
 ] as const;

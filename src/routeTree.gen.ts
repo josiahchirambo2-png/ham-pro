@@ -19,6 +19,7 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppVisualizeRouteImport } from './routes/_app/visualize'
 import { Route as AppTutorRouteImport } from './routes/_app/tutor'
 import { Route as AppTestsRouteImport } from './routes/_app/tests'
+import { Route as AppPlansRouteImport } from './routes/_app/plans'
 import { Route as AppLabsRouteImport } from './routes/_app/labs'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
@@ -82,6 +83,11 @@ const AppTutorRoute = AppTutorRouteImport.update({
 const AppTestsRoute = AppTestsRouteImport.update({
   id: '/tests',
   path: '/tests',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppPlansRoute = AppPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppLabsRoute = AppLabsRouteImport.update({
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
+  '/plans': typeof AppPlansRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/visualize': typeof AppVisualizeRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByTo {
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
+  '/plans': typeof AppPlansRoute
   '/tests': typeof AppTestsRoute
   '/tutor': typeof AppTutorRoute
   '/visualize': typeof AppVisualizeRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
   '/_app/labs': typeof AppLabsRoute
+  '/_app/plans': typeof AppPlansRoute
   '/_app/tests': typeof AppTestsRoute
   '/_app/tutor': typeof AppTutorRoute
   '/_app/visualize': typeof AppVisualizeRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/hamiverse'
     | '/identify'
     | '/labs'
+    | '/plans'
     | '/tests'
     | '/tutor'
     | '/visualize'
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/hamiverse'
     | '/identify'
     | '/labs'
+    | '/plans'
     | '/tests'
     | '/tutor'
     | '/visualize'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/_app/hamiverse'
     | '/_app/identify'
     | '/_app/labs'
+    | '/_app/plans'
     | '/_app/tests'
     | '/_app/tutor'
     | '/_app/visualize'
@@ -401,6 +413,13 @@ declare module '@tanstack/react-router' {
       path: '/tests'
       fullPath: '/tests'
       preLoaderRoute: typeof AppTestsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/plans': {
+      id: '/_app/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof AppPlansRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/labs': {
@@ -553,6 +572,7 @@ interface AppRouteRouteChildren {
   AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
   AppLabsRoute: typeof AppLabsRoute
+  AppPlansRoute: typeof AppPlansRoute
   AppTestsRoute: typeof AppTestsRoute
   AppTutorRoute: typeof AppTutorRoute
   AppVisualizeRoute: typeof AppVisualizeRoute
@@ -567,6 +587,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
   AppLabsRoute: AppLabsRoute,
+  AppPlansRoute: AppPlansRoute,
   AppTestsRoute: AppTestsRoute,
   AppTutorRoute: AppTutorRoute,
   AppVisualizeRoute: AppVisualizeRoute,
