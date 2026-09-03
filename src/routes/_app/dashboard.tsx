@@ -6,7 +6,6 @@ import {
 } from "lucide-react";
 import { APPEARANCE_EVENT, getCourseId } from "@/lib/appearance";
 import { courseById } from "@/lib/courses";
-import { LevelDecor, LevelMascots, useLevelTier } from "@/components/level-decor";
 
 export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
@@ -30,7 +29,6 @@ const TILES = [
 ] as const;
 
 function Dashboard() {
-  const tier = useLevelTier();
   const [courseId, setCourseId] = useState("general");
   useEffect(() => {
     const read = () => setCourseId(getCourseId());
@@ -43,7 +41,6 @@ function Dashboard() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
-        <LevelDecor tier={tier} />
         <div className="relative">
           <p className="text-xs uppercase tracking-wide opacity-80 flex items-center gap-1.5"><course.icon className="size-3.5" aria-hidden="true" /> {course.name}</p>
           <h1 className="mt-1 text-3xl md:text-4xl font-bold">Welcome back</h1>
@@ -56,7 +53,6 @@ function Dashboard() {
               </Link>
             ))}
           </div>
-          <LevelMascots tier={tier} className="mt-6 md:hidden" />
         </div>
       </div>
       <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
