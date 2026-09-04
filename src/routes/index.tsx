@@ -70,7 +70,7 @@ function Landing() {
             with <span className="chrome-text">KIT AI</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            An all-in-one learning app from primary school through university. Meet KIT — your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
+            An all-in-one learning app from primary school through university. Meet KIT — the Knowledge Interactive Tutor, your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
           </p>
           <div className="mt-9">
             <Button asChild size="lg" className="rounded-full px-8 shadow-[var(--shadow-chrome)]" style={{ background: "var(--gradient-chrome)", color: "oklch(15% 0 0)" }}>
