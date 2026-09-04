@@ -8,7 +8,7 @@ import { moderateMessage } from "@/lib/moderation";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/community/$groupId")({
-  head: () => ({ meta: [{ title: "Group chat — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Group chat — KIT AI" }] }),
   component: GroupChat,
 });
 
@@ -104,7 +104,7 @@ function GroupChat() {
       const { data: prof2 } = await supabase.from("profiles").select("id,display_name").ilike("display_name", email.split("@")[0]).limit(1);
       targetId = prof2 && prof2[0] ? (prof2[0] as any).id : null;
     }
-    if (!targetId) { setInviting(false); toast.error("No HAM PRO user found with that name. Ask them for the exact display name on their profile."); return; }
+    if (!targetId) { setInviting(false); toast.error("No KIT AI user found with that name. Ask them for the exact display name on their profile."); return; }
     const { error } = await supabase.from("group_members").insert({ group_id: groupId, user_id: targetId, added_by: me });
     setInviting(false);
     if (error) { toast.error(error.message); return; }
@@ -130,7 +130,7 @@ function GroupChat() {
   async function copyInviteLink(token: string) {
     const url = `${window.location.origin}/join/${token}`;
     const text = hasPw
-      ? `Join my HAM PRO study group: ${url}\nGroup password: (ask me — set by the group owner)`
+      ? `Join my KIT AI study group: ${url}\nGroup password: (ask me — set by the group owner)`
       : url;
     try {
       await navigator.clipboard.writeText(text);

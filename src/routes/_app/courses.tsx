@@ -9,10 +9,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_app/courses")({
   head: () => ({
     meta: [
-      { title: "Courses — HAM PRO" },
-      { name: "description", content: "Choose a course and HAM PRO re-skins itself: colours, subjects and study tools tuned to what you're studying." },
-      { property: "og:title", content: "Courses — HAM PRO" },
-      { property: "og:description", content: "Choose a course and HAM PRO re-skins itself around what you're studying." },
+      { title: "Courses — KIT AI" },
+      { name: "description", content: "Choose a course and KIT AI re-skins itself: colours, subjects and study tools tuned to what you're studying." },
+      { property: "og:title", content: "Courses — KIT AI" },
+      { property: "og:description", content: "Choose a course and KIT AI re-skins itself around what you're studying." },
     ],
   }),
   component: Courses,
@@ -38,7 +38,7 @@ function Courses() {
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-2"><Layers /> Courses</h1>
           <p className="mt-2 opacity-90 max-w-xl">
-            Pick what you're studying. HAM PRO changes its colours, home screen and subject shortcuts to match your course.
+            Pick what you're studying. KIT AI changes its colours, home screen and subject shortcuts to match your course.
           </p>
         </div>
       </div>

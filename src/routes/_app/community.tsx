@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/community")({
-  head: () => ({ meta: [{ title: "Community — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Community — KIT AI" }] }),
   component: Community,
 });
 

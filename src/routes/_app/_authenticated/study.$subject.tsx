@@ -10,7 +10,7 @@ import { generateStudyQuiz, type Quiz } from "@/lib/quiz.functions";
 import { detectTier, TIER_LABEL } from "@/lib/level";
 
 export const Route = createFileRoute("/_app/_authenticated/study/$subject")({
-  head: () => ({ meta: [{ title: "Study session — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Study session — KIT AI" }] }),
   validateSearch: z.object({ minutes: z.coerce.number().min(1).max(240).default(25) }),
   component: StudyPage,
 });
@@ -95,7 +95,7 @@ function StudyPage() {
 
       {phase === "quiz" && (
         <div className="mt-8 space-y-4">
-          {loadingQuiz && <p className="text-sm text-muted-foreground">HAM is preparing your quiz…</p>}
+          {loadingQuiz && <p className="text-sm text-muted-foreground">KIT is preparing your quiz…</p>}
           {quiz && quiz.questions.map((q, i) => (
             <div key={i} className="rounded-xl border bg-card p-4">
               <p className="font-medium">{i + 1}. {q.question}</p>

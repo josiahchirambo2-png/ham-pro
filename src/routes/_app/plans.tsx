@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/_app/plans")({
   head: () => ({
     meta: [
-      { title: "Plans & Pricing — HAM PRO" },
-      { name: "description", content: "Compare the Free, Pro and Unlimited HAM PRO plans — AI tutoring, labs, tests, notes and study groups." },
-      { property: "og:title", content: "Plans & Pricing — HAM PRO" },
-      { property: "og:description", content: "Compare the Free, Pro and Unlimited HAM PRO plans." },
+      { title: "Plans & Pricing — KIT AI" },
+      { name: "description", content: "Compare the Free, Pro and Unlimited KIT AI plans — AI tutoring, labs, tests, notes and study groups." },
+      { property: "og:title", content: "Plans & Pricing — KIT AI" },
+      { property: "og:description", content: "Compare the Free, Pro and Unlimited KIT AI plans." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -30,7 +30,7 @@ const PLANS = [
     cta: "Your current plan",
     highlight: false,
     features: [
-      "HAM AI tutor — daily message allowance",
+      "KIT AI tutor — daily message allowance",
       "50+ interactive labs",
       "Practice tests and ECZ past papers",
       "Notes library with offline access",
@@ -49,10 +49,10 @@ const PLANS = [
     highlight: true,
     features: [
       "Everything in Free",
-      "Unlimited HAM tutor conversations",
+      "Unlimited KIT tutor conversations",
       "Priority, faster AI responses",
       "AI Visuals — diagrams and mind maps",
-      "HAMIVERSE labs and Galaxy Explorer",
+      "KITVERSE labs and Galaxy Explorer",
       "Progress analytics and study schedule reminders",
     ],
   },
@@ -71,7 +71,7 @@ const PLANS = [
       "Unlimited past-paper and test generation",
       "Up to 5 learner profiles on one plan",
       "Bigger study groups with longer history",
-      "Early access to new HAM features",
+      "Early access to new KIT features",
     ],
   },
 ] as const;
@@ -87,7 +87,7 @@ function PlansPage() {
         </div>
         <h1 className="mt-4 text-3xl md:text-4xl font-bold">Simple pricing that grows with you</h1>
         <p className="mt-2 opacity-90 max-w-2xl">
-          Start free forever. Upgrade whenever you want more from HAM — no lock-in, cancel any time.
+          Start free forever. Upgrade whenever you want more from KIT — no lock-in, cancel any time.
         </p>
       </div>
 

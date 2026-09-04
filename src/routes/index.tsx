@@ -12,10 +12,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HAM PRO — Offline-ready AI learning, primary to university" },
-      { name: "description", content: "HAM PRO is an installable offline-ready AI learning app: HAM voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and private study groups." },
-      { property: "og:title", content: "HAM PRO — Offline-ready AI learning" },
-      { property: "og:description", content: "HAM voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups — installable and offline-ready." },
+      { title: "KIT AI — Offline-ready AI learning, primary to university" },
+      { name: "description", content: "KIT AI is an installable offline-ready AI learning app: KIT voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and private study groups." },
+      { property: "og:title", content: "KIT AI — Offline-ready AI learning" },
+      { property: "og:description", content: "KIT voice tutor, 60+ interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups — installable and offline-ready." },
     ],
   }),
   component: Landing,
@@ -67,10 +67,10 @@ function Landing() {
           <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight md:text-6xl">
             Grow your mind
             <br />
-            with <span className="chrome-text">HAM PRO</span>
+            with <span className="chrome-text">KIT AI</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            An all-in-one learning app from primary school through university. Meet HAM — your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
+            An all-in-one learning app from primary school through university. Meet KIT — the Knowledge Interactive Tutor, your voice-enabled AI tutor — plus 60+ interactive labs, identify-with-camera notes, the Zambian syllabus and more. Install it on any device and keep learning even when you're offline.
           </p>
           <div className="mt-9">
             <Button asChild size="lg" className="rounded-full px-8 shadow-[var(--shadow-chrome)]" style={{ background: "var(--gradient-chrome)", color: "oklch(15% 0 0)" }}>
@@ -116,7 +116,7 @@ function Landing() {
           <span className="mx-auto grid size-12 place-items-center rounded-full border border-border bg-secondary/50">
             <Smartphone className="size-5" />
           </span>
-          <h2 className="mt-5 text-2xl font-semibold tracking-tight">Install HAM PRO on any device</h2>
+          <h2 className="mt-5 text-2xl font-semibold tracking-tight">Install KIT AI on any device</h2>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
             Phone, tablet or desktop — add it to your home screen once and your study hub is always a tap away.
           </p>
@@ -134,7 +134,7 @@ function Landing() {
           </span>
           <h2 className="mt-5 text-2xl font-semibold tracking-tight">About the developer</h2>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-            HAM PRO was designed and built by Josiah Brian Chirambo. Read his full story, portfolio and other projects.
+            KIT AI was designed and built by Josiah Brian Chirambo. Read his full story, portfolio and other projects.
           </p>
           <Button asChild variant="outline" className="mt-7 rounded-full px-7">
             <a href="https://brand-bios-showcase.lovable.app" target="_blank" rel="noopener noreferrer">
@@ -145,14 +145,14 @@ function Landing() {
       </section>
 
       <footer className="border-t border-border py-10 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} HAM PRO — Created by <span className="text-foreground">Josiah Brian Chirambo</span>
+        © {new Date().getFullYear()} KIT AI — Created by <span className="text-foreground">Josiah Brian Chirambo</span>
       </footer>
     </div>
   );
 }
 
 const FEATURES = [
-  { icon: Bot, title: "HAM — voice AI tutor", desc: "Talk to HAM with your voice, hear answers spoken back, adjust speed and voice gender. Quick voice commands like 'send' and 'stop'." },
+  { icon: Bot, title: "KIT — voice AI tutor", desc: "Talk to KIT with your voice, hear answers spoken back, adjust speed and voice gender. Quick voice commands like 'send' and 'stop'." },
   { icon: FlaskConical, title: "60+ interactive labs", desc: "Hands-on physics, chemistry, biology, math and computing simulations — every lab is open and runs on-device." },
   { icon: Camera, title: "Identify with camera", desc: "Snap or upload a photo and instantly get an explanation plus downloadable study notes." },
   { icon: BookOpen, title: "Syllabus library", desc: "Browse Zambian (ECZ), Cambridge, IB, common-core and university-level topics, all in one place." },

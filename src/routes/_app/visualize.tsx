@@ -12,9 +12,9 @@ import { streamImage } from "@/lib/streamImage";
 export const Route = createFileRoute("/_app/visualize")({
   head: () => ({
     meta: [
-      { title: "AI Diagrams & Images — HAM PRO" },
-      { name: "description", content: "Generate labelled study diagrams, illustrations and visual explanations with HAM's AI image generator." },
-      { property: "og:title", content: "AI Diagrams & Images — HAM PRO" },
+      { title: "AI Diagrams & Images — KIT AI" },
+      { name: "description", content: "Generate labelled study diagrams, illustrations and visual explanations with KIT's AI image generator." },
+      { property: "og:title", content: "AI Diagrams & Images — KIT AI" },
       { property: "og:description", content: "Turn any topic into a clear, labelled study diagram or illustration." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -128,11 +128,11 @@ function Visualize() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-3xl font-bold flex items-center gap-2"><Sparkles className="text-primary" /> AI Diagrams &amp; Images</h1>
-      <p className="text-muted-foreground mt-1">Describe any topic and HAM will draw a study diagram or illustration you can download.</p>
+      <p className="text-muted-foreground mt-1">Describe any topic and KIT will draw a study diagram or illustration you can download.</p>
 
       <div className="mt-6 grid md:grid-cols-2 gap-6">
         <div className="rounded-2xl border bg-card p-5">
-          <Label>What should HAM draw?</Label>
+          <Label>What should KIT draw?</Label>
           <Textarea
             className="mt-1"
             rows={4}
@@ -222,7 +222,7 @@ function Visualize() {
               />
             ) : (
               <span className="text-sm text-muted-foreground px-6 text-center">
-                {busy ? "HAM is sketching your diagram…" : "Your diagram will appear here."}
+                {busy ? "KIT is sketching your diagram…" : "Your diagram will appear here."}
               </span>
             )}
           </div>

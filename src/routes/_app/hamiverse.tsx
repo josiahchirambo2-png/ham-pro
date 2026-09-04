@@ -15,8 +15,8 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_app/hamiverse")({
   head: () => ({
     meta: [
-      { title: "HAMIVERSE — HAM PRO" },
-      { name: "description", content: "HAMIVERSE — grade-tuned labs, a 3D galaxy explorer, and your personal research notes." },
+      { title: "KITVERSE — KIT AI" },
+      { name: "description", content: "KITVERSE — grade-tuned labs, a 3D galaxy explorer, and your personal research notes." },
     ],
   }),
   component: HamiversePage,
@@ -27,7 +27,7 @@ function HamiversePage() {
     <div className="mx-auto max-w-6xl px-4 py-8">
       <div className="rounded-3xl p-6 md:p-8 text-white shadow-[var(--shadow-leaf)]" style={{ background: "var(--gradient-canopy)" }}>
         <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs backdrop-blur">
-          <Sparkles className="size-3.5" /> HAMIVERSE
+          <Sparkles className="size-3.5" /> KITVERSE
         </div>
         <h1 className="mt-4 text-3xl md:text-4xl font-bold">Your learning universe</h1>
         <p className="mt-2 opacity-90 max-w-2xl">Explore labs tuned to your level, wander the galaxy in 3D, and keep a research journal.</p>

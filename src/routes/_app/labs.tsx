@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { detectTier, tierForLab, TIER_LABEL, type LevelTier } from "@/lib/level";
 
 export const Route = createFileRoute("/_app/labs")({
-  head: () => ({ meta: [{ title: "Interactive Labs — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Interactive Labs — KIT AI" }] }),
   component: Labs,
 });
 

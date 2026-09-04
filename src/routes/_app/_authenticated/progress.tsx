@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { TrendingUp, Clock, CalendarCheck, GraduationCap } from "lucide-react";
 
 export const Route = createFileRoute("/_app/_authenticated/progress")({
-  head: () => ({ meta: [{ title: "Progress — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Progress — KIT AI" }] }),
   component: ProgressPage,
 });
 

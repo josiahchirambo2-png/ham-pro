@@ -14,10 +14,10 @@ export const Route = createFileRoute("/onboarding")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Meet HAM — set up HAM PRO" },
-      { name: "description", content: "Answer six quick questions so HAM can tailor lessons, labs and tests to your level, language and syllabus." },
-      { property: "og:title", content: "Meet HAM — set up HAM PRO" },
-      { property: "og:description", content: "Six quick questions to personalise your HAM PRO learning experience." },
+      { title: "Meet KIT — set up KIT AI" },
+      { name: "description", content: "Answer six quick questions so KIT can tailor lessons, labs and tests to your level, language and syllabus." },
+      { property: "og:title", content: "Meet KIT — set up KIT AI" },
+      { property: "og:description", content: "Six quick questions to personalise your KIT AI learning experience." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -77,13 +77,13 @@ function Onboarding() {
   }, [langQuery]);
 
   const steps = [
-    { key: "intro", title: "Hi, I'm HAM!", sub: "I'm your tiny robot tutor. Six quick questions and I'll shape the app around you." },
+    { key: "intro", title: "Hi, I'm KIT!", sub: "I'm your tiny robot tutor. Six quick questions and I'll shape the app around you." },
     { key: "age", title: "How old are you?", sub: "This helps me pitch explanations just right." },
     { key: "language", title: "Which language do you prefer?", sub: "I speak Zambian, European and Asian languages." },
     { key: "syllabus", title: "Which syllabus do you follow?", sub: "Your tests and notes will match it." },
     { key: "level", title: "What level are you at?", sub: "Your labs, theme and mascots adapt to this." },
     { key: "degree", title: "What are you studying for?", sub: "A degree, a certificate, or just curiosity — all good." },
-    { key: "referral", title: "How did you hear about HAM PRO?", sub: "Last one, promise." },
+    { key: "referral", title: "How did you hear about KIT AI?", sub: "Last one, promise." },
   ] as const;
 
   const current = steps[step];
@@ -120,7 +120,7 @@ function Onboarding() {
     setThemeFromLevel(a.level);
     markOnboarded(a);
     setSaving(false);
-    toast.success("All set — welcome to HAM PRO");
+    toast.success("All set — welcome to KIT AI");
     navigate({ to: "/dashboard", replace: true });
   }
 

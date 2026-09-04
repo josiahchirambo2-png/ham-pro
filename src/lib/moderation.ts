@@ -1,4 +1,4 @@
-// Lightweight client-side moderation for HAM PRO study groups.
+// Lightweight client-side moderation for KIT AI study groups.
 // Filters profanity/harassment and nudges off-topic chat back toward learning.
 
 const BANNED = [

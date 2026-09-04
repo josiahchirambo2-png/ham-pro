@@ -11,12 +11,12 @@ import { courseById } from "@/lib/courses";
 const NAV = [
   { to: "/dashboard", label: "Home" },
   { to: "/courses", label: "Courses" },
-  { to: "/tutor", label: "HAM Tutor" },
+  { to: "/tutor", label: "KIT Tutor" },
   { to: "/identify", label: "Identify" },
   { to: "/notes", label: "Notes" },
   { to: "/tests", label: "Tests" },
   { to: "/labs", label: "Labs" },
-  { to: "/hamiverse", label: "HAMIVERSE" },
+  { to: "/hamiverse", label: "KITVERSE" },
   { to: "/visualize", label: "AI Visuals" },
   { to: "/community", label: "Study Groups" },
   { to: "/schedule", label: "Schedule" },
@@ -138,7 +138,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
       <main className="flex-1">{children}</main>
       <footer className="border-t border-border py-4 text-center text-[11px] text-muted-foreground/80">
-        HAM PRO © Josiah Brian Chirambo
+        KIT AI © Josiah Brian Chirambo
       </footer>
     </div>
   );

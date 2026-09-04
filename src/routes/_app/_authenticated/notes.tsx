@@ -11,7 +11,7 @@ import { Download, NotebookPen, Plus, Search, Trash2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
 export const Route = createFileRoute("/_app/_authenticated/notes")({
-  head: () => ({ meta: [{ title: "My Notes — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "My Notes — KIT AI" }] }),
   component: NotesPage,
 });
 

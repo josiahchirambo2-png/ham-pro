@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { CalendarClock, Bell, Plus, Trash2, Play, Moon } from "lucide-react";
 
 export const Route = createFileRoute("/_app/_authenticated/schedule")({
-  head: () => ({ meta: [{ title: "Study Schedule — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Study Schedule — KIT AI" }] }),
   component: SchedulePage,
 });
 
@@ -106,7 +106,7 @@ function SchedulePage() {
         const uniq = `${s.id}-${key}`;
         if (fired.has(uniq)) return;
         fired.add(uniq);
-        new Notification("HAM PRO — study time", { body: `Time to study ${s.subject} for ${s.duration_minutes} min.` });
+        new Notification("KIT AI — study time", { body: `Time to study ${s.subject} for ${s.duration_minutes} min.` });
       });
     }, 30_000);
     return () => clearInterval(t);

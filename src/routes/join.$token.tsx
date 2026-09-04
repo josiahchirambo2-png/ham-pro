@@ -11,8 +11,8 @@ export const Route = createFileRoute("/join/$token")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Join study group — HAM PRO" },
-      { name: "description", content: "You've been invited to a HAM PRO study group." },
+      { title: "Join study group — KIT AI" },
+      { name: "description", content: "You've been invited to a KIT AI study group." },
       { name: "robots", content: "noindex" },
     ],
   }),

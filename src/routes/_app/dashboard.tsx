@@ -8,18 +8,18 @@ import { APPEARANCE_EVENT, getCourseId } from "@/lib/appearance";
 import { courseById } from "@/lib/courses";
 
 export const Route = createFileRoute("/_app/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — KIT AI" }] }),
   component: Dashboard,
 });
 
 const TILES = [
   { to: "/courses", icon: Layers, title: "Courses", desc: "Pick a course and the whole app adapts to it." },
-  { to: "/tutor", icon: Bot, title: "HAM — AI Tutor", desc: "Ask HAM anything, get clear step-by-step answers." },
+  { to: "/tutor", icon: Bot, title: "KIT — AI Tutor", desc: "Ask KIT anything, get clear step-by-step answers." },
   { to: "/identify", icon: Camera, title: "Identify & Notes", desc: "Photo → instant explanation and downloadable notes." },
   { to: "/notes", icon: NotebookPen, title: "My Notes", desc: "Saved notes you can search and use offline." },
   { to: "/tests", icon: GraduationCap, title: "Tests", desc: "Generate practice tests by subject and level." },
   { to: "/labs", icon: FlaskConical, title: "Interactive Labs", desc: "50+ science, math & computing simulations." },
-  { to: "/hamiverse", icon: Rocket, title: "HAMIVERSE", desc: "Level-tuned labs, Galaxy Explorer and My Research." },
+  { to: "/hamiverse", icon: Rocket, title: "KITVERSE", desc: "Level-tuned labs, Galaxy Explorer and My Research." },
   { to: "/visualize", icon: Sparkles, title: "AI Visuals", desc: "Generate diagrams, mind maps and illustrations." },
   { to: "/community", icon: Users, title: "Study Groups", desc: "Public rooms plus password-protected private groups." },
   { to: "/schedule", icon: CalendarDays, title: "Schedule", desc: "Study timetable with reminders." },
