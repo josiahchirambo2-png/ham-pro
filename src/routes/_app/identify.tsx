@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_app/identify")({
-  head: () => ({ meta: [{ title: "Identify — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "Identify — KIT AI" }] }),
   component: Identify,
 });
 
@@ -62,7 +62,7 @@ function Identify() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="text-3xl font-bold">Identify & get notes</h1>
-      <p className="text-muted-foreground mt-1">Take a photo or upload an image. HAM PRO identifies it and produces downloadable study notes.</p>
+      <p className="text-muted-foreground mt-1">Take a photo or upload an image. KIT AI identifies it and produces downloadable study notes.</p>
 
       <div className="mt-6 grid md:grid-cols-2 gap-6">
         <div className="rounded-2xl border bg-card p-5">

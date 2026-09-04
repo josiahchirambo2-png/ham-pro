@@ -14,7 +14,7 @@ import { LANGUAGES, getLanguage, setLanguage as persistLanguage, langByCode } fr
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_app/tutor")({
-  head: () => ({ meta: [{ title: "AI Tutor — HAM PRO" }] }),
+  head: () => ({ meta: [{ title: "AI Tutor — KIT AI" }] }),
   component: Tutor,
 });
 
@@ -158,11 +158,11 @@ function Tutor() {
     <div className="mx-auto max-w-3xl px-4 py-6 flex flex-col" style={{ minHeight: "calc(100dvh - 56px - 60px)" }}>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2"><Bot className="text-primary" /> HAM — Your AI Tutor</h1>
+          <h1 className="text-2xl font-bold flex items-center gap-2"><Bot className="text-primary" /> KIT — Your AI Tutor</h1>
           <p className="text-sm text-muted-foreground">Ask anything from grade 1 to university. Voice commands: "send", "stop", "mute", "faster", "slower", "male voice", "female voice".</p>
         </div>
         <div className="flex items-center gap-1">
-          <Button size="icon" variant="ghost" onClick={() => { stopSpeaking(); setPref((p) => ({ ...p, enabled: !p.enabled })); }} title={pref.enabled ? "Mute HAM" : "Let HAM speak"}>
+          <Button size="icon" variant="ghost" onClick={() => { stopSpeaking(); setPref((p) => ({ ...p, enabled: !p.enabled })); }} title={pref.enabled ? "Mute KIT" : "Let KIT speak"}>
             {pref.enabled ? <Volume2 className="size-4" /> : <VolumeX className="size-4" />}
           </Button>
           <Popover>
@@ -183,7 +183,7 @@ function Tutor() {
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="mt-1 text-[11px] text-muted-foreground">HAM will reply and speak in {activeLang.label}.</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">KIT will reply and speak in {activeLang.label}.</p>
               </div>
               <div>
                 <Label className="text-xs">Voice gender</Label>
@@ -243,7 +243,7 @@ function Tutor() {
               <div className="spark s3" />
             </div>
             <div className="px-3 py-2 rounded-2xl bg-muted/60">
-              <span className="text-xs font-medium ham-think-text">HAM is thinking…</span>
+              <span className="text-xs font-medium ham-think-text">KIT is thinking…</span>
             </div>
           </div>
         )}
@@ -253,13 +253,13 @@ function Tutor() {
         onSubmit={(e) => { e.preventDefault(); submitText(); }}
         className="mt-4 flex gap-2 sticky bottom-2 bg-background/95 backdrop-blur p-2 rounded-2xl border"
       >
-        <Button type="button" size="icon" variant={listening ? "destructive" : "ghost"} onClick={listening ? stopVoice : startVoice} title={listening ? "Stop listening" : "Speak to HAM"}>
+        <Button type="button" size="icon" variant={listening ? "destructive" : "ghost"} onClick={listening ? stopVoice : startVoice} title={listening ? "Stop listening" : "Speak to KIT"}>
           {listening ? <MicOff className="size-4" /> : <Mic className="size-4" />}
         </Button>
         <Textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={listening ? "Listening…" : "Ask HAM, or tap the mic to speak…"}
+          placeholder={listening ? "Listening…" : "Ask KIT, or tap the mic to speak…"}
           rows={1}
           className="resize-none border-0 focus-visible:ring-0"
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submitText(); } }}

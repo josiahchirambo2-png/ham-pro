@@ -23,8 +23,8 @@ export function InstallPrompt() {
       const dismissed = Number(localStorage.getItem(DISMISS_KEY) || 0);
       if (Date.now() - dismissed < DISMISS_MS) return;
 
-      toast("Install HAM PRO", {
-        description: "Add HAM PRO to your device for a faster, app-like experience.",
+      toast("Install KIT AI", {
+        description: "Add KIT AI to your device for a faster, app-like experience.",
         duration: 12000,
         action: {
           label: "Install",
@@ -41,7 +41,7 @@ export function InstallPrompt() {
 
     const onInstalled = () => {
       setDeferred(null);
-      toast.success("HAM PRO installed", { description: "Launch it from your home screen anytime." });
+      toast.success("KIT AI installed", { description: "Launch it from your home screen anytime." });
     };
 
     window.addEventListener("beforeinstallprompt", onBefore);
@@ -55,7 +55,7 @@ export function InstallPrompt() {
       const dismissed = Number(localStorage.getItem(DISMISS_KEY) || 0);
       if (Date.now() - dismissed > DISMISS_MS) {
         setTimeout(() => {
-          toast("Install HAM PRO on your iPhone", {
+          toast("Install KIT AI on your iPhone", {
             description: "Tap the Share icon, then 'Add to Home Screen'.",
             duration: 12000,
             onDismiss: () => localStorage.setItem(DISMISS_KEY, String(Date.now())),

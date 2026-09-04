@@ -18,7 +18,7 @@ export const COURSES: readonly Course[] = [
     id: "general",
     name: "General Learning",
     icon: Sprout,
-    tagline: "A bit of everything — the classic HAM PRO experience.",
+    tagline: "A bit of everything — the classic KIT AI experience.",
     greeting: "Pick a tool below to keep growing your knowledge.",
     subjects: ["Mathematics", "English", "Science", "Social Studies"],
   },
@@ -27,7 +27,7 @@ export const COURSES: readonly Course[] = [
     name: "Pure Sciences",
     icon: Microscope,
     tagline: "Physics, chemistry and biology, lab-first.",
-    greeting: "Run an experiment, then let HAM explain the theory behind it.",
+    greeting: "Run an experiment, then let KIT explain the theory behind it.",
     subjects: ["Physics", "Chemistry", "Biology", "Environmental Science"],
   },
   {
@@ -35,7 +35,7 @@ export const COURSES: readonly Course[] = [
     name: "Mathematics",
     icon: Ruler,
     tagline: "Numbers, proofs and problem solving.",
-    greeting: "Work a problem step by step — HAM shows every line.",
+    greeting: "Work a problem step by step — KIT shows every line.",
     subjects: ["Algebra", "Geometry", "Calculus", "Statistics"],
   },
   {
@@ -43,7 +43,7 @@ export const COURSES: readonly Course[] = [
     name: "Computer Science",
     icon: Laptop,
     tagline: "Code, algorithms and how machines think.",
-    greeting: "Build, break and debug — HAM reviews your logic.",
+    greeting: "Build, break and debug — KIT reviews your logic.",
     subjects: ["Programming", "Algorithms", "Databases", "Networks"],
   },
   {
@@ -67,7 +67,7 @@ export const COURSES: readonly Course[] = [
     name: "Business & Economics",
     icon: TrendingUp,
     tagline: "Markets, money and management.",
-    greeting: "Ask HAM to turn any concept into a real-world example.",
+    greeting: "Ask KIT to turn any concept into a real-world example.",
     subjects: ["Economics", "Accounting", "Marketing", "Entrepreneurship"],
   },
   {
@@ -75,7 +75,7 @@ export const COURSES: readonly Course[] = [
     name: "Law & Civics",
     icon: Scale,
     tagline: "Rules, rights and reasoning.",
-    greeting: "Argue both sides — HAM will challenge your reasoning.",
+    greeting: "Argue both sides — KIT will challenge your reasoning.",
     subjects: ["Constitutional Law", "Civics", "Ethics", "Legal Writing"],
   },
   {
@@ -83,7 +83,7 @@ export const COURSES: readonly Course[] = [
     name: "Arts & Literature",
     icon: Palette,
     tagline: "Stories, language and creative expression.",
-    greeting: "Read closely, write boldly — HAM helps you edit.",
+    greeting: "Read closely, write boldly — KIT helps you edit.",
     subjects: ["Literature", "History", "Creative Writing", "Art"],
   },
   {
@@ -99,7 +99,7 @@ export const COURSES: readonly Course[] = [
     name: "Languages",
     icon: Languages,
     tagline: "Speak, read and write in any language.",
-    greeting: "Practise out loud — HAM speaks your language.",
+    greeting: "Practise out loud — KIT speaks your language.",
     subjects: ["English", "French", "Bemba", "Nyanja"],
   },
 ] as const;

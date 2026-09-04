@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
- * HAM PRO public questions API  ·  written by hand by Josiah Brian Chirambo
+ * KIT AI public questions API  ·  written by hand by Josiah Brian Chirambo
  * GET /api/public/questions?subject=Mathematics&limit=5
  * Header: x-ham-api-key: <HAM_PRO_API_KEY>
  * Returns hand-typed ECZ past paper questions. No personal data is exposed.

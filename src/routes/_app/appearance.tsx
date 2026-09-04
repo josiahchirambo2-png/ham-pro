@@ -6,9 +6,9 @@ import { APPEARANCE_EVENT, getScheme, saveScheme, type Scheme } from "@/lib/appe
 export const Route = createFileRoute("/_app/appearance")({
   head: () => ({
     meta: [
-      { title: "Colour scheme — HAM PRO" },
-      { name: "description", content: "Switch HAM PRO between light, dark, or match your device's power and display settings." },
-      { property: "og:title", content: "Colour scheme — HAM PRO" },
+      { title: "Colour scheme — KIT AI" },
+      { name: "description", content: "Switch KIT AI between light, dark, or match your device's power and display settings." },
+      { property: "og:title", content: "Colour scheme — KIT AI" },
       { property: "og:description", content: "Light, dark, or follow your device settings." },
     ],
   }),
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/_app/appearance")({
 });
 
 const OPTIONS: { id: Scheme; label: string; desc: string; icon: typeof Sun }[] = [
-  { id: "light", label: "Light", desc: "Bright and clear — the HAM PRO default.", icon: Sun },
+  { id: "light", label: "Light", desc: "Bright and clear — the KIT AI default.", icon: Sun },
   { id: "dark", label: "Dark", desc: "Easier on the eyes at night.", icon: Moon },
   { id: "system", label: "Match my device", desc: "Follows your device display and power-saving settings.", icon: MonitorSmartphone },
 ];
@@ -33,7 +33,7 @@ function Appearance() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-3xl font-bold flex items-center gap-2"><Palette className="text-primary" /> Colour scheme</h1>
-      <p className="text-muted-foreground mt-1">Choose how HAM PRO looks on this device.</p>
+      <p className="text-muted-foreground mt-1">Choose how KIT AI looks on this device.</p>
 
       <div className="mt-6 grid sm:grid-cols-3 gap-4">
         {OPTIONS.map((o) => {

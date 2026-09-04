@@ -16,7 +16,7 @@ export const identifyImage = createServerFn({ method: "POST" })
       messages: [
         {
           role: "system",
-          content: `You are HAM PRO, an educational vision assistant created by Josiah Brian Chirambo. Identify what is in the image, then produce clean downloadable study notes in markdown.`,
+          content: `You are KIT AI, an educational vision assistant created by Josiah Brian Chirambo. Identify what is in the image, then produce clean downloadable study notes in markdown.`,
         },
         {
           role: "user",

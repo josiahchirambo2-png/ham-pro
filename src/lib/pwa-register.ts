@@ -51,6 +51,6 @@ export async function registerHamProSW() {
     wb.addEventListener("waiting", () => wb.messageSkipWaiting());
     await wb.register();
   } catch (err) {
-    console.warn("[HAM PRO] SW registration failed", err);
+    console.warn("[KIT AI] SW registration failed", err);
   }
 }

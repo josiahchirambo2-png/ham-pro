@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Sign in — HAM PRO" }, { name: "description", content: "Sign in or create your free HAM PRO account." }] }),
+  head: () => ({ meta: [{ title: "Sign in — KIT AI" }, { name: "description", content: "Sign in or create your free KIT AI account." }] }),
   component: AuthPage,
 });
 
@@ -106,7 +106,7 @@ function AuthPage() {
             <div className="h-px flex-1 bg-border" /> or <div className="h-px flex-1 bg-border" />
           </div>
           <Button variant="outline" className="w-full" onClick={google}>Continue with Google</Button>
-          <p className="mt-6 text-[11px] text-center text-muted-foreground/70">By continuing you agree to use HAM PRO responsibly.</p>
+          <p className="mt-6 text-[11px] text-center text-muted-foreground/70">By continuing you agree to use KIT AI responsibly.</p>
         </div>
       </div>
     </div>

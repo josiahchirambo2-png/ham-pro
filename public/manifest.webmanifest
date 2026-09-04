@@ -1,7 +1,7 @@
 {
-  "name": "HAM PRO",
-  "short_name": "HAM PRO",
-  "description": "All-in-one learning hub by Josiah Brian Chirambo: AI tutor HAM, interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups.",
+  "name": "KIT AI",
+  "short_name": "KIT AI",
+  "description": "All-in-one learning hub by Josiah Brian Chirambo: AI tutor KIT, interactive labs, identify-with-camera notes, Zambian syllabus, tests and study groups.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

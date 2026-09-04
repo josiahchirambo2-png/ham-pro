@@ -23,9 +23,9 @@ import { ECZ_PAPERS, type EczPaper } from "@/lib/ecz-past-papers";
 export const Route = createFileRoute("/_app/tests")({
   head: () => ({
     meta: [
-      { title: "Tests and ECZ Past Papers — HAM PRO" },
+      { title: "Tests and ECZ Past Papers — KIT AI" },
       { name: "description", content: "Generate an instant practice test on any subject, or open real ECZ past papers and answer them question by question." },
-      { property: "og:title", content: "Tests and ECZ Past Papers — HAM PRO" },
+      { property: "og:title", content: "Tests and ECZ Past Papers — KIT AI" },
       { property: "og:description", content: "Instant AI practice tests plus hand-typed ECZ past papers, online or offline." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -91,9 +91,9 @@ function Tests() {
     try {
       const r = await gen({ data: { subject, level, count: c } });
       if (!r?.questions?.length) throw new Error("empty response");
-      loadQuestions(r.questions, `HAM generated · ${subject} · ${level}`);
+      loadQuestions(r.questions, `KIT generated · ${subject} · ${level}`);
     } catch (e: any) {
-      startOffline(`HAM could not be reached — switched to offline questions. (${e?.message ?? "network error"})`);
+      startOffline(`KIT could not be reached — switched to offline questions. (${e?.message ?? "network error"})`);
     } finally { setBusy(false); }
   }
 

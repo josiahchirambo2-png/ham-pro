@@ -9,13 +9,13 @@ export function Logo({ className = "", size = 30 }: { className?: string; size?:
       >
         <img
           src={logoSrc}
-          alt="HAM PRO chrome chip logo"
+          alt="KIT AI chrome chip logo"
           width={1024}
           height={1024}
           style={{ width: size, height: size }}
         />
       </span>
-      <span className="font-semibold uppercase tracking-[0.22em] text-sm">HAM PRO</span>
+      <span className="font-semibold uppercase tracking-[0.22em] text-sm">KIT AI</span>
     </div>
   );
 }

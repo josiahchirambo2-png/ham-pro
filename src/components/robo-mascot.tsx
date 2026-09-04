@@ -1,7 +1,7 @@
-// Tiny HAM robo mascot — pure CSS/SVG, no emojis.
+// Tiny KIT robo mascot — pure CSS/SVG, no emojis.
 export function RoboMascot({ size = 96, talking = false }: { size?: number; talking?: boolean }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 96 96" role="img" aria-label="HAM robo mascot" className={talking ? "animate-bounce" : ""}>
+    <svg width={size} height={size} viewBox="0 0 96 96" role="img" aria-label="KIT robo mascot" className={talking ? "animate-bounce" : ""}>
       <defs>
         <linearGradient id="rm-body" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="currentColor" stopOpacity="0.18" />
