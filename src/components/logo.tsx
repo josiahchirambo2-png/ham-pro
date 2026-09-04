@@ -1,4 +1,4 @@
-import logoSrc from "@/assets/logo-chrome.png";
+import logoSrc from "@/assets/logo-inverted.png";
 
 export function Logo({ className = "", size = 30 }: { className?: string; size?: number }) {
   return (
