@@ -56,6 +56,7 @@
     "embla-carousel-react": "^8.6.0",
     "eventsource-parser": "^3.1.0",
     "input-otp": "^1.4.2",
+    "jose": "^6.2.12",
     "lucide-react": "^0.575.0",
     "pdfjs-dist": "^6.4.299",
     "perfect-freehand": "^1.2.3",
