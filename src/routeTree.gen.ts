@@ -9,36 +9,40 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as JoinTokenRouteImport } from './routes/join.$token'
-import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
-import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as AppVisualizeRouteImport } from './routes/_app/visualize'
-import { Route as AppTutorRouteImport } from './routes/_app/tutor'
-import { Route as AppTestsRouteImport } from './routes/_app/tests'
-import { Route as AppPlansRouteImport } from './routes/_app/plans'
-import { Route as AppLabsRouteImport } from './routes/_app/labs'
-import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
-import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
-import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
-import { Route as AppCoursesRouteImport } from './routes/_app/courses'
-import { Route as AppCommunityRouteImport } from './routes/_app/community'
-import { Route as AppAppearanceRouteImport } from './routes/_app/appearance'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as AppAuthenticatedRouteRouteImport } from './routes/_app/_authenticated/route'
-import { Route as ApiPublicQuestionsRouteImport } from './routes/api/public/questions'
-import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
-import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
-import { Route as AppAuthenticatedProgressRouteImport } from './routes/_app/_authenticated/progress'
-import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
+import { Route as AppAppearanceRouteImport } from './routes/_app/appearance'
+import { Route as AppCommunityRouteImport } from './routes/_app/community'
+import { Route as AppCoursesRouteImport } from './routes/_app/courses'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
+import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
+import { Route as AppLabsRouteImport } from './routes/_app/labs'
+import { Route as AppPlansRouteImport } from './routes/_app/plans'
+import { Route as AppTestsRouteImport } from './routes/_app/tests'
+import { Route as AppTutorRouteImport } from './routes/_app/tutor'
+import { Route as AppVisualizeRouteImport } from './routes/_app/visualize'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
+import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as AppAuthenticatedNotesRouteImport } from './routes/_app/_authenticated/notes'
+import { Route as AppAuthenticatedProfileRouteImport } from './routes/_app/_authenticated/profile'
+import { Route as AppAuthenticatedProgressRouteImport } from './routes/_app/_authenticated/progress'
+import { Route as AppAuthenticatedScheduleRouteImport } from './routes/_app/_authenticated/schedule'
+import { Route as AppCommunityGroupIdRouteImport } from './routes/_app/community.$groupId'
+import { Route as ApiPublicQuestionsRouteImport } from './routes/api/public/questions'
 import { Route as AppAuthenticatedStudySubjectRouteImport } from './routes/_app/_authenticated/study.$subject'
 
-const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -46,78 +50,13 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRouteRoute = AppRouteRouteImport.update({
-  id: '/_app',
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinTokenRoute = JoinTokenRouteImport.update({
-  id: '/join/$token',
-  path: '/join/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
-  id: '/api/generate-image',
-  path: '/api/generate-image',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/api/chat',
-  path: '/api/chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppVisualizeRoute = AppVisualizeRouteImport.update({
-  id: '/visualize',
-  path: '/visualize',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppTutorRoute = AppTutorRouteImport.update({
-  id: '/tutor',
-  path: '/tutor',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppTestsRoute = AppTestsRouteImport.update({
-  id: '/tests',
-  path: '/tests',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppPlansRoute = AppPlansRouteImport.update({
-  id: '/plans',
-  path: '/plans',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppLabsRoute = AppLabsRouteImport.update({
-  id: '/labs',
-  path: '/labs',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppIdentifyRoute = AppIdentifyRouteImport.update({
-  id: '/identify',
-  path: '/identify',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppHamiverseRoute = AppHamiverseRouteImport.update({
-  id: '/hamiverse',
-  path: '/hamiverse',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppCoursesRoute = AppCoursesRouteImport.update({
-  id: '/courses',
-  path: '/courses',
-  getParentRoute: () => AppRouteRoute,
-} as any)
-const AppCommunityRoute = AppCommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
+const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppAppearanceRoute = AppAppearanceRouteImport.update({
@@ -125,41 +64,102 @@ const AppAppearanceRoute = AppAppearanceRouteImport.update({
   path: '/appearance',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppAuthenticatedRouteRoute = AppAuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AppCommunityRoute = AppCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const ApiPublicQuestionsRoute = ApiPublicQuestionsRouteImport.update({
-  id: '/api/public/questions',
-  path: '/api/public/questions',
+const AppCoursesRoute = AppCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppHamiverseRoute = AppHamiverseRouteImport.update({
+  id: '/hamiverse',
+  path: '/hamiverse',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppIdentifyRoute = AppIdentifyRouteImport.update({
+  id: '/identify',
+  path: '/identify',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppLabsRoute = AppLabsRouteImport.update({
+  id: '/labs',
+  path: '/labs',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppPlansRoute = AppPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppTestsRoute = AppTestsRouteImport.update({
+  id: '/tests',
+  path: '/tests',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppTutorRoute = AppTutorRouteImport.update({
+  id: '/tutor',
+  path: '/tutor',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppVisualizeRoute = AppVisualizeRouteImport.update({
+  id: '/visualize',
+  path: '/visualize',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppCommunityGroupIdRoute = AppCommunityGroupIdRouteImport.update({
-  id: '/$groupId',
-  path: '/$groupId',
-  getParentRoute: () => AppCommunityRoute,
+const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
+  id: '/api/generate-image',
+  path: '/api/generate-image',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AppAuthenticatedScheduleRoute =
-  AppAuthenticatedScheduleRouteImport.update({
-    id: '/schedule',
-    path: '/schedule',
-    getParentRoute: () => AppAuthenticatedRouteRoute,
-  } as any)
+const JoinTokenRoute = JoinTokenRouteImport.update({
+  id: '/join/$token',
+  path: '/join/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAuthenticatedNotesRoute = AppAuthenticatedNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AppAuthenticatedRouteRoute,
+} as any)
+const AppAuthenticatedProfileRoute = AppAuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppAuthenticatedRouteRoute,
+} as any)
 const AppAuthenticatedProgressRoute =
   AppAuthenticatedProgressRouteImport.update({
     id: '/progress',
     path: '/progress',
     getParentRoute: () => AppAuthenticatedRouteRoute,
   } as any)
-const AppAuthenticatedProfileRoute = AppAuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AppAuthenticatedRouteRoute,
+const AppAuthenticatedScheduleRoute =
+  AppAuthenticatedScheduleRouteImport.update({
+    id: '/schedule',
+    path: '/schedule',
+    getParentRoute: () => AppAuthenticatedRouteRoute,
+  } as any)
+const AppCommunityGroupIdRoute = AppCommunityGroupIdRouteImport.update({
+  id: '/$groupId',
+  path: '/$groupId',
+  getParentRoute: () => AppCommunityRoute,
 } as any)
-const AppAuthenticatedNotesRoute = AppAuthenticatedNotesRouteImport.update({
-  id: '/notes',
-  path: '/notes',
-  getParentRoute: () => AppAuthenticatedRouteRoute,
+const ApiPublicQuestionsRoute = ApiPublicQuestionsRouteImport.update({
+  id: '/api/public/questions',
+  path: '/api/public/questions',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppAuthenticatedStudySubjectRoute =
   AppAuthenticatedStudySubjectRouteImport.update({
@@ -345,18 +345,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -366,102 +359,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/_authenticated': {
+      id: '/_app/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/join/$token': {
-      id: '/join/$token'
-      path: '/join/$token'
-      fullPath: '/join/$token'
-      preLoaderRoute: typeof JoinTokenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/generate-image': {
-      id: '/api/generate-image'
-      path: '/api/generate-image'
-      fullPath: '/api/generate-image'
-      preLoaderRoute: typeof ApiGenerateImageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/api/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/visualize': {
-      id: '/_app/visualize'
-      path: '/visualize'
-      fullPath: '/visualize'
-      preLoaderRoute: typeof AppVisualizeRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/tutor': {
-      id: '/_app/tutor'
-      path: '/tutor'
-      fullPath: '/tutor'
-      preLoaderRoute: typeof AppTutorRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/tests': {
-      id: '/_app/tests'
-      path: '/tests'
-      fullPath: '/tests'
-      preLoaderRoute: typeof AppTestsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/plans': {
-      id: '/_app/plans'
-      path: '/plans'
-      fullPath: '/plans'
-      preLoaderRoute: typeof AppPlansRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/labs': {
-      id: '/_app/labs'
-      path: '/labs'
-      fullPath: '/labs'
-      preLoaderRoute: typeof AppLabsRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/identify': {
-      id: '/_app/identify'
-      path: '/identify'
-      fullPath: '/identify'
-      preLoaderRoute: typeof AppIdentifyRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/hamiverse': {
-      id: '/_app/hamiverse'
-      path: '/hamiverse'
-      fullPath: '/hamiverse'
-      preLoaderRoute: typeof AppHamiverseRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/dashboard': {
-      id: '/_app/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/courses': {
-      id: '/_app/courses'
-      path: '/courses'
-      fullPath: '/courses'
-      preLoaderRoute: typeof AppCoursesRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
-    '/_app/community': {
-      id: '/_app/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof AppCommunityRouteImport
+      preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/appearance': {
@@ -471,39 +387,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAppearanceRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/_authenticated': {
-      id: '/_app/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppAuthenticatedRouteRouteImport
+    '/_app/community': {
+      id: '/_app/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AppCommunityRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/api/public/questions': {
-      id: '/api/public/questions'
-      path: '/api/public/questions'
-      fullPath: '/api/public/questions'
-      preLoaderRoute: typeof ApiPublicQuestionsRouteImport
+    '/_app/courses': {
+      id: '/_app/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof AppCoursesRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/hamiverse': {
+      id: '/_app/hamiverse'
+      path: '/hamiverse'
+      fullPath: '/hamiverse'
+      preLoaderRoute: typeof AppHamiverseRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/identify': {
+      id: '/_app/identify'
+      path: '/identify'
+      fullPath: '/identify'
+      preLoaderRoute: typeof AppIdentifyRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/labs': {
+      id: '/_app/labs'
+      path: '/labs'
+      fullPath: '/labs'
+      preLoaderRoute: typeof AppLabsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/plans': {
+      id: '/_app/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof AppPlansRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/tests': {
+      id: '/_app/tests'
+      path: '/tests'
+      fullPath: '/tests'
+      preLoaderRoute: typeof AppTestsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/tutor': {
+      id: '/_app/tutor'
+      path: '/tutor'
+      fullPath: '/tutor'
+      preLoaderRoute: typeof AppTutorRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/visualize': {
+      id: '/_app/visualize'
+      path: '/visualize'
+      fullPath: '/visualize'
+      preLoaderRoute: typeof AppVisualizeRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/community/$groupId': {
-      id: '/_app/community/$groupId'
-      path: '/$groupId'
-      fullPath: '/community/$groupId'
-      preLoaderRoute: typeof AppCommunityGroupIdRouteImport
-      parentRoute: typeof AppCommunityRoute
+    '/api/generate-image': {
+      id: '/api/generate-image'
+      path: '/api/generate-image'
+      fullPath: '/api/generate-image'
+      preLoaderRoute: typeof ApiGenerateImageRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/_authenticated/schedule': {
-      id: '/_app/_authenticated/schedule'
-      path: '/schedule'
-      fullPath: '/schedule'
-      preLoaderRoute: typeof AppAuthenticatedScheduleRouteImport
-      parentRoute: typeof AppAuthenticatedRouteRoute
+    '/join/$token': {
+      id: '/join/$token'
+      path: '/join/$token'
+      fullPath: '/join/$token'
+      preLoaderRoute: typeof JoinTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/_authenticated/progress': {
-      id: '/_app/_authenticated/progress'
-      path: '/progress'
-      fullPath: '/progress'
-      preLoaderRoute: typeof AppAuthenticatedProgressRouteImport
+    '/_app/_authenticated/notes': {
+      id: '/_app/_authenticated/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AppAuthenticatedNotesRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
     '/_app/_authenticated/profile': {
@@ -513,12 +492,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAuthenticatedProfileRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
     }
-    '/_app/_authenticated/notes': {
-      id: '/_app/_authenticated/notes'
-      path: '/notes'
-      fullPath: '/notes'
-      preLoaderRoute: typeof AppAuthenticatedNotesRouteImport
+    '/_app/_authenticated/progress': {
+      id: '/_app/_authenticated/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof AppAuthenticatedProgressRouteImport
       parentRoute: typeof AppAuthenticatedRouteRoute
+    }
+    '/_app/_authenticated/schedule': {
+      id: '/_app/_authenticated/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof AppAuthenticatedScheduleRouteImport
+      parentRoute: typeof AppAuthenticatedRouteRoute
+    }
+    '/_app/community/$groupId': {
+      id: '/_app/community/$groupId'
+      path: '/$groupId'
+      fullPath: '/community/$groupId'
+      preLoaderRoute: typeof AppCommunityGroupIdRouteImport
+      parentRoute: typeof AppCommunityRoute
+    }
+    '/api/public/questions': {
+      id: '/api/public/questions'
+      path: '/api/public/questions'
+      fullPath: '/api/public/questions'
+      preLoaderRoute: typeof ApiPublicQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/_authenticated/study/$subject': {
       id: '/_app/_authenticated/study/$subject'
