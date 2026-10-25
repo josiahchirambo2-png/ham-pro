@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { storeRoomKey } from "@/lib/roomkey";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/community")({
@@ -43,6 +44,8 @@ function Community() {
     e.preventDefault();
     if (!name.trim()) return;
     if (!me) { toast.error("Sign in to create a group"); return; }
+    const roomKey = groupPassword.trim();
+    if (roomKey.length < 4) { toast.error("Set a room key of at least 4 characters — it unlocks and encrypts your group's chat"); return; }
     setCreating(true);
     const { data, error } = await supabase
       .from("study_groups")
@@ -51,13 +54,12 @@ function Community() {
       .single();
     if (error || !data) { setCreating(false); toast.error(error?.message ?? "Could not create group"); return; }
     await supabase.from("group_members").insert({ group_id: data.id, user_id: me, added_by: me });
-    if (groupPassword.trim().length >= 4) {
-      const { error: pwErr } = await (supabase as any).rpc("set_group_password", { _group_id: data.id, _password: groupPassword.trim() });
-      if (pwErr) toast.error(`Group created, but the room key failed: ${pwErr.message}`);
-    }
+    const { error: pwErr } = await (supabase as any).rpc("set_group_password", { _group_id: data.id, _password: roomKey });
+    if (pwErr) toast.error(`Group created, but the room key failed: ${pwErr.message}`);
+    storeRoomKey(data.id, roomKey);
     setCreating(false); setShowCreate(false);
     setName(""); setSubject(""); setDescription(""); setGroupPassword("");
-    toast.success("Group created");
+    toast.success("Group created — the chat unlocks automatically on this device");
     load();
   }
 
@@ -88,11 +90,11 @@ function Community() {
           </div>
           <div className="space-y-1"><Label>Description</Label><Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What will you study together?" maxLength={300} /></div>
           <div className="space-y-1">
-            <Label>Room key (optional, min 4 characters)</Label>
-            <Input type="password" value={groupPassword} onChange={(e) => setGroupPassword(e.target.value)}
-              placeholder="Sent along with your invite link" maxLength={64} autoComplete="new-password" />
+            <Label>Room key (required, min 4 characters)</Label>
+            <Input type="password" value={groupPassword} onChange={(e) => setGroupPassword(e.target.value)} required minLength={4}
+              placeholder="Shared with your invite link" maxLength={64} autoComplete="new-password" />
             <p className="text-xs text-muted-foreground">
-              Every room is private. Anyone opening your invite link must type this key to join, and you can change it any time from inside the group.
+              Every room is private and every chat is end-to-end encrypted. Anyone opening your invite link must type this key to join, and you can change it any time from inside the group.
             </p>
           </div>
           <Button type="submit" disabled={creating || !name.trim()}>{creating ? "Creating…" : "Create group"}</Button>

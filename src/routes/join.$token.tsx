@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { Lock, Users, Loader2, LogIn, KeyRound } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { storeRoomKey } from "@/lib/roomkey";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/join/$token")({
@@ -58,13 +59,15 @@ function JoinPage() {
       navigate({ to: "/auth" });
       return;
     }
-    if (group?.requires_password && !password.trim()) { toast.error("This group needs the password from your invite"); return; }
+    if (group?.requires_password && password.trim().length < 4) { toast.error("This group needs the room key from your invite (at least 4 characters)"); return; }
     setJoining(true);
     const { data, error } = await (supabase as any).rpc("join_group_by_invite", { _token: token, _password: password.trim() || null });
     setJoining(false);
     if (error) { toast.error(error.message); return; }
-    toast.success(`Joined ${group?.name ?? "the group"}`);
-    navigate({ to: "/community/$groupId", params: { groupId: data as string } });
+    const joinedId = data as string;
+    if (group?.requires_password && password.trim()) storeRoomKey(joinedId, password.trim());
+    toast.success(`Joined ${group?.name ?? "the group"} — the chat unlocks on this device`);
+    navigate({ to: "/community/$groupId", params: { groupId: joinedId } });
   }
 
   return (
@@ -97,11 +100,12 @@ function JoinPage() {
             {group.requires_password && (
               <div className="mt-5 text-left">
                 <label className="text-xs flex items-center gap-1.5 text-muted-foreground">
-                  <KeyRound className="size-3.5" /> Group password
+                  <KeyRound className="size-3.5" /> Room key
                 </label>
                 <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off"
-                  className="mt-1" placeholder="Sent with your invite" maxLength={64}
+                  className="mt-1" placeholder="Sent with your invite (min 4 characters)" maxLength={64}
                   onKeyDown={(e) => { if (e.key === "Enter") accept(); }} />
+                <p className="mt-1 text-[11px] text-muted-foreground">It stays on this device and unlocks the encrypted chat.</p>
               </div>
             )}
             <Button className="mt-6 w-full" size="lg" onClick={accept} disabled={joining}>
