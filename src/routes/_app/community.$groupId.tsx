@@ -130,7 +130,7 @@ function GroupChat() {
     if (!check.ok) { toast.error(check.reason); return; }
     setText("");
     const payload = await seal(content);
-    const { error } = await supabase.from("group_messages").insert({ group_id: groupId, user_id: me, content: payload });
+    const { error } = await supabase.from("group_messages").insert({ group_id: groupId, user_id: me, content: payload, encrypted: isEncrypted(payload) });
     if (error) toast.error(error.message);
   }
 
@@ -144,7 +144,7 @@ function GroupChat() {
     if (!check.ok) { toast.error(check.reason); return; }
     const payload = await seal(content);
     const { error } = await supabase.from("group_messages")
-      .update({ content: payload, edited_at: new Date().toISOString() })
+      .update({ content: payload, edited_at: new Date().toISOString(), encrypted: isEncrypted(payload) })
       .eq("id", id);
     if (error) { toast.error(error.message); return; }
     cancelEdit();

@@ -58,13 +58,15 @@ function JoinPage() {
       navigate({ to: "/auth" });
       return;
     }
-    if (group?.requires_password && !password.trim()) { toast.error("This group needs the password from your invite"); return; }
+    if (group?.requires_password && password.trim().length < 4) { toast.error("This group needs the room key from your invite (at least 4 characters)"); return; }
     setJoining(true);
     const { data, error } = await (supabase as any).rpc("join_group_by_invite", { _token: token, _password: password.trim() || null });
     setJoining(false);
     if (error) { toast.error(error.message); return; }
-    toast.success(`Joined ${group?.name ?? "the group"}`);
-    navigate({ to: "/community/$groupId", params: { groupId: data as string } });
+    const joinedId = data as string;
+    if (group?.requires_password && password.trim()) storeRoomKey(joinedId, password.trim());
+    toast.success(`Joined ${group?.name ?? "the group"} — the chat unlocks on this device`);
+    navigate({ to: "/community/$groupId", params: { groupId: joinedId } });
   }
 
   return (
