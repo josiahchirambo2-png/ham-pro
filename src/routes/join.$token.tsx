@@ -99,11 +99,12 @@ function JoinPage() {
             {group.requires_password && (
               <div className="mt-5 text-left">
                 <label className="text-xs flex items-center gap-1.5 text-muted-foreground">
-                  <KeyRound className="size-3.5" /> Group password
+                  <KeyRound className="size-3.5" /> Room key
                 </label>
                 <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off"
-                  className="mt-1" placeholder="Sent with your invite" maxLength={64}
+                  className="mt-1" placeholder="Sent with your invite (min 4 characters)" maxLength={64}
                   onKeyDown={(e) => { if (e.key === "Enter") accept(); }} />
+                <p className="mt-1 text-[11px] text-muted-foreground">It stays on this device and unlocks the encrypted chat.</p>
               </div>
             )}
             <Button className="mt-6 w-full" size="lg" onClick={accept} disabled={joining}>

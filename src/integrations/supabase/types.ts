@@ -526,6 +526,12 @@ export type Database = {
         Args: { _group_id: string; _user_id: string }
         Returns: boolean
       }
+      find_user_by_display_name: {
+        Args: { _display_name: string }
+        Returns: {
+          id: string
+        }[]
+      }
       get_group_by_invite: {
         Args: { _token: string }
         Returns: {
