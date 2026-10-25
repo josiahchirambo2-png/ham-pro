@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/logo";
 import { Lock, Users, Loader2, LogIn, KeyRound } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { storeRoomKey } from "@/lib/roomkey";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/join/$token")({

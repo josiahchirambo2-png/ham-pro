@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { storeRoomKey } from "@/lib/roomkey";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/community")({
