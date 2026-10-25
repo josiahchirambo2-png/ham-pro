@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_app/plans")({
   component: PlansPage,
 });
 
-const PAY_NUMBERS = ["+260 977873761", "+260 977935215"];
+const PAY_NUMBERS = ["+260 978001266"];
 
 const PLANS = [
   {
@@ -149,7 +149,7 @@ function PlansPage() {
       <div id="how-to-pay" className="mt-10 rounded-3xl border border-border bg-card p-6 md:p-8">
         <h2 className="text-xl font-semibold flex items-center gap-2"><Smartphone className="size-5 text-primary" /> How to pay</h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
-          Send your plan amount by mobile money to either number below, then message the same number with your account email.
+          Send your plan amount by mobile money to the number below, then message it with your account email.
           Your upgrade is activated manually once the payment is confirmed.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
@@ -164,7 +164,7 @@ function PlansPage() {
           { q: "Is the free plan really free?", a: "Yes. Tutoring, labs, tests, notes and private study groups stay free for every learner." },
           { q: "Can I change plans later?", a: "Any time. Upgrades apply immediately and downgrades take effect at the end of your billing month." },
           { q: "What happens when I cancel?", a: "You keep your notes, tests and groups, and simply return to the Free plan limits." },
-          { q: "Do you offer school pricing?", a: "Unlimited covers up to five learners; message either number above for larger classes." },
+          { q: "Do you offer school pricing?", a: "Unlimited covers up to five learners; message the number above for larger classes." },
         ].map((f) => (
           <div key={f.q} className="rounded-2xl border border-border bg-card p-5">
             <h3 className="font-semibold text-sm">{f.q}</h3>
