@@ -18,6 +18,7 @@ import { Route as AppAppearanceRouteImport } from './routes/_app/appearance'
 import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppCoursesRouteImport } from './routes/_app/courses'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppFlashcardsRouteImport } from './routes/_app/flashcards'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
 import { Route as AppLabsRouteImport } from './routes/_app/labs'
@@ -77,6 +78,11 @@ const AppCoursesRoute = AppCoursesRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppFlashcardsRoute = AppFlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppHamiverseRoute = AppHamiverseRouteImport.update({
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/community': typeof AppCommunityRouteWithChildren
   '/courses': typeof AppCoursesRoute
   '/dashboard': typeof AppDashboardRoute
+  '/flashcards': typeof AppFlashcardsRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/community': typeof AppCommunityRouteWithChildren
   '/courses': typeof AppCoursesRoute
   '/dashboard': typeof AppDashboardRoute
+  '/flashcards': typeof AppFlashcardsRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
   '/labs': typeof AppLabsRoute
@@ -231,6 +239,7 @@ export interface FileRoutesById {
   '/_app/community': typeof AppCommunityRouteWithChildren
   '/_app/courses': typeof AppCoursesRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/flashcards': typeof AppFlashcardsRoute
   '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
   '/_app/labs': typeof AppLabsRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/courses'
     | '/dashboard'
+    | '/flashcards'
     | '/hamiverse'
     | '/identify'
     | '/labs'
@@ -285,6 +295,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/courses'
     | '/dashboard'
+    | '/flashcards'
     | '/hamiverse'
     | '/identify'
     | '/labs'
@@ -313,6 +324,7 @@ export interface FileRouteTypes {
     | '/_app/community'
     | '/_app/courses'
     | '/_app/dashboard'
+    | '/_app/flashcards'
     | '/_app/hamiverse'
     | '/_app/identify'
     | '/_app/labs'
@@ -406,6 +418,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/flashcards': {
+      id: '/_app/flashcards'
+      path: '/flashcards'
+      fullPath: '/flashcards'
+      preLoaderRoute: typeof AppFlashcardsRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/hamiverse': {
@@ -569,6 +588,7 @@ interface AppRouteRouteChildren {
   AppCommunityRoute: typeof AppCommunityRouteWithChildren
   AppCoursesRoute: typeof AppCoursesRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppFlashcardsRoute: typeof AppFlashcardsRoute
   AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
   AppLabsRoute: typeof AppLabsRoute
@@ -584,6 +604,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCommunityRoute: AppCommunityRouteWithChildren,
   AppCoursesRoute: AppCoursesRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppFlashcardsRoute: AppFlashcardsRoute,
   AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
   AppLabsRoute: AppLabsRoute,
