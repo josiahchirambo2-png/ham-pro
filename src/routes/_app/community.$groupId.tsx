@@ -3,8 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock, Link2, KeyRound, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Send, Pencil, Check, X, UserPlus, Lock, Link2, KeyRound, ShieldCheck, Presentation, Video } from "lucide-react";
 import { moderateMessage } from "@/lib/moderation";
+import { Whiteboard } from "@/components/whiteboard";
+import { LiveLesson } from "@/components/live-lesson";
 import {
   deriveRoomKey, encryptMessage, decryptMessage, isEncrypted,
   getStoredRoomKey, storeRoomKey, clearRoomKey,
@@ -39,6 +41,8 @@ function GroupChat() {
   const [cryptoKey, setCryptoKey] = useState<CryptoKey | null>(null);
   const [unlockInput, setUnlockInput] = useState("");
   const [unlocking, setUnlocking] = useState(false);
+  const [showBoard, setShowBoard] = useState(false);
+  const [showLive, setShowLive] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { supabase.auth.getUser().then(({ data }) => setMe(data.user?.id ?? null)); }, []);
@@ -219,6 +223,16 @@ function GroupChat() {
         )}
         <div className="ml-auto">
           <div className="flex items-center gap-2">
+            {me && (
+              <Button size="sm" variant="outline" onClick={() => { setShowBoard(true); setShowLive(false); }}>
+                <Presentation className="size-4" /> Whiteboard
+              </Button>
+            )}
+            {me && (
+              <Button size="sm" variant="outline" onClick={() => { setShowLive(true); setShowBoard(false); }}>
+                <Video className="size-4" /> Live lesson
+              </Button>
+            )}
             {cryptoKey && (
               <Button size="sm" variant="ghost" onClick={forgetKey}>Forget key</Button>
             )}
@@ -309,6 +323,8 @@ function GroupChat() {
           <Button type="submit" size="icon" disabled={!text.trim()}><Send className="size-4" /></Button>
         </form>
       )}
+      {showBoard && <Whiteboard groupId={groupId} onClose={() => setShowBoard(false)} />}
+      {showLive && <LiveLesson groupId={groupId} onClose={() => setShowLive(false)} />}
     </div>
   );
 }

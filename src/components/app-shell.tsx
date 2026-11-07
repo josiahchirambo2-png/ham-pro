@@ -15,6 +15,7 @@ const NAV = [
   { to: "/identify", label: "Identify" },
   { to: "/notes", label: "Notes" },
   { to: "/tests", label: "Tests" },
+  { to: "/flashcards", label: "Flashcards" },
   { to: "/labs", label: "Labs" },
   { to: "/hamiverse", label: "KITVERSE" },
   { to: "/visualize", label: "AI Visuals" },
