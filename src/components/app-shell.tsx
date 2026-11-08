@@ -17,6 +17,7 @@ const NAV = [
   { to: "/tests", label: "Tests" },
   { to: "/flashcards", label: "Flashcards" },
   { to: "/labs", label: "Labs" },
+  { to: "/elements", label: "Elements" },
   { to: "/hamiverse", label: "KITVERSE" },
   { to: "/visualize", label: "AI Visuals" },
   { to: "/community", label: "Study Groups" },

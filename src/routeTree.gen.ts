@@ -18,6 +18,7 @@ import { Route as AppAppearanceRouteImport } from './routes/_app/appearance'
 import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppCoursesRouteImport } from './routes/_app/courses'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppElementsRouteImport } from './routes/_app/elements'
 import { Route as AppFlashcardsRouteImport } from './routes/_app/flashcards'
 import { Route as AppHamiverseRouteImport } from './routes/_app/hamiverse'
 import { Route as AppIdentifyRouteImport } from './routes/_app/identify'
@@ -78,6 +79,11 @@ const AppCoursesRoute = AppCoursesRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppElementsRoute = AppElementsRouteImport.update({
+  id: '/elements',
+  path: '/elements',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const AppFlashcardsRoute = AppFlashcardsRouteImport.update({
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/community': typeof AppCommunityRouteWithChildren
   '/courses': typeof AppCoursesRoute
   '/dashboard': typeof AppDashboardRoute
+  '/elements': typeof AppElementsRoute
   '/flashcards': typeof AppFlashcardsRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
@@ -209,6 +216,7 @@ export interface FileRoutesByTo {
   '/community': typeof AppCommunityRouteWithChildren
   '/courses': typeof AppCoursesRoute
   '/dashboard': typeof AppDashboardRoute
+  '/elements': typeof AppElementsRoute
   '/flashcards': typeof AppFlashcardsRoute
   '/hamiverse': typeof AppHamiverseRoute
   '/identify': typeof AppIdentifyRoute
@@ -239,6 +247,7 @@ export interface FileRoutesById {
   '/_app/community': typeof AppCommunityRouteWithChildren
   '/_app/courses': typeof AppCoursesRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/elements': typeof AppElementsRoute
   '/_app/flashcards': typeof AppFlashcardsRoute
   '/_app/hamiverse': typeof AppHamiverseRoute
   '/_app/identify': typeof AppIdentifyRoute
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/courses'
     | '/dashboard'
+    | '/elements'
     | '/flashcards'
     | '/hamiverse'
     | '/identify'
@@ -295,6 +305,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/courses'
     | '/dashboard'
+    | '/elements'
     | '/flashcards'
     | '/hamiverse'
     | '/identify'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/_app/community'
     | '/_app/courses'
     | '/_app/dashboard'
+    | '/_app/elements'
     | '/_app/flashcards'
     | '/_app/hamiverse'
     | '/_app/identify'
@@ -418,6 +430,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/elements': {
+      id: '/_app/elements'
+      path: '/elements'
+      fullPath: '/elements'
+      preLoaderRoute: typeof AppElementsRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/flashcards': {
@@ -588,6 +607,7 @@ interface AppRouteRouteChildren {
   AppCommunityRoute: typeof AppCommunityRouteWithChildren
   AppCoursesRoute: typeof AppCoursesRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppElementsRoute: typeof AppElementsRoute
   AppFlashcardsRoute: typeof AppFlashcardsRoute
   AppHamiverseRoute: typeof AppHamiverseRoute
   AppIdentifyRoute: typeof AppIdentifyRoute
@@ -604,6 +624,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppCommunityRoute: AppCommunityRouteWithChildren,
   AppCoursesRoute: AppCoursesRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppElementsRoute: AppElementsRoute,
   AppFlashcardsRoute: AppFlashcardsRoute,
   AppHamiverseRoute: AppHamiverseRoute,
   AppIdentifyRoute: AppIdentifyRoute,
