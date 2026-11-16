@@ -40,7 +40,7 @@ export function matchUniversities(p: Profile, list: Uni[], zmwPerUsd: number): U
     if (u.modes.includes(p.mode as never)) s += 3; else s -= 8;
     if (u.intakes.includes(p.intake as never)) { s += 2; reasons.push(`Has a ${p.intake} intake`); } else s -= 5;
     const score = Math.max(5, Math.min(98, Math.round(s)));
-    const tier = gap > 4 ? "Reach" : score >= 80 ? "Top Match" : score >= 60 ? "Good Match" : "Reach";
+    const tier: UniMatch["tier"] = gap > 4 ? "Reach" : score >= 80 ? "Top Match" : score >= 60 ? "Good Match" : "Reach";
     return { uni: u, score, tier, reasons: reasons.slice(0, 3) };
   }).sort((a, b) => b.score - a.score);
 }
