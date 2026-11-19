@@ -14,6 +14,21 @@ export type Database = {
   }
   public: {
     Tables: {
+      aftergrad_workspaces: {
+        Row: {
+          user_id: string
+          workspace: Json
+        }
+        Insert: {
+          user_id: string
+          workspace?: Json
+        }
+        Update: {
+          user_id?: string
+          workspace?: Json
+        }
+        Relationships: []
+      }
       group_members: {
         Row: {
           added_by: string | null

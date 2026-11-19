@@ -1,0 +1,4 @@
+CREATE POLICY aftergrad_docs_read ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'aftergrad-documents' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text);
+CREATE POLICY aftergrad_docs_insert ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'aftergrad-documents' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text);
+CREATE POLICY aftergrad_docs_replace ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'aftergrad-documents' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text) WITH CHECK (bucket_id = 'aftergrad-documents' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text);
+CREATE POLICY aftergrad_docs_remove ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'aftergrad-documents' AND (storage.foldername(name))[1] = (SELECT auth.uid())::text);

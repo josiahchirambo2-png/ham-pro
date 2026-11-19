@@ -20,7 +20,7 @@ const FIELD_WORDS: Record<string, string[]> = {
 };
 export function fieldsFor(p: Pick<Profile, "career" | "favourite">): string[] {
   const t = `${p.career} ${p.favourite}`.toLowerCase();
-  return Object.entries(FIELD_WORDS).filter(([, ws]) => ws.some((w) => t.includes(w))).map(([f]) => f);
+  return Object.entries(FIELD_WORDS).filter(([, ws]) => ws.some((w) => w === "it" ? /\bit\b/.test(t) : t.includes(w))).map(([f]) => f);
 }
 
 export type UniMatch = { uni: Uni; score: number; tier: "Top Match" | "Good Match" | "Reach"; reasons: string[] };
@@ -36,9 +36,13 @@ export function matchUniversities(p: Profile, list: Uni[], zmwPerUsd: number): U
     const semFee = (u.feesUSD * zmwPerUsd) / 2;
     if (semFee <= p.budgetZMW) { s += 10; reasons.push(`Fees (~K${Math.round(semFee).toLocaleString()}/semester) fit your budget`); }
     else s -= Math.min(20, Math.round(((semFee - p.budgetZMW) / Math.max(p.budgetZMW, 1)) * 10));
-    if (p.country === "Any" || u.country === p.country || u.city.toLowerCase().includes(p.country.toLowerCase())) { s += 5; reasons.push(`In your preferred location (${u.city})`); }
-    if (u.modes.includes(p.mode as never)) s += 3; else s -= 8;
-    if (u.intakes.includes(p.intake as never)) { s += 2; reasons.push(`Has a ${p.intake} intake`); } else s -= 5;
+    const locationMatch = `${u.country} ${u.city}`.toLowerCase().includes(p.country.trim().toLowerCase());
+    if (p.country && p.country.toLowerCase() !== "any") {
+      if (locationMatch) { s += 5; reasons.push(`In your preferred location (${u.city})`); }
+      else s -= 12;
+    }
+    if (u.modes.some((mode) => mode === p.mode)) s += 3; else s -= 8;
+    if (u.intakes.some((intake) => intake === p.intake)) { s += 2; reasons.push(`Has a ${p.intake} intake`); } else s -= 5;
     const score = Math.max(5, Math.min(98, Math.round(s)));
     const tier: UniMatch["tier"] = gap > 4 ? "Reach" : score >= 80 ? "Top Match" : score >= 60 ? "Good Match" : "Reach";
     return { uni: u, score, tier, reasons: reasons.slice(0, 3) };

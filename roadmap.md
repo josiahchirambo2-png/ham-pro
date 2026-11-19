@@ -4,3 +4,9 @@
 - [x] Make KIT tutor guide learners with hints before solutions.
 - [x] Add offline flashcards and spaced repetition.
 - [x] Verify learning flows and route metadata in the browser.
+
+# After Graduation
+- [ ] Finish the public university and scholarship finder, comparison, and eligibility checks.
+- [ ] Save private planning progress, documents, and reminders; add exports and preparation tools.
+- [ ] Connect ASAP and verify the preview, signed-in saving, and downloads.
+- [ ] Verify catalog figures and find attributable scholarship stories; until then, label examples and estimates.

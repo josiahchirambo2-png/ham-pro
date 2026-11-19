@@ -15,6 +15,20 @@
       "when": 1792951689691,
       "tag": "0001_find_user_by_display_name",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795104717204,
+      "tag": "0002_after_graduation_workspace",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795104801859,
+      "tag": "0003_aftergrad_private_vault",
+      "breakpoints": true
     }
   ]
 }
